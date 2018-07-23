@@ -5,3 +5,5 @@ Utilizes the AACT-CTTI database from Duke.
 * CTTI = Clinical Trials Transformation Initiative
 * AACT = Aggregate Analysis of ClinicalTrials.gov
 * See https://aact.ctti-clinicaltrials.org/.
+
+Text mining performed with [NextMove Leadmine](http://nextmovesoftware.com).
