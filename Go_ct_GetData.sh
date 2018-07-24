@@ -5,6 +5,9 @@
 ### See https://aact.ctti-clinicaltrials.org/.
 ### According to website (July 2018), data is refreshed monthly.
 #############################################################################
+### Identify drugs by intervention ID, since may be multiple
+### drugs per trial (NCT_ID).
+#############################################################################
 #
 set -x
 #
@@ -14,52 +17,42 @@ DBNAME="aact"
 cwd=$(pwd)
 DATADIR="${cwd}/data"
 #
-ARGS="-Atq -h $DBHOST -d $DBNAME"
+ARGS="-h $DBHOST -d $DBNAME"
+###
+STUDYFILE="$DATADIR/aact_studies.tsv"
+psql $ARGS -c "COPY (SELECT nct_id,study_type,source,phase,overall_status,start_date,completion_date,enrollment,official_title FROM studies) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$STUDYFILE
+###
 ###
 DRUGFILE="$DATADIR/aact_drugs.tsv"
 #Drugs:
-printf "itv.id\titv.nct_id\titv.name\n" >$DRUGFILE
-psql -F $'\t' $ARGS \
-        -c "SELECT itv.id, itv.nct_id, itv.name FROM interventions itv WHERE itv.intervention_type ='Drug'" \
-	>>$DRUGFILE
-#
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM interventions WHERE intervention_type ='Drug') TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$DRUGFILE
 ###
 #Keywords:
 KEYWORDFILE="$DATADIR/aact_keywords.tsv"
-printf "kwd.id\tkwd.nct_id\tkwd.name\n" >$KEYWORDFILE
-psql -F $'\t' $ARGS \
-        -c "SELECT kwd.id, kwd.nct_id, kwd.name FROM ctgov.keywords kwd" \
-	>>$KEYWORDFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM keywords) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$KEYWORDFILE
 #
 ###
 #Conditions:
 CONDITIONFILE="$DATADIR/aact_conditions.tsv"
-printf "cnd.id\tcnd.nct_id\tcnd.name\n" >$CONDITIONFILE
-psql -F $'\t' $ARGS \
-        -c "SELECT cnd.id, cnd.nct_id, cnd.name FROM ctgov.conditions cnd" \
-	>>$CONDITIONFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM conditions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$CONDITIONFILE
 #
 ###
 #Conditions_MeSH:
 MESHCONDITIONFILE="$DATADIR/aact_conditions_mesh.tsv"
-printf "bcnd_msh.id\tbcnd_msh.nct_id\tbcnd_msh.mesh_term\n" >$MESHCONDITIONFILE
-psql -F $'\t' $ARGS \
-        -c "SELECT bcnd_msh.id, bcnd_msh.nct_id, bcnd_msh.mesh_term FROM ctgov.browse_conditions bcnd_msh" \
-	>>$MESHCONDITIONFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, mesh_term FROM browse_conditions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$MESHCONDITIONFILE
 #
 ###
+#Special handling required to clean newlines and tabs.
+###
+ARGS="-Atq -h $DBHOST -d $DBNAME"
 #Brief Summaries:
 SUMMARYFILE=$DATADIR/aact_summaries.tsv
-printf "bsumm.id\tbsumm.nct_id\tbsumm.description\n" >$SUMMARYFILE
-psql -F $'\t' $ARGS \
-        -f sql/summary_list.sql \
-	>>$SUMMARYFILE
+printf "id\tnct_id\tdescription\n" >$SUMMARYFILE
+psql -F $'\t' $ARGS -f sql/summary_list.sql >>$SUMMARYFILE
 #
 ###
 #Descriptions:
 DESCRIPTIONFILE=$DATADIR/aact_descriptions.tsv
-printf "ddesc.id\tddesc.nct_id\tddesc.description\n" 
-psql -F $'\t' $ARGS \
-        -f sql/description_list.sql \
-	>>$DESCRIPTIONFILE
+printf "id\tnct_id\tdescription\n" >$DESCRIPTIONFILE
+psql -F $'\t' $ARGS -f sql/description_list.sql >>$DESCRIPTIONFILE
 #

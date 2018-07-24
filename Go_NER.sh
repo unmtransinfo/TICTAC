@@ -9,11 +9,12 @@ DATADIR="$cwd/data"
 #
 #############################################################################
 # Chemical NER (drug intervention names), with default LeadMine dictionary
-# and resolver.
+# and resolver. Must identify drugs by intervention ID, since may be multiple
+# drugs per trial ID (NCT_ID).
 ###
 leadmine_utils.sh \
 	-i ${DATADIR}/aact_drugs.tsv \
-	-textcol 3 -unquote -idcol 2 \
+	-textcol 3 -unquote -idcol 1 \
 	-o ${DATADIR}/aact_drugs_leadmine.tsv \
 	-v
 #
@@ -74,7 +75,7 @@ for f in $(ls $CFGDIR/${PREFIX}_*.cfg) ; do
 	leadmine_utils.sh \
 		-config $f \
 		-i ${DATADIR}/aact_descriptions.tsv \
-		-textcol 3 -unquote -idcol 2 \
+		-textcol 3 -unquote -idcol 1 \
 		-o ${DATADIR}/aact_descriptions_${dictname}_leadmine.tsv \
 		-v
 	#
