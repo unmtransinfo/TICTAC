@@ -24,9 +24,9 @@ studies <- studies[studies$study_type=="Interventional",]
 studies$study_type <- NULL
 n_studies_itv <- nrow(studies)
 writeLines(sprintf("Interventional trials: %d (%.1f%%)", n_studies_itv, 100*n_studies_itv/n_studies_total))
-#plot_ly(type="pie", data=count(studies, phase))
+studies$phase[studies$phase == "N/A"] <- NA
 writeLines("===All studies, phase:")
-tbl <- table(studies$phase)
+tbl <- table(studies$phase, useNA="ifany")
 writeLines(sprintf("%18s: %6d", names(tbl), tbl))
 #
 #Drugs 
@@ -37,6 +37,9 @@ studies[["is_drug_trial"]] <- !is.na(studies$drug_itv_id)
 drugs <- merge(drugs, studies, by="nct_id", all.x=T, all.y=F)
 drugs <- drugs[order(drugs$name),]
 #
+writeLines("===All drugs, phase:")
+tbl <- table(drugs$phase, useNA="ifany")
+writeLines(sprintf("%18s: %6d", names(tbl), tbl))
 writeLines(sprintf("Drug trials (NCT_IDs): %d", length(unique(drugs$nct_id))))
 writeLines(sprintf("Unique drug names: %d", length(unique(drugs$name))))
 #
@@ -57,32 +60,27 @@ writeLines(sprintf("%18s: %6d", names(tbl), tbl))
 #plot_ly(type="pie", data=count(drugs, resolved_structure))
 #
 ###
-#prefix <- "AACT"
-#ax0 <- list(showline=F, zeroline=F, showticklabels=F, showgrid=F)
-#plot_ly() %>%
-#  add_pie(data = count(studies, is_drug_trial), labels = ~is_drug_trial, values = ~n,
-#          textinfo = "label+percent", textposition = "inside", domain = list(x = c(0, 0.5), y  = c(0, 1))) %>%
-#  add_pie(data = count(drugs, resolved_structure), labels = ~resolved_structure, values = ~n,
-#          textinfo = "label+percent", textposition = "inside", domain = list(x = c(0.5, 1), y  = c(0, 1))) %>%
-#  add_annotations(x = c(0.25, 0.75), y = c(0, 0),
-#                  xanchor = "center", xref = "paper", yref = "paper", showarrow = F,
-#                  text = c("drug_trial", "resolved_structure"),
-#                  font = list(family = "Arial", size = 20)) %>%
-#  layout(title = paste0(prefix, ":<br>Clinical trial classification<br>(N_total = ", nrow(studies), ")"),
-#         xaxis = ax0, yaxis = ax0, margin = list(t = 120), showlegend = F)
+prefix <- "AACT"
+ax0 <- list(showline=F, zeroline=F, showticklabels=F, showgrid=F)
+drugs[["begin_year"]] <- as.integer(format(drugs$start_date, "%Y"))
+#
+p1 <- plot_ly() %>%
+  add_trace(type="bar", data=count(drugs, begin_year), x = ~begin_year, y = ~n) %>%
+  layout(title=paste0(prefix, ": Drug trials per begin-year"), xaxis=list(range=c(1990, 2019)))
+p1
 ##
-#p1 <- plot_ly() %>%
-#  add_pie(data = count(drugs, phase), labels = ~phase, values = ~n,
-#          textinfo = "label+percent", textposition = "inside", domain = list(x = c(0, 0.5), y = c(0, 1))) %>%
-#  add_pie(data = count(drugs, overall_status), labels = ~overall_status, values = ~n,
-#          textinfo = "label+percent", textposition = "inside", domain = list(x = c(0.5, 1), y = c(0, 1))) %>%
-#  add_annotations(x = c(0.25, 0.75), y = c(0, 0),
-#                  xanchor = "center", xref = "paper", yref = "paper", showarrow = F,
-#                  text = c("phase", "overall_status"),
-#                  font = list(family = "Arial", size = 20)) %>%
-#  layout(title = paste0(prefix, ":<br>Drug trial classification<br>(N_total = ", nrow(drugs), ")"),
-#         xaxis = ax0, yaxis = ax0, margin = list(t = 120), showlegend = F)
-#p1
+p2 <- plot_ly() %>%
+  add_pie(data=count(drugs, phase), labels=~phase, values=~n, sort=F,
+          textinfo="label+percent", textposition="inside", domain=list(x=c(0, 0.5), y=c(0, 1))) %>%
+  add_pie(data = count(drugs, overall_status), labels = ~overall_status, values = ~n,
+          textinfo = "label+percent", textposition = "inside", domain = list(x = c(0.5, 1), y = c(0, 1))) %>%
+  add_annotations(x = c(0.25, 0.75), y = c(-.1, -.1),
+                  xanchor = "center", xref = "paper", yref = "paper", showarrow = F,
+                  text = c("Phase", "Overall status"),
+                  font = list(family = "Arial", size = 20)) %>%
+  layout(title = paste0(prefix, ": Drug trial classification<br>(N_total = ", nrow(drugs), ")"),
+         xaxis=ax0, yaxis=ax0, margin=list(t = 120), showlegend = F)
+p2
 ###
 #
 drugs_smi <- drugs_leadmine[!is.na(drugs_leadmine$smiles),c("smiles","OriginalText")]
@@ -117,4 +115,48 @@ writeLines(sprintf("Leadmine results by drug name: %.1f%% (%d/%d)",
                    nrow(ner), length(unique(drugs$name))))
 #
 ###
+# PUBCHEM:
+# Intervention IDs to CIDs from PubChem (via SMILES)
+drug2cid <- read_delim("data/aact_drugs_smi_pubchem_cid.tsv", "\t", col_names=c("smiles","cid","names"))
+drug2cid <- drug2cid[!is.na(drug2cid$cid),]
+drug2cid <- drug2cid[drug2cid$cid!=0,]
+drug2cid <- merge(drug2cid, unique(drugs[,c("smiles","id")]), all.x=F, all.y=F, by="smiles")
+drug2cid <- dplyr::rename(drug2cid, itv_id = "id")
+drug2cid$smiles <- NULL
+drug2cid$names <- NULL
+drug2cid <- unique(drug2cid)
+writeLines(sprintf("Intervention IDs mapped to PubChem CIDs (via SMILES): %d", nrow(drug2cid)))
+write_delim(drug2cid, "data/aact_drugs_itvid2cid.tsv", delim="\t")
 #
+#InChIKeys from PubChem (via CIDs)
+pubchem <- read_delim("data/aact_drugs_smi_pubchem_cid2inchi.tsv", "\t")
+writeLines(sprintf("PubChem CIDs with InChIKeys: %d", nrow(pubchem)))
+
+###
+# CHEMBL:
+#ChEMBL molecule IDs, and properties (via InChIKeys)
+chembl_mol <- read_delim("data/aact_drugs_inchi2chembl.tsv", "\t")
+writeLines(sprintf("ChEMBL compounds mapped via InChIKeys: %d", nrow(chembl_mol)))
+
+#ChEMBL activities (via compounds)
+chembl_act <- read_delim("data/aact_drugs_chembl_activity_pchembl.tsv", "\t")
+writeLines(sprintf("ChEMBL activities (with pChembl): %d", nrow(chembl_act)))
+
+#ChEMBL target IDs (via activities)
+chembl_tgt <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
+writeLines(sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt)))
+
+###
+#IDG/TCRD:
+tcrd_tgt <- read_csv("~/projects/idg/TCRD/data/tcrd_all.csv")
+
+tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="protein:uniprot")
+writeLines(sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
+	nrow(tgt[!is.na(tgt$tdl),])))
+
+writeLines("===Targets, human_or_other:")
+print(table(tgt$organism=="Homo sapiens"))
+
+writeLines("===Targets, TDL for human:")
+print(table(tgt$tdl[tgt$organism=="Homo sapiens"], useNA="ifany"))
+
