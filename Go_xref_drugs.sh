@@ -42,7 +42,7 @@ cat data/aact_drugs_inchi2chembl.tsv \
 #
 ###
 #
-python/chembl_fetchbyid.py \
+chembl_fetchbyid.py \
 	--i data/aact_drugs_inchi2chembl.chemblid \
 	--o data/aact_drugs_chembl_activity_pchembl.tsv \
 	-v cid2Activity
