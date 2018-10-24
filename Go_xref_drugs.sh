@@ -27,7 +27,7 @@ cat data/aact_drugs_smi_pubchem_cid2inchi.tsv \
 	|awk -F '\t' '{print $3}' \
 	|sed -e '1d' \
 	|sed -e 's/"//g' \
-	>data/aact_drugs_smi_pubchem.inchi \
+	>data/aact_drugs_smi_pubchem.inchi
 #
 chembl_inchi_lookup.py \
 	--i data/aact_drugs_smi_pubchem.inchi \
@@ -42,20 +42,34 @@ cat data/aact_drugs_inchi2chembl.tsv \
 #
 ###
 #
-chembl_fetchbyid.py \
+chembl_fetchbyid.py -v \
 	--i data/aact_drugs_inchi2chembl.chemblid \
 	--o data/aact_drugs_chembl_activity_pchembl.tsv \
-	-v cid2Activity
+	cid2Activity
 #
 csv_utils.py \
 	--i data/aact_drugs_chembl_activity_pchembl.tsv --tsv \
 	--coltag "target_chembl_id" \
 	--extractcol \
 	|sort -u \
-	> data/aact_drugs_chembl_target.chemblid \
+	>data/aact_drugs_chembl_target.chemblid
 #
-python/chembl_fetchbyid.py \
+chembl_fetchbyid.py -v \
 	--i data/aact_drugs_chembl_target.chemblid \
 	--o data/aact_drugs_chembl_target_component.tsv \
-	-v tid2Targetcomponents
+	tid2Targetcomponents
+#
+###
+#
+csv_utils.py \
+	--i data/aact_drugs_chembl_activity_pchembl.tsv --tsv \
+	--coltag "document_chembl_id" \
+	--extractcol \
+	|sort -u \
+	>data/aact_drugs_chembl_document.chemblid
+#
+chembl_fetchbyid.py -v \
+	--i data/aact_drugs_chembl_document.chemblid \
+	--o data/aact_drugs_chembl_document.tsv \
+	did2Documents
 #

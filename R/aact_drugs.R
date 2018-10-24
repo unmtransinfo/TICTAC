@@ -97,20 +97,20 @@ write_delim(drugs_smi, "data/aact_drugs_smi.smi", "\t", col_names=F)
 ###
 # Aggregate mentions by intervention ID.
 ner <- drugs_leadmine[!is.na(drugs_leadmine$smiles),] %>% group_by(id) %>% summarise(n = n())
-writeLines(sprintf("Leadmine results by intervention ID: %.1f%% (%d/%d)", 
+writeLines(sprintf("Mentions by intervention ID: %.1f%% (%d/%d)", 
                    100*nrow(ner)/length(unique(drugs$id)),
                    nrow(ner), length(unique(drugs$id))))
 #
 # Aggregate mentions by trial.
 drugs_leadmine <- merge(drugs_leadmine, drugs[,c("drug_itv_id", "nct_id")], by.x="id", by.y="drug_itv_id")
 ner <- drugs_leadmine[!is.na(drugs_leadmine$smiles),] %>% group_by(nct_id) %>% summarise(n = n())
-writeLines(sprintf("Leadmine results by study: %.1f%% (%d/%d)", 
+writeLines(sprintf("Mentions by study: %.1f%% (%d/%d)", 
                    100*nrow(ner)/length(unique(drugs$nct_id)),
                    nrow(ner), length(unique(drugs$nct_id))))
 #
 # Aggregate mentions by drug.
 ner <- drugs_leadmine[!is.na(drugs_leadmine$smiles),] %>% group_by(OriginalText) %>% summarise(n = n())
-writeLines(sprintf("Leadmine results by drug name: %.1f%% (%d/%d)", 
+writeLines(sprintf("Mentions by drug name: %.1f%% (%d/%d)", 
                    100*nrow(ner)/length(unique(drugs$name)),
                    nrow(ner), length(unique(drugs$name))))
 #

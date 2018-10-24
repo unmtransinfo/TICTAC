@@ -8,6 +8,18 @@
 ### Identify drugs by intervention ID, since may be multiple
 ### drugs per trial (NCT_ID).
 #############################################################################
+### Tables of interest:
+###	[x] studies
+###	[x] keywords
+###	[x] brief_summaries
+###	[x] detailed_descriptions
+###	[x] conditions
+###	[x] browse_conditions		(NCT-MeSH links)
+###	[x] interventions
+###	[ ] browse_interventions	(NCT-MeSH links)
+###	[ ] intervention_other_names	(synonyms)
+###	[ ] study_references		(including type results_reference)
+#############################################################################
 #
 set -x
 #
@@ -19,27 +31,42 @@ DATADIR="${cwd}/data"
 #
 ARGS="-h $DBHOST -d $DBNAME"
 ###
-STUDYFILE="$DATADIR/aact_studies.tsv"
-psql $ARGS -c "COPY (SELECT nct_id,study_type,source,phase,overall_status,start_date,completion_date,enrollment,official_title FROM studies) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$STUDYFILE
+psql $ARGS -c "COPY (SELECT nct_id,study_type,source,phase,overall_status,start_date,completion_date,enrollment,official_title FROM studies) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_studies.tsv
 ###
 ###
-DRUGFILE="$DATADIR/aact_drugs.tsv"
 #Drugs:
-psql $ARGS -c "COPY (SELECT id, nct_id, name FROM interventions WHERE intervention_type ='Drug') TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$DRUGFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM interventions WHERE intervention_type ='Drug') TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_drugs.tsv
 ###
 #Keywords:
-KEYWORDFILE="$DATADIR/aact_keywords.tsv"
-psql $ARGS -c "COPY (SELECT id, nct_id, name FROM keywords) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$KEYWORDFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM keywords) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_keywords.tsv
 #
 ###
 #Conditions:
-CONDITIONFILE="$DATADIR/aact_conditions.tsv"
-psql $ARGS -c "COPY (SELECT id, nct_id, name FROM conditions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$CONDITIONFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM conditions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_conditions.tsv
 #
 ###
 #Conditions_MeSH:
-MESHCONDITIONFILE="$DATADIR/aact_conditions_mesh.tsv"
-psql $ARGS -c "COPY (SELECT id, nct_id, mesh_term FROM browse_conditions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" >$MESHCONDITIONFILE
+psql $ARGS -c "COPY (SELECT id, nct_id, mesh_term FROM browse_conditions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_conditions_mesh.tsv
+#
+###
+#Interventions_MeSH:
+psql $ARGS -c "COPY (SELECT id, nct_id, mesh_term FROM browse_interventions) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_interventions_mesh.tsv
+#
+###
+#Interventions Other Names:
+psql $ARGS -c "COPY (SELECT id, nct_id, intervention_id, name FROM intervention_other_names) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_interventions_othernames.tsv
+#
+###
+#Study references:
+psql $ARGS -c "COPY (SELECT id, nct_id, reference_type, pmid, citation FROM study_references) TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+	>$DATADIR/aact_study_refs.tsv
 #
 ###
 #Special handling required to clean newlines and tabs.
