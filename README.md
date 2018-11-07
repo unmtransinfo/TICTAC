@@ -13,7 +13,7 @@ Includes cheminformatics and medical terms text mining.
 ### References:
 * <http://clinicaltrials.gov>
 * <https://aact.ctti-clinicaltrials.org/>
-* [AACT Data Dictionary](https://aact.ctti-clinicaltrials.org/data_dictionary), which references <https://prsinfo.clinicaltrials.gov/definitions.html>.
+* [AACT Data Dictionary](https://aact.ctti-clinicaltrials.org/data_dictionary), which references <https://prsinfo.clinicaltrials.gov/definitions.html> and <https://prsinfo.clinicaltrials.gov/results_definitions.html>.
 * [The Database for Aggregate Analysis of ClinicalTrials.gov (AACT) and Subsequent Regrouping by Clinical Specialty](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033677), Tasneem et al., March 16, * 2012https://doi.org/10.1371/journal.pone.0033677.
 * [How to avoid common problems when using ClinicalTrials.gov in research: 10 issues to consider](https://www.bmj.com/content/361/bmj.k1452), Tse et al., BMJ 2018; 361 doi: https://doi.org/10.1136/bmj.k1452 (Published 25 May 2018.
 * See also: <https://www.ctti-clinicaltrials.org/briefing-room/publications>
@@ -27,26 +27,28 @@ Includes cheminformatics and medical terms text mining.
 * Associate drugs with protein targets.
 
 ### Tables of interest:
-* **studies**
-* **keywords**
-* **brief\_summaries**
-* **detailed\_descriptions**
+* **studies**	(titles)
+* **keywords**	(reported)
+* **brief\_summaries**	(max 5000 chars)
+* **detailed\_descriptions**	(max 32000 chars)
 * **conditions**
-* **browse\_conditions**           (NCT-MeSH links)
-* **interventions**
-* **browse\_interventions**        (NCT-MeSH links)
-* **intervention\_other\_names**    (synonyms)
-* **study\_references**            (including type results\_reference)
+* **browse\_conditions**	(NCT-MeSH links)
+* **interventions**	(various; our focus is drugs only)
+* **browse\_interventions**	(NCT-MeSH links)
+* **intervention\_other\_names**	(synonyms)
+* **study\_references**	(including type results\_reference)
 
 ### Overall workflow:
-* `Go\_ct\_GetData.sh` - Fetch selected data from AACT db.
-* `Go\_xref\_drugs.sh` - PubChem and ChEMBL IDs via APIs.
-* `Go\_BuildDicts.sh` - Build NextMove LeadMine dicts for MeSH etc. NER.
-* `Go\_NER.sh` - LeadMine NER.
-* `Go\_NER\_pubmed.sh` - LeadMine NER, selected referenced PMIDs.
-* `leadmine\_utils.sh` - Runs LeadMine API custom app on TSVs.
+* `Go_ct_GetData.sh` - Fetch selected data from AACT db.
+* `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
+* `Go_BuildDicts.sh` - Build NextMove LeadMine dicts for MeSH etc. NER.
+* `Go_NER.sh` - LeadMine NER.
+* `Go_NER_pubmed.sh` - LeadMine NER, selected referenced PMIDs.
+* `leadmine_utils.sh` - Runs LeadMine API custom app on TSVs.
 * Results analyzed for associations via R codes.
 
 ### Association semantics:
-* **keywords**, **conditions** and **summaries**: reported terms and free text which may be text mined for other intended associations.
-* **studies**, **descriptions** and **conditions** text mined for MeSH disease/phenotype terms.  These free text fields may indicate both the intended and other conditions, symptoms and phenotypic traits, which may be non-obvious from the study design.
+* **keywords**, **conditions**, **studies** and **summaries**: reported terms and free text which may be text mined for intended associations.
+* **descriptions**:  may be text mined for both the intended and other conditions, symptoms and phenotypic traits, which may be non-obvious from the study design.
+* **study\_references**: via PubMed, text mining of titles, abstracts can associate disease/phenotypes, protein targets, chemical entities and more.  The "results\_reference" type may include findings not anticipated in the design/protocol.
+* **interventions** include drug names which can be recognized and mapped to standard IDs, a task for which NextMove LeadMine is particularly suited.
