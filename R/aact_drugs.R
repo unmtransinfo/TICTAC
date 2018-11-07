@@ -148,15 +148,15 @@ writeLines(sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt)))
 
 ###
 #IDG/TCRD:
-tcrd_tgt <- read_csv("~/projects/idg/TCRD/data/tcrd_all.csv")
+tcrd_tgt <- read_delim("~/projects/IDG/TCRD/data/pharos_targets.tsv", "\t")
 
-tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="protein:uniprot")
+tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="accession")
 writeLines(sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
-	nrow(tgt[!is.na(tgt$tdl),])))
+	nrow(tgt[!is.na(tgt$idgTDL),])))
 
 writeLines("===Targets, human_or_other:")
 print(table(tgt$organism=="Homo sapiens"))
 
 writeLines("===Targets, TDL for human:")
-print(table(tgt$tdl[tgt$organism=="Homo sapiens"], useNA="ifany"))
+print(table(tgt$idgTDL[tgt$organism=="Homo sapiens"], useNA="ifany"))
 

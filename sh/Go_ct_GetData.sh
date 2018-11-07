@@ -8,6 +8,11 @@
 ### Identify drugs by intervention ID, since may be multiple
 ### drugs per trial (NCT_ID).
 #############################################################################
+### Purpose:
+###   * Associate drugs with diseases/phenotypes.
+###   * Associate protein targets with diseases/phenotypes.
+###   * Associate drugs with protein targets.
+#############################################################################
 ### Tables of interest:
 ###	[x] studies
 ###	[x] keywords
