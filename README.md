@@ -25,18 +25,21 @@ Includes cheminformatics and medical terms text mining.
 * Associate drugs with diseases/phenotypes.
 * Associate protein targets with diseases/phenotypes.
 * Associate drugs with protein targets.
+* Predict and score disease-target associations.
 
-### Tables of interest:
-* **studies**	(titles)
-* **keywords**	(reported)
-* **brief\_summaries**	(max 5000 chars)
-* **detailed\_descriptions**	(max 32000 chars)
-* **conditions**
-* **browse\_conditions**	(NCT-MeSH links)
-* **interventions**	(various; our focus is drugs only)
-* **browse\_interventions**	(NCT-MeSH links)
-* **intervention\_other\_names**	(synonyms)
-* **study\_references**	(including type results\_reference)
+### AACT tables of interest:
+| *Table* | *Notes* |
+| ---: | :--- |
+| **studies** | (titles) |
+| **keywords** | (reported) |
+| **brief\_summaries** | (max 5000 chars) |
+| **detailed\_descriptions** | (max 32000 chars) |
+| **conditions** | |
+| **browse\_conditions** | (NCT-MeSH links) |
+| **interventions** | (various; our focus is drugs only) |
+| **browse\_interventions** | (NCT-MeSH links) |
+| **intervention\_other\_names** | (synonyms) |
+| **study\_references** | (including type results\_reference) |
 
 ### Overall workflow:
 * `Go_ct_GetData.sh` - Fetch selected data from AACT db.
