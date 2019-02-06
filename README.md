@@ -30,16 +30,17 @@ Includes cheminformatics and medical terms text mining.
 ### AACT tables of interest:
 | *Table* | *Notes* |
 | ---: | :--- |
-| **studies** | (titles) |
-| **keywords** | (reported) |
+| **studies** | titles |
+| **keywords** | Reported; multiple vocabularies. |
 | **brief\_summaries** | (max 5000 chars) |
 | **detailed\_descriptions** | (max 32000 chars) |
-| **conditions** | |
-| **browse\_conditions** | (NCT-MeSH links) |
-| **interventions** | (various; our focus is drugs only) |
-| **browse\_interventions** | (NCT-MeSH links) |
-| **intervention\_other\_names** | (synonyms) |
-| **study\_references** | (including type results\_reference) |
+| **conditions** | diseases/phenotypes |
+| **browse\_conditions** | MeSH links |
+| **interventions** | Our focus is drugs only among several types. |
+| **browse\_interventions** | MeSH links |
+| **intervention\_other\_names** | synonyms |
+| **study\_references** | PubMed links |
+| **reported\_events** | including adverse events |
 
 ### Overall workflow:
 * `Go_ct_GetData.sh` - Fetch selected data from AACT db.
@@ -55,3 +56,4 @@ Includes cheminformatics and medical terms text mining.
 * **descriptions**:  may be text mined for both the intended and other conditions, symptoms and phenotypic traits, which may be non-obvious from the study design.
 * **study\_references**: via PubMed, text mining of titles, abstracts can associate disease/phenotypes, protein targets, chemical entities and more.  The "results\_reference" type may include findings not anticipated in the design/protocol.
 * **interventions** include drug names which can be recognized and mapped to standard IDs, a task for which NextMove LeadMine is particularly suited.
+* LeadMine chemical NER also resolves entities to structures via SMILES, enabling downstream cheminformatics such as aggregation by chemical substructure and similarity.

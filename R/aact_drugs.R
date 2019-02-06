@@ -148,7 +148,7 @@ writeLines(sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt)))
 
 ###
 #IDG/TCRD:
-tcrd_tgt <- read_delim("~/projects/IDG/TCRD/data/pharos_targets.tsv", "\t")
+tcrd_tgt <- read_delim("~/src/TCRD_tools/data/pharos_targets.tsv", "\t")
 
 tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="accession")
 writeLines(sprintf("ChEMBL target proteins mapped to TCRD (human): %d",

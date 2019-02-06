@@ -4,6 +4,8 @@
 cwd=$(pwd)
 #
 NM_ROOT="/home/app/nextmove"
+#LEADMINE_JAR="${NM_ROOT}/leadmine-3.12/LeadMine/leadmine-3.12.jar"
+LEADMINE_JAR="${NM_ROOT}/leadmine-3.13/bin/leadmine.jar"
 #
 DATADIR="$cwd/data"
 #
@@ -12,7 +14,7 @@ DATADIR="$cwd/data"
 # and resolver. Must identify drugs by intervention ID, since may be multiple
 # drugs per trial ID (NCT_ID).
 ###
-leadmine_utils.sh \
+${cwd}/sh/leadmine_utils.sh \
 	-i ${DATADIR}/aact_drugs.tsv \
 	-textcol 3 -unquote -idcol 1 \
 	-o ${DATADIR}/aact_drugs_leadmine.tsv \
@@ -22,12 +24,9 @@ leadmine_utils.sh \
 # Disease/phenotype NER (descriptions), with custom built dictionaries
 # and config files.
 #
-CFGDIR="$cwd/config"
-DICTDIR="$cwd/dict/mesh"
-#
+CFGDIR="${DATADIR}/config"
+DICTDIR="${DATADIR}/dict/mesh"
 PREFIX="MeSH"
-#
-LEADMINE_JAR="${NM_ROOT}/leadmine-3.12/LeadMine/leadmine-3.12.jar"
 #
 ###
 # CONFIG: Create LeadMine config files for each dict:
@@ -72,7 +71,7 @@ for f in $(ls $CFGDIR/${PREFIX}_*.cfg) ; do
 	dictname=$(basename $f |perl -pe 's/^(.*)\.cfg$/$1/')
 	printf "Leadmine: %s (%s)\n" $(basename $f) $dictname
 	#
-	leadmine_utils.sh \
+	${cwd}/sh/leadmine_utils.sh \
 		-config $f \
 		-i ${DATADIR}/aact_descriptions.tsv \
 		-textcol 3 -unquote -idcol 1 \
