@@ -1,5 +1,7 @@
 # Clinicaltrials.gov analytics
-Includes cheminformatics and medical terms text mining.
+
+Mining ClinicalTrials.gov for target hypotheses, with strong
+cheminformatics and medical terms text mining, from NextMove Software.
 
 ---
 
@@ -23,9 +25,11 @@ Includes cheminformatics and medical terms text mining.
 
 ### Purpose:
 * Associate drugs with diseases/phenotypes.
-* Associate protein targets with diseases/phenotypes.
 * Associate drugs with protein targets.
+* Associate protein targets with diseases/phenotypes (via drugs).
 * Predict and score disease-target associations.
+
+___Drugs___ may be experimental candidates.
 
 ### AACT tables of interest:
 | *Table* | *Notes* |
