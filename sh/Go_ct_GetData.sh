@@ -26,6 +26,7 @@
 ###	[ ] study_references		(including type results_reference)
 #############################################################################
 #
+set -e
 set -x
 #
 DBHOST="aact-db.ctti-clinicaltrials.org"
