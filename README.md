@@ -55,6 +55,9 @@ ___Drugs___ may be experimental candidates.
 * `leadmine_utils.sh` - Runs LeadMine API custom app on TSVs.
 * Results analyzed for associations via R codes.
 
+Dependencies:
+* [nextmove-tools](https://github.com/unmtransinfo/nextmove-tools)
+
 ### Association semantics:
 * **keywords**, **conditions**, **studies** and **summaries**: reported terms and free text which may be text mined for intended associations.
 * **descriptions**:  may be text mined for both the intended and other conditions, symptoms and phenotypic traits, which may be non-obvious from the study design.
