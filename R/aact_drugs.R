@@ -7,8 +7,15 @@
 #############################################################################
 ### See also: https://github.com/ctti-clinicaltrials/aact
 #############################################################################
-### aact_drugs.tsv from intervention_drug_list.sql
-### aact_drugs_leadmine.tsv from Go_NER.sh
+### AACT:	aact_studies.tsv
+### AACT:	aact_drugs.tsv
+### LeadMine:	aact_drugs_leadmine.tsv
+### PubChem:	aact_drugs_smi_pubchem_cid.tsv
+### PubChem:	aact_drugs_smi_pubchem_cid2inchi.tsv
+### ChEMBL:	aact_drugs_inchi2chembl.tsv
+### ChEMBL:	aact_drugs_chembl_activity_pchembl.tsv
+### ChEMBL:	aact_drugs_chembl_target_component.tsv
+### TCRD/Pharos:	pharos_targets.tsv
 #############################################################################
 ### nct_id is the study ID. 
 #############################################################################
@@ -29,7 +36,8 @@ writeLines("===All studies, phase:")
 tbl <- table(studies$phase, useNA="ifany")
 writeLines(sprintf("%18s: %6d", names(tbl), tbl))
 #
-#Drugs 
+#Drugs (id, nct_id, name)
+#"id" is AACT_ID
 drugs <- read_delim("data/aact_drugs.tsv", "\t", col_types = "dcc")
 studies <- merge(studies, dplyr::rename(drugs, drug_name = name, drug_itv_id = id), by="nct_id", all=T)
 studies[["is_drug_trial"]] <- !is.na(studies$drug_itv_id)
@@ -82,17 +90,6 @@ p2 <- plot_ly() %>%
          xaxis=ax0, yaxis=ax0, margin=list(t = 120), showlegend = F)
 p2
 ###
-#
-drugs_smi <- drugs_leadmine[!is.na(drugs_leadmine$smiles),c("smiles","OriginalText")]
-drugs_smi <- unique(drugs_smi)
-drugs_smi <- rename(drugs_smi, name = "OriginalText")
-#drugs_smi <- drugs_smi[order(drugs_smi$name),]
-writeLines(sprintf("Unique drug smiles: %d", length(unique(drugs_smi$smiles))))
-#
-# Aggregate by same smiles.
-drugs_smi <- group_by(drugs_smi, smiles) %>% summarise(names = paste(name, collapse="; "))
-drugs_smi <- drugs_smi[order(nchar(drugs_smi$smiles)),]
-write_delim(drugs_smi, "data/aact_drugs_smi.smi", "\t", col_names=F)
 #
 ###
 # Aggregate mentions by intervention ID.
@@ -154,8 +151,9 @@ tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="acc
 writeLines(sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
 	nrow(tgt[!is.na(tgt$idgTDL),])))
 
-writeLines("===Targets, human_or_other:")
-print(table(tgt$organism=="Homo sapiens"))
+writeLines("===Targets by organism:")
+tbl <- (table(tgt$organism))
+writeLines(sprintf("%18s: %6d", names(tbl), tbl))
 
 writeLines("===Targets, TDL for human:")
 print(table(tgt$idgTDL[tgt$organism=="Homo sapiens"], useNA="ifany"))

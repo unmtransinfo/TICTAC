@@ -14,12 +14,17 @@ date
 #############################################################################
 # Use "pubmed" table from TCRD:
 #(2547706 rows in March 2019)
-runsql_my.sh -h juniper.health.unm.edu -n tcrd -q 'SELECT * FROM PUBMED' -c \
+#Some processing errors due to newlines in abstracts(?).
+${cwd}/sh/runsql_my.sh -h juniper.health.unm.edu -u $DBUSR -p $DBPW \
+	-n tcrd \
+	-f ${cwd}/sql/tcrd_pubmed.sql -c \
 	|gzip -c \
 	>${DATADIR}/pubmed.tsv.gz
 #
 #############################################################################
 # Chemical NER, with default LeadMine dictionary and resolver. 
+# total elapsed time: 02:25:46
+# Many "badly formed line" errors to be investigated.
 ###
 ${cwd}/sh/leadmine_utils.sh \
 	-i ${DATADIR}/pubmed.tsv.gz \

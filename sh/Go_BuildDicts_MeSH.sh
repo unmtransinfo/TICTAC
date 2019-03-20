@@ -5,7 +5,8 @@ cwd=$(pwd)
 NM_ROOT="/home/app/nextmove"
 #
 #COMPILE_JAR=${NM_ROOT}/leadmine-3.12/DictionaryBuilding/CompileCfx/compilecfx-3.12.jar
-COMPILE_JAR=${NM_ROOT}/leadmine-3.13/bin/compilecfx.jar
+#COMPILE_JAR=${NM_ROOT}/leadmine-3.13/bin/compilecfx.jar
+COMPILE_JAR=${NM_ROOT}/leadmine-3.14.1/bin/compilecfx.jar
 #
 DATADIR="$cwd/data"
 #
