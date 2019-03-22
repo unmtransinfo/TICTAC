@@ -23,41 +23,37 @@ ${cwd}/python/pubchem_query.py \
 	--o data/aact_drugs_smi_pubchem_cid2inchi.csv \
 	--v
 #
-${cwd}/python/csv_utils.py \
-	--csv2tsv \
+${cwd}/python/pandas_utils.py \
 	--i data/aact_drugs_smi_pubchem_cid2inchi.csv \
-	--o data/aact_drugs_smi_pubchem_cid2inchi.tsv
-	
+	--o data/aact_drugs_smi_pubchem_cid2inchi.tsv \
+	csv2tsv
 #
 cat data/aact_drugs_smi_pubchem_cid2inchi.tsv \
 	|awk -F '\t' '{print $3}' \
-	|sed -e '1d' \
-	|sed -e 's/"//g' \
+	|sed -e '1d' |sed -e 's/"//g' \
 	>data/aact_drugs_smi_pubchem.inchi
 #
-${cwd}/python/chembl_inchi_lookup.py \
+${cwd}/python/chembl_fetchbyid.py \
 	--i data/aact_drugs_smi_pubchem.inchi \
 	--o data/aact_drugs_inchi2chembl.tsv \
-	--v
+	inchi2Mol
 #
 cat data/aact_drugs_inchi2chembl.tsv \
-	|awk -F '\t' '{print $1}' \
-	|sed -e '1d' \
-	|sort -u \
+	|awk -F '\t' '{print $13}' \
+	|sed -e '1d' |sort -u \
 	>data/aact_drugs_inchi2chembl.chemblid
 #
 ###
-#
+#This takes several hours.
 ${cwd}/python/chembl_fetchbyid.py -v \
 	--i data/aact_drugs_inchi2chembl.chemblid \
 	--o data/aact_drugs_chembl_activity_pchembl.tsv \
 	cid2Activity
 #
-${cwd}/python/csv_utils.py \
-	--i data/aact_drugs_chembl_activity_pchembl.tsv --tsv \
-	--coltag "target_chembl_id" \
-	--extractcol \
-	|sort -u \
+#Extract "target_chembl_id"
+cat data/aact_drugs_chembl_activity_pchembl.tsv \
+	|awk -F '\t' '{print $20}' \
+	|sed -e '1d' |sort -u \
 	>data/aact_drugs_chembl_target.chemblid
 #
 ${cwd}/python/chembl_fetchbyid.py -v \
@@ -66,12 +62,10 @@ ${cwd}/python/chembl_fetchbyid.py -v \
 	tid2Targetcomponents
 #
 ###
-#
-${cwd}/python/csv_utils.py \
-	--i data/aact_drugs_chembl_activity_pchembl.tsv --tsv \
-	--coltag "document_chembl_id" \
-	--extractcol \
-	|sort -u \
+# Extract "document_chembl_id"
+cat data/aact_drugs_chembl_activity_pchembl.tsv \
+	|awk -F '\t' '{print $4}' \
+	|sed -e '1d' |sort -u \
 	>data/aact_drugs_chembl_document.chemblid
 #
 ${cwd}/python/chembl_fetchbyid.py -v \

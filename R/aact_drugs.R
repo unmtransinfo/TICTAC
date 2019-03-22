@@ -20,6 +20,7 @@
 ### nct_id is the study ID. 
 #############################################################################
 library(readr)
+library(data.table)
 library(dplyr, quietly = T)
 library(plotly, quietly = T)
 
@@ -76,6 +77,7 @@ p1 <- plot_ly() %>%
   add_trace(type="bar", data=count(drugs, begin_year), x = ~begin_year, y = ~n) %>%
   layout(title=paste0(prefix, ": Drug trials per begin-year"), xaxis=list(range=c(1990, 2019)))
 p1
+#plotly::orca(p1, file = "data/aact_drugs_by-year.png", format="png")
 ##
 p2 <- plot_ly() %>%
   add_pie(data=count(drugs, phase), labels=~phase, values=~n, sort=F,
@@ -146,15 +148,17 @@ writeLines(sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt)))
 ###
 #IDG/TCRD:
 tcrd_tgt <- read_delim("~/src/TCRD_tools/data/pharos_targets.tsv", "\t")
-
+#
 tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="accession")
 writeLines(sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
 	nrow(tgt[!is.na(tgt$idgTDL),])))
+setDT(tgt)
 
-writeLines("===Targets by organism:")
-tbl <- (table(tgt$organism))
-writeLines(sprintf("%18s: %6d", names(tbl), tbl))
+writeLines(sprintf("Organisms: %d", length(unique(tgt$organism))))
+writeLines("===Targets by organism (top 10):")
+org_counts <- tgt[, .(.N), by = "organism"][order(-N)][1:10, ]
+writeLines(sprintf("%28s: %6d", org_counts$organism, org_counts$N))
 
 writeLines("===Targets, TDL for human:")
-print(table(tgt$idgTDL[tgt$organism=="Homo sapiens"], useNA="ifany"))
-
+tdl_counts <- tgt[organism == "Homo sapiens", .(.N), by = "idgTDL"]
+writeLines(sprintf("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N))

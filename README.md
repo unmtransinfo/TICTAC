@@ -1,7 +1,7 @@
-# Clinicaltrials.gov analytics
+# Clinicaltrials.gov mining for drug target hypotheses
 
 Mining ClinicalTrials.gov for target hypotheses, with strong
-cheminformatics and medical terms text mining, from NextMove Software.
+cheminformatics and medical terms text mining, powered by NextMove Software.
 
 ---
 
@@ -49,14 +49,18 @@ ___Drugs___ may be experimental candidates.
 ### Overall workflow:
 * `Go_ct_GetData.sh` - Fetch selected data from AACT db.
 * `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
-* `Go_BuildDicts.sh` - Build NextMove LeadMine dicts for MeSH etc. NER.
-* `Go_NER.sh` - LeadMine NER.
-* `Go_NER_pubmed.sh` - LeadMine NER, selected referenced PMIDs.
+* `Go_BuildDicts_MeSH.sh` - Build NextMove LeadMine dicts for MeSH.
+* `Go_ct_NER_chem.sh` - LeadMine NER.
+* `Go_ct_NER_disease.sh` - LeadMine NER.
+* `Go_pubmed_NER_chem.sh` - LeadMine NER, selected referenced PMIDs.
 * `leadmine_utils.sh` - Runs LeadMine API custom app on TSVs.
-* Results analyzed for associations via R codes.
+* `aact_drugs.R` - Results described and analyzed.
 
 Dependencies:
-* [nextmove-tools](https://github.com/unmtransinfo/nextmove-tools)
+* [PubChem REST API](http://pubchem.ncbi.nlm.nih.gov/rest/pug/)
+* [ChEMBL REST API](https://www.ebi.ac.uk/chembl/ws)
+* [ChEMBL webresource client](https://github.com/chembl/chembl_webresource_client) \(Python client library\).
+* [nextmove-tools](https://github.com/unmtransinfo/nextmove-tools) \(local Java library\)
 
 ### Association semantics:
 * **keywords**, **conditions**, **studies** and **summaries**: reported terms and free text which may be text mined for intended associations.

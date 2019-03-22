@@ -46,7 +46,6 @@ import xml.dom.minidom #replace with ETree
 #
 import rest_utils
 import time_utils
-import csv_utils
 #
 OFMTS={
 	'XML':'application/xml',
@@ -514,7 +513,7 @@ for each AID, then iterate through SIDs and use local hash.
       for j,tag in enumerate(tags):
         if tag == 'SID': j_sid = j
         if tag == 'Bioactivity Outcome': j_res = j
-      fout.write(','.join([csv_utils.ToStringForCSV(tag) for tag in tags])+'\n')
+      fout.write(','.join(tags)+'\n')
 
     rows = rval["Table"]["Row"]
 
@@ -524,7 +523,6 @@ for each AID, then iterate through SIDs and use local hash.
         print >>sys.stderr, 'Error: n_cells != n_tags (%d != %d)'%(len(cells), len(tags))
         continue
 
-      #fout.write(','.join([csv_utils.ToStringForCSV(cell) for cell in cells])+'\n')
       sid = cells[j_sid]
       res = cells[j_res]
       adata[sid] = res
