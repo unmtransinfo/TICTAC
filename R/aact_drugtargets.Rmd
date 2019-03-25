@@ -1,0 +1,283 @@
+---
+title: "Mining ClinicalTrials.gov for Target Hypotheses: AACT Drug-Targets Analysis"
+author: "Jeremy Yang"
+output: 
+  html_document: 
+    number_sections: yes
+    toc: yes
+---
+
+# Introduction
+
+* CTTI = Clinical Trials Transformation Initiative
+* AACT = Aggregate Analysis of ClinicalTrials.gov
+* According to website (March 2019), data is refreshed monthly.
+* https://aact.ctti-clinicaltrials.org/
+* https://github.com/ctti-clinicaltrials/aact
+
+## Input files:
+
+* (AACT) `aact_studies.tsv`
+* (AACT) `aact_drugs.tsv`
+* (LeadMine) `aact_drugs_leadmine.tsv`
+* (PubChem) `aact_drugs_smi_pubchem_cid.tsv`
+* (PubChem) `aact_drugs_smi_pubchem_cid2inchi.tsv`
+* (ChEMBL) `aact_drugs_inchi2chembl.tsv`
+* (ChEMBL) `aact_drugs_chembl_activity_pchembl.tsv`
+* (ChEMBL) `aact_drugs_chembl_target_component.tsv`
+* (TCRD/Pharos) `pharos_targets.tsv`
+
+> `nct_id` is the study ID.
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE)
+base::date()
+```
+
+```{r setup, echo=TRUE, message=FALSE}
+library(readr)
+library(data.table)
+library(plotly, quietly=T)
+```
+
+# Studies
+Read file of all studies in AACT.
+
+```{r studies_input, message=FALSE}
+studies <- read_delim("data/aact_studies.tsv", "\t")
+setDT(studies)
+n_studies_total <- nrow(studies)
+sprintf("Total studies: %d ; unique NCT_IDs: %d", n_studies_total, length(unique(studies$nct_id)))
+```
+
+# Interventional studies only
+Select only ___Interventional___ `study_type`.
+
+```{r studies_describe}
+studies <- studies[study_type=="Interventional"]
+sprintf("Interventional studies: %d (%.1f%%)", nrow(studies), 100*nrow(studies)/n_studies_total)
+studies$phase[studies$phase == "N/A"] <- NA
+knitr::kable(studies[, .(.N), by="phase"][order(phase)], caption="All interventional studies, by phase")
+```
+
+# Drugs 
+Read file of all drugs in AACT.
+* `id` is AACT ID.
+* Note that one study may involve multiple drugs.
+
+```{r drugs_input, message=FALSE}
+drugs <- read_delim("data/aact_drugs.tsv", "\t", col_types = "dcc")
+setDT(drugs)
+drugs <- drugs[order(drugs$name)]
+sprintf("Unique drug names: %d ; unique intervention IDs: %d", length(unique(drugs$name)), length(unique(drugs$id)))
+```
+
+## Studies: drug trials only
+Select only studies involving drugs.
+
+```{r drugtrials}
+studies <- studies[nct_id %in% drugs$nct_id]
+sprintf("Drug trials: %d ; unique NCT_IDs: %d", nrow(studies), length(unique(studies$nct_id)))
+```
+Merge study metadata with drugs.
+```{r drugs_merge}
+drugs <- merge(drugs, studies, by="nct_id", all.x=T, all.y=F)
+knitr::kable(drugs[, .(.N), by="phase"][order(phase)], caption="All drugs, by study phase")
+```
+
+## Drugs by study start_year
+
+```{r drugs_by_year, message=FALSE}
+ax0 <- list(showline=F, zeroline=F, showticklabels=F, showgrid=F)
+drugs[["start_year"]] <- as.integer(format(drugs$start_date, "%Y"))
+p1 <- plot_ly() %>%
+	add_trace(type="bar", data=drugs[, .(.N), by="start_year"], x = ~start_year, y = ~N) %>%
+	layout(title="AACT: Drugs per study start_year", xaxis=list(range=c(1990, 2020)),
+	       margin=list(t=120), font=list(family="Arial", size=20))
+p1
+# knitr::kable(drugs[, .(.N), by="start_year"][order(start_year)], caption="All drugs, by start_year")
+```
+
+## Drug-trials by Phase and Status
+
+```{r studies_by_classification}
+knitr::kable(drugs[, .(.N), by="phase"][order(phase)], caption="All drugs, by phase")
+p2 <- plot_ly() %>%
+  add_pie(data=drugs[, .(.N), by="phase"], labels=~phase, values=~N, sort=F,
+          textinfo="label+percent", textposition="inside", domain=list(x=c(0, 0.5), y=c(0, 1))) %>%
+  add_pie(data = drugs[, .(.N), by="overall_status"], labels=~overall_status, values=~N,
+          textinfo = "label+percent", textposition="inside", domain=list(x = c(0.5, 1), y = c(0, 1))) %>%
+  add_annotations(x = c(0.25, 0.75), y = c(-.1, -.1),
+                  xanchor = "center", xref = "paper", yref = "paper", showarrow = F,
+                  text = c("Phase", "Overall status"),
+                  font = list(family = "Arial", size = 20)) %>%
+  layout(title=paste0("AACT: Drug trials by Phase and Status<br>(N_total = ", nrow(drugs), ")"),
+         xaxis=ax0, yaxis=ax0, margin=list(t=120), font=list(family="Arial", size=20), showlegend=F)
+p2
+```
+
+# NextMove Leadmine NER
+AACT drug names resolved to standard names and structures via SMILES.
+
+```{r drugs_leadmine_input, message=FALSE}
+drugs_leadmine <- read_delim("data/aact_drugs_leadmine.tsv",  "\t", escape_double=F, trim_ws=T)
+setDT(drugs_leadmine)
+setnames(drugs_leadmine, old=c("DocName","ResolvedForm"), new=c("id","smiles"))
+```
+```{r drugs_leadmine}
+drugs <- merge(drugs, drugs_leadmine, by="id")
+drugs[["resolved_structure"]] <- !is.na(drugs$smiles)
+sprintf("Drugs with resolved structure: %d / %d (%.1f%%)", sum(drugs$resolved_structure), nrow(drugs), 100*sum(drugs$resolved_structure)/nrow(drugs))
+knitr::kable(drugs[, .(.N), by="overall_status"][order(-N)], caption="All drugs, by overall_status")
+```
+
+## NER mentions by intervention ID.
+
+```{r ner_by_itvid}
+ner <- drugs_leadmine[!is.na(smiles), .(.N), by="id"]
+sprintf("Mentions by intervention ID: %d / %d (%.1f%%)", nrow(ner), length(unique(drugs$id)), 100*nrow(ner)/length(unique(drugs$id)))
+```
+
+## NER mentions by trial (NCT ID).
+
+```{r ner_by_trial}
+drugs_leadmine <- merge(drugs_leadmine, drugs[,c("id", "nct_id")], by="id")
+ner <- drugs_leadmine[!is.na(smiles), .(.N), by="nct_id"]
+sprintf("Mentions by study: %d / %d (%.1f%%)", nrow(ner), length(unique(drugs$nct_id)), 100*nrow(ner)/length(unique(drugs$nct_id)))
+```
+
+## NER mentions by drug, i.e. name in AACT.
+
+```{r ner_by_drug}
+ner <- drugs_leadmine[!is.na(smiles), .(.N), by="OriginalText"]
+sprintf("Mentions by drug name: %d / %d (%.1f%%)", nrow(ner), length(unique(drugs$name)), 100*nrow(ner)/length(unique(drugs$name)))
+```
+
+# PUBCHEM:
+## Intervention IDs to CIDs from PubChem (via SMILES)
+
+```{r pubchem_compounds_input, message=FALSE}
+drug2cid <- read_delim("data/aact_drugs_smi_pubchem_cid.tsv", "\t", col_names=c("smiles","cid","names"))
+setDT(drug2cid)
+sprintf("PubChem SMILES2CID hits: %d / %d (%.1f%%)", sum(!is.na(drug2cid$cid)), nrow(drug2cid),
+        100*sum(!is.na(drug2cid$cid))/nrow(drug2cid))
+```
+```{r pubchem_compounds}
+drug2cid <- drug2cid[!is.na(cid)]
+drug2cid <- drug2cid[cid!=0]
+drug2cid <- merge(drug2cid, unique(drugs[,c("smiles","id")]), all.x=F, all.y=F, by="smiles")
+setnames(drug2cid, old="id", new="itv_id")
+drug2cid$smiles <- NULL
+drug2cid$names <- NULL
+drug2cid <- unique(drug2cid)
+sprintf("Intervention IDs mapped to PubChem CIDs (via SMILES): %d", nrow(drug2cid))
+write_delim(drug2cid, "data/aact_drugs_itvid2cid.tsv", delim="\t")
+```
+
+## InChIKeys from PubChem (via CIDs)
+
+```{r pubchem_cid2inchi_input, message=FALSE}
+pubchem <- read_delim("data/aact_drugs_smi_pubchem_cid2inchi.tsv", "\t")
+sprintf("PubChem CIDs with InChIKeys: %d", nrow(pubchem))
+```
+
+# CHEMBL:
+## ChEMBL molecule IDs, and properties (via InChIKeys)
+
+```{r chembl_mols}
+chembl_mol <- read_delim("data/aact_drugs_inchi2chembl.tsv", "\t", 
+                         col_types=cols_only(molecule_chembl_id = col_character(), molecule_type = col_character(), structure_type = col_character(), pref_name=col_character(), max_phase=col_character(), therapeutic_flag=col_logical()))
+sprintf("ChEMBL compounds mapped via InChIKeys: %d", nrow(chembl_mol))
+```
+
+## ChEMBL activities for mapped compounds
+Select only activities with pChembl values for confidence.
+
+```{r chembl_acts, message=FALSE}
+chembl_act <- read_delim("data/aact_drugs_chembl_activity_pchembl.tsv", "\t", col_types=cols_only(  activity_id = col_double(),
+  assay_chembl_id = col_character(),
+  assay_type = col_character(),
+  document_chembl_id = col_character(),
+  document_year = col_integer(),
+  molecule_chembl_id = col_character(),
+  molecule_pref_name = col_character(),
+  parent_molecule_chembl_id = col_character(),
+  pchembl_value = col_double(),
+  published_type = col_character(),
+  published_units = col_character(),
+  published_value = col_double(),
+  qudt_units = col_character(),
+  relation = col_character(),
+  src_id = col_double(),
+  standard_relation = col_character(),
+  standard_type = col_character(),
+  standard_units = col_character(),
+  standard_value = col_double(),
+  target_chembl_id = col_character(),
+  target_organism = col_character(),
+  target_pref_name = col_character(),
+  target_tax_id = col_integer(),
+  text_value = col_logical(),
+  type = col_character(),
+  units = col_character(),
+  uo_units = col_character(),
+  value = col_double()))
+sprintf("ChEMBL activities: %d", nrow(chembl_act))
+sprintf("ChEMBL activities molecules: %d ; targets: %d ; documents: %d", length(unique(chembl_act$molecule_chembl_id)), length(unique(chembl_act$target_chembl_id)), length(unique(chembl_act$document_chembl_id)))
+plot_ly(x=chembl_act$pchembl_value, type="histogram") %>%
+  layout(title=paste0("AACT: ChEMBL Activities, pChembl values<br>(N_total = ", nrow(chembl_act), ")<br>pChembl = -log<sub>10</sub>({IC50|EC50|LC50})"), xaxis=list(title="pChembl"), yaxis=list(title="N"),
+         margin=list(t=120), font=list(family="Arial", size=20), showlegend=F)
+
+```
+
+## ChEMBL targets (via activities)
+
+```{r chembl_tgts}
+chembl_tgt <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
+sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt))
+```
+
+# IDG/TCRD:
+
+```{r idg_input, message=FALSE}
+tcrd_tgt <- read_delim("~/src/TCRD_tools/data/pharos_targets.tsv", "\t")
+tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="accession")
+sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
+	nrow(tgt[!is.na(tgt$idgTDL),]))
+setDT(tgt)
+```
+
+## Targets by organism (top 10):
+
+```{r tgt_organisms}
+sprintf("Organisms: %d", length(unique(tgt$organism)))
+org_counts <- tgt[, .(N_targets = .N), by = "organism"][order(-N_targets)]
+knitr::kable(org_counts[1:10], caption="Targets by organism (top 10)")
+```
+
+## Human single-protein targets only.
+
+```{r}
+tgt <- tgt[organism=="Homo sapiens"]
+sprintf("Human targets: %d", nrow(tgt))
+knitr::kable(tgt[, .(.N), by="target_type"][order(-N)])
+tgt <- tgt[target_type=="SINGLE PROTEIN"]
+sprintf("Human single-protein targets: %d ; unique UniProts: %d", nrow(tgt), length(unique(tgt$accession)))
+
+```
+
+## Targets by IDG Target Development Level (TDL):
+
+```{r tgt_by_tdl}
+tdls <- c("Tdark", "Tbio", "Tchem", "Tclin")
+tdl_counts <- tgt[, .(.N), by = "idgTDL"]
+tdl_counts$tdl_color <- ifelse(tdl_counts$idgTDL=="Tdark", "gray", ifelse(tdl_counts$idgTDL=="Tbio", "red", ifelse(tdl_counts$idgTDL=="Tchem", "green", ifelse(tdl_counts$idgTDL=="Tclin", "blue", NA))))
+tdl_counts$idgTDL <- factor(tdl_counts$idgTDL, levels=tdls)
+sprintf("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N)
+p3 <- plot_ly() %>%
+	add_trace(type="bar", data=tdl_counts, x=~idgTDL, y=~N, marker=list(color=~tdl_color),
+	          text=~N, textposition="auto") %>%
+	layout(title="Targets by IDG Target Development Level (TDL)", 
+	       margin=list(t=120), font=list(family="Arial", size=20))
+p3
+```
