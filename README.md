@@ -54,7 +54,7 @@ ___Drugs___ may be experimental candidates.
 * `Go_ct_NER_disease.sh` - LeadMine NER.
 * `Go_pubmed_NER_chem.sh` - LeadMine NER, selected referenced PMIDs.
 * `leadmine_utils.sh` - Runs LeadMine API custom app on TSVs.
-* `aact_drugs.R` - Results described and analyzed.
+* `aact_drugtargets.Rmd` - Results described and analyzed.
 
 Dependencies:
 * [PubChem REST API](http://pubchem.ncbi.nlm.nih.gov/rest/pug/)

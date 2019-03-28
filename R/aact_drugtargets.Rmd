@@ -1,8 +1,8 @@
 ---
-title: "Mining ClinicalTrials.gov for Target Hypotheses: AACT Drug-Targets Analysis"
+title: 'Mining ClinicalTrials.gov for Target Hypotheses: AACT Drug-Targets Analysis'
 author: "Jeremy Yang"
-output: 
-  html_document: 
+output:
+  html_document:
     number_sections: yes
     toc: yes
 ---
@@ -40,30 +40,24 @@ library(data.table)
 library(plotly, quietly=T)
 ```
 
-# Studies
+# Input studies and drugs
+## Studies
 Read file of all studies in AACT.
 
 ```{r studies_input, message=FALSE}
 studies <- read_delim("data/aact_studies.tsv", "\t")
 setDT(studies)
+studies[["start_year"]] <- as.integer(format(studies$start_date, "%Y"))
 n_studies_total <- nrow(studies)
 sprintf("Total studies: %d ; unique NCT_IDs: %d", n_studies_total, length(unique(studies$nct_id)))
 ```
 
-# Interventional studies only
-Select only ___Interventional___ `study_type`.
-
-```{r studies_describe}
-studies <- studies[study_type=="Interventional"]
-sprintf("Interventional studies: %d (%.1f%%)", nrow(studies), 100*nrow(studies)/n_studies_total)
-studies$phase[studies$phase == "N/A"] <- NA
-knitr::kable(studies[, .(.N), by="phase"][order(phase)], caption="All interventional studies, by phase")
-```
-
-# Drugs 
+## Drugs 
 Read file of all drugs in AACT.
+
 * `id` is AACT ID.
 * Note that one study may involve multiple drugs.
+* At this point a "drug" is identified by a name.
 
 ```{r drugs_input, message=FALSE}
 drugs <- read_delim("data/aact_drugs.tsv", "\t", col_types = "dcc")
@@ -72,36 +66,43 @@ drugs <- drugs[order(drugs$name)]
 sprintf("Unique drug names: %d ; unique intervention IDs: %d", length(unique(drugs$name)), length(unique(drugs$id)))
 ```
 
-## Studies: drug trials only
-Select only studies involving drugs.
+## Studies: Interventional drug studies only
+Select only ___Interventional___ studies (`study_type`) associated with drugs (via `nct_id`).
 
 ```{r drugtrials}
+studies <- studies[study_type=="Interventional"]
+n_studies_inter <- nrow(studies)
+sprintf("Interventional studies: %d (%.1f%%)", n_studies_inter, 100*n_studies_inter/n_studies_total)
+studies$phase[studies$phase == "N/A"] <- NA
 studies <- studies[nct_id %in% drugs$nct_id]
-sprintf("Drug trials: %d ; unique NCT_IDs: %d", nrow(studies), length(unique(studies$nct_id)))
+n_studies_inter_drug <- nrow(studies)
+sprintf("Interventional drug studies: %d ; unique NCT_IDs: %d", n_studies_inter_drug, length(unique(studies$nct_id)))
 ```
-Merge study metadata with drugs.
+
+
 ```{r drugs_merge}
 drugs <- merge(drugs, studies, by="nct_id", all.x=T, all.y=F)
-knitr::kable(drugs[, .(.N), by="phase"][order(phase)], caption="All drugs, by study phase")
+knitr::kable(
+  merge(studies[, .(N_studies = .N), by="phase"], drugs[, .(N_drugs = .N), by="phase"], by="phase")[order(phase)], caption="Drug studies and drugs, by phase")
+knitr::kable(drugs[, .(.N), by="overall_status"][order(-N)], caption="Drugs (itv_ids), by study overall_status")
 ```
 
-## Drugs by study start_year
 
-```{r drugs_by_year, message=FALSE}
-ax0 <- list(showline=F, zeroline=F, showticklabels=F, showgrid=F)
-drugs[["start_year"]] <- as.integer(format(drugs$start_date, "%Y"))
-p1 <- plot_ly() %>%
-	add_trace(type="bar", data=drugs[, .(.N), by="start_year"], x = ~start_year, y = ~N) %>%
-	layout(title="AACT: Drugs per study start_year", xaxis=list(range=c(1990, 2020)),
-	       margin=list(t=120), font=list(family="Arial", size=20))
+## Drugs by study start_year
+(To do: stack with study start_year.)
+```{r counts_by_year, message=FALSE}
+p1 <- plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], drugs[, .(N_drugs = .N), by="start_year"], by="start_year"), x = ~start_year, name="studies", y = ~N_studies) %>%
+	add_trace(name="drugs", y = ~N_drugs) %>%
+	layout(title="AACT: Studies and drugs vs. start_year", xaxis=list(range=c(1990, 2020), tickangle=-45), yaxis=list(title="N"),
+	       barmode="stack",
+	       margin=list(t=120), font=list(family="Monospace", size=20))
 p1
-# knitr::kable(drugs[, .(.N), by="start_year"][order(start_year)], caption="All drugs, by start_year")
 ```
 
 ## Drug-trials by Phase and Status
 
 ```{r studies_by_classification}
-knitr::kable(drugs[, .(.N), by="phase"][order(phase)], caption="All drugs, by phase")
+ax0 <- list(showline=F,zeroline=F,showticklabels=F,showgrid=F)
 p2 <- plot_ly() %>%
   add_pie(data=drugs[, .(.N), by="phase"], labels=~phase, values=~N, sort=F,
           textinfo="label+percent", textposition="inside", domain=list(x=c(0, 0.5), y=c(0, 1))) %>%
@@ -118,17 +119,19 @@ p2
 
 # NextMove Leadmine NER
 AACT drug names resolved to standard names and structures via SMILES.
+Now we can use cheminformatically rigorous counts for drugs as active pharmaceutical ingredients (APIs).
 
 ```{r drugs_leadmine_input, message=FALSE}
 drugs_leadmine <- read_delim("data/aact_drugs_leadmine.tsv",  "\t", escape_double=F, trim_ws=T)
 setDT(drugs_leadmine)
 setnames(drugs_leadmine, old=c("DocName","ResolvedForm"), new=c("id","smiles"))
+sprintf("Drug unique SMILES resolved by LeadMine: %d ; unique intervention IDs: %d", length(unique(drugs_leadmine$smiles)), length(unique(drugs_leadmine$id)))
 ```
+
 ```{r drugs_leadmine}
 drugs <- merge(drugs, drugs_leadmine, by="id")
 drugs[["resolved_structure"]] <- !is.na(drugs$smiles)
-sprintf("Drugs with resolved structure: %d / %d (%.1f%%)", sum(drugs$resolved_structure), nrow(drugs), 100*sum(drugs$resolved_structure)/nrow(drugs))
-knitr::kable(drugs[, .(.N), by="overall_status"][order(-N)], caption="All drugs, by overall_status")
+sprintf("Drugs (drug names) with resolved structure: %d / %d (%.1f%%)", sum(drugs$resolved_structure), nrow(drugs), 100*sum(drugs$resolved_structure)/nrow(drugs))
 ```
 
 ## NER mentions by intervention ID.
