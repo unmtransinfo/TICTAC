@@ -14,11 +14,15 @@ output:
 * According to website (March 2019), data is refreshed monthly.
 * https://aact.ctti-clinicaltrials.org/
 * https://github.com/ctti-clinicaltrials/aact
+* https:/www.nextmovesoftware.com
+* https://bitbucket.org/larsjuhljensen/tagger
+* http://download.jensenlab.org/
 
 ## Input files:
 
 * (AACT) `aact_studies.tsv`
 * (AACT) `aact_drugs.tsv`
+* (AACT) `aact_descriptions.tsv`
 * (LeadMine) `aact_drugs_leadmine.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid2inchi.tsv`
@@ -26,6 +30,8 @@ output:
 * (ChEMBL) `aact_drugs_chembl_activity_pchembl.tsv`
 * (ChEMBL) `aact_drugs_chembl_target_component.tsv`
 * (TCRD/Pharos) `pharos_targets.tsv`
+* (JensenLabTagger) `aact_descriptions_tagger_matches.tsv`
+* (JensenLabDictionary) `diseases_entities.tsv`
 
 > `nct_id` is the study ID.
 
@@ -284,3 +290,34 @@ p3 <- plot_ly() %>%
 	       margin=list(t=120), font=list(family="Arial", size=20))
 p3
 ```
+
+# Diseases NER with JensenLab Tagger 
+(id) is AACT primary key for detailed_descriptions table.
+Disease entities from JensenLab DOID dictionary, where `serialno` corresponds with DOID.
+
+```{r message=FALSE, echo=FALSE}
+dner <- read_delim("data/aact_descriptions_tagger_matches.tsv", "\t", 
+                   col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
+dent <- read_delim("/home/data/jensenlab/data/diseases_entities.tsv", "\t", col_names=c("serialnm", "doid"), col_types="c-c")
+setDT(dner)
+setDT(dent)
+dner <- merge(dner, dent, by="serialnm", all.x=T, all.y=F)
+descs <- read_delim("data/aact_descriptions.tsv", "\t", skip=1, col_names=c("id","nct_id"), col_types="cc-", escape_double=F, trim_ws=T)
+dner <- merge(dner, descs, by="id", all.x=T, all.y=F)
+dner$id <- NULL
+dner$serialnm <- NULL
+dner <- dner[grepl("^DOID:", doid)] #Why not? "AmyCo:8" etc.? TBE.
+#
+dner_totals <- dner[, .(N_mentions = .N), by=c("doid", "term")]
+dner_totals <- dner_totals[order(as.integer(sub("DOID:", "", doid)), term)]
+dner_totals <- dner_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse=";")), by=c("doid")]
+dner_totals <- dner_totals[order(-N_mentions)]
+knitr::kable(dner_totals[1:20], caption="Top 20 diseases by total mentions")
+#
+dner <- dner[, .(N_mentions = .N), by=c("nct_id", "doid", "term")]
+dner <- dner[order(nct_id, as.integer(sub("DOID:", "", doid)), term)]
+dner <- dner[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse=";")), by=c("nct_id", "doid")]
+#
+
+```
+

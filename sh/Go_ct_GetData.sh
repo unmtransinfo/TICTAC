@@ -80,12 +80,16 @@ psql $ARGS -c "COPY (SELECT id, nct_id, reference_type, pmid, citation FROM stud
 ###
 ARGS="-Atq -h $DBHOST -d $DBNAME"
 #Brief Summaries:
+#(table: brief_summaries)
+#id = "AACT assigned primary key"
 SUMMARYFILE=$DATADIR/aact_summaries.tsv
 printf "id\tnct_id\tdescription\n" >$SUMMARYFILE
 psql -F $'\t' $ARGS -f sql/summary_list.sql >>$SUMMARYFILE
 #
 ###
 #Descriptions:
+#(table: detailed_descriptions)
+#id = "AACT assigned primary key"
 DESCRIPTIONFILE=$DATADIR/aact_descriptions.tsv
 printf "id\tnct_id\tdescription\n" >$DESCRIPTIONFILE
 psql -F $'\t' $ARGS -f sql/description_list.sql >>$DESCRIPTIONFILE
