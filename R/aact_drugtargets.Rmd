@@ -20,18 +20,18 @@ output:
 
 ## Input files:
 
-* (AACT) `aact_studies.tsv`
-* (AACT) `aact_drugs.tsv`
-* (AACT) `aact_descriptions.tsv`
-* (LeadMine) `aact_drugs_leadmine.tsv`
+* (CTTI AACT) `aact_studies.tsv`
+* (CTTI AACT) `aact_drugs.tsv`
+* (CTTI AACT) `aact_descriptions.tsv`
+* (NextMove LeadMine) `aact_drugs_leadmine.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid2inchi.tsv`
 * (ChEMBL) `aact_drugs_inchi2chembl.tsv`
 * (ChEMBL) `aact_drugs_chembl_activity_pchembl.tsv`
 * (ChEMBL) `aact_drugs_chembl_target_component.tsv`
-* (TCRD/Pharos) `pharos_targets.tsv`
-* (JensenLabTagger) `aact_descriptions_tagger_matches.tsv`
-* (JensenLabDictionary) `diseases_entities.tsv`
+* (IDG TCRD/Pharos) `pharos_targets.tsv`
+* (JensenLab Tagger) `aact_descriptions_tagger_matches.tsv`
+* (JensenLab Dictionary) `diseases_entities.tsv`
 
 > `nct_id` is the study ID.
 
@@ -58,6 +58,21 @@ n_studies_total <- nrow(studies)
 sprintf("Total studies: %d ; unique NCT_IDs: %d", n_studies_total, length(unique(studies$nct_id)))
 ```
 
+### Study references
+Reference type `results_reference` may offer greater evidence, confidence.
+
+```{r}
+refs <- read_delim("data/aact_study_refs.tsv", "\t", col_types="ccccc")
+setDT(refs)
+refs$id <- NULL
+sprintf("references: %d; NCT_IDs: %d; PMIDs: %d; results_references: %d", nrow(refs), 
+        length(unique(refs$nct_id)),
+        length(unique(refs$pmid)),
+        nrow(refs[reference_type=="results_reference"]))
+refs <- refs[, .(N_refs = .N, N_results_refs = sum(reference_type=="results_reference"), pmids=paste0(pmid, collapse="; "), citations=paste0(citation, collapse="\t")), by="nct_id"]
+```
+
+
 ## Drugs 
 Read file of all drugs in AACT.
 
@@ -65,7 +80,7 @@ Read file of all drugs in AACT.
 * Note that one study may involve multiple drugs.
 * At this point a "drug" is identified by a name.
 
-```{r drugs_input, message=FALSE}
+```{r message=FALSE}
 drugs <- read_delim("data/aact_drugs.tsv", "\t", col_types = "dcc")
 setDT(drugs)
 drugs <- drugs[order(drugs$name)]
@@ -75,7 +90,7 @@ sprintf("Unique drug names: %d ; unique intervention IDs: %d", length(unique(dru
 ## Studies: Interventional drug studies only
 Select only ___Interventional___ studies (`study_type`) associated with drugs (via `nct_id`).
 
-```{r drugtrials}
+```{r}
 studies <- studies[study_type=="Interventional"]
 n_studies_inter <- nrow(studies)
 sprintf("Interventional studies: %d (%.1f%%)", n_studies_inter, 100*n_studies_inter/n_studies_total)
@@ -86,7 +101,7 @@ sprintf("Interventional drug studies: %d ; unique NCT_IDs: %d", n_studies_inter_
 ```
 
 
-```{r drugs_merge}
+```{r}
 drugs <- merge(drugs, studies, by="nct_id", all.x=T, all.y=F)
 knitr::kable(
   merge(studies[, .(N_studies = .N), by="phase"], drugs[, .(N_drugs = .N), by="phase"], by="phase")[order(phase)], caption="Drug studies and drugs, by phase")
@@ -123,43 +138,57 @@ p2 <- plot_ly() %>%
 p2
 ```
 
-# NextMove Leadmine NER
+# NextMove Leadmine Chemical NER
 AACT drug names resolved to standard names and structures via SMILES.
+Note that one name may include multiple chemicals.
 Now we can use cheminformatically rigorous counts for drugs as active pharmaceutical ingredients (APIs).
 
-```{r drugs_leadmine_input, message=FALSE}
-drugs_leadmine <- read_delim("data/aact_drugs_leadmine.tsv",  "\t", escape_double=F, trim_ws=T)
-setDT(drugs_leadmine)
-setnames(drugs_leadmine, old=c("DocName","ResolvedForm"), new=c("id","smiles"))
-sprintf("Drug unique SMILES resolved by LeadMine: %d ; unique intervention IDs: %d", length(unique(drugs_leadmine$smiles)), length(unique(drugs_leadmine$id)))
+```{r message=FALSE}
+cner <- read_delim("data/aact_drugs_leadmine.tsv",  "\t", escape_double=F, trim_ws=T)
+setDT(cner)
+setnames(cner, old=c("DocName","ResolvedForm"), new=c("id","smiles"))
+sprintf("Drug unique SMILES resolved by LeadMine: %d ; unique intervention IDs: %d", length(unique(cner$smiles)), length(unique(cner$id)))
+```
+## Chemical NER mentions
+### Disambiguated totals by resolved structure (SMILES)
+
+```{r}
+cner_totals <- cner[!is.na(smiles), .(N_mentions = .N), by=c("smiles", "OriginalText")]
+cner_totals <- cner_totals[order(smiles, OriginalText)]
+cner_totals <- cner_totals[, .(N_mentions = sum(N_mentions), names=paste0(OriginalText, collapse="; ")), by=c("smiles")]
+cner_totals <- cner_totals[order(-N_mentions)]
+cner_totals[["smi2img"]] <- sprintf("<img src=\"http://localhost:8080/cdkdepict/depict/cow/svg?smi=%s&zoom=2.2\">", sapply(cner_totals$smiles, URLencode, reserved=T))
+knitr::kable(cner_totals[1:20, .(smi2img, N_mentions, names)], caption="Top 20 drugs by total mentions")
 ```
 
-```{r drugs_leadmine}
-drugs <- merge(drugs, drugs_leadmine, by="id")
+### Chemical NER mentions resolved to structures (SMILES)
+
+```{r}
+drugs <- merge(drugs, cner, by="id")
 drugs[["resolved_structure"]] <- !is.na(drugs$smiles)
 sprintf("Drugs (drug names) with resolved structure: %d / %d (%.1f%%)", sum(drugs$resolved_structure), nrow(drugs), 100*sum(drugs$resolved_structure)/nrow(drugs))
 ```
 
-## NER mentions by intervention ID.
+### Chemical NER mentions by intervention ID.
 
 ```{r ner_by_itvid}
-ner <- drugs_leadmine[!is.na(smiles), .(.N), by="id"]
-sprintf("Mentions by intervention ID: %d / %d (%.1f%%)", nrow(ner), length(unique(drugs$id)), 100*nrow(ner)/length(unique(drugs$id)))
+cner_this <- cner[!is.na(smiles), .(.N), by="id"]
+sprintf("Mentions by intervention ID: %d / %d (%.1f%%)", nrow(cner_this), length(unique(drugs$id)), 100*nrow(cner_this)/length(unique(drugs$id)))
 ```
 
-## NER mentions by trial (NCT ID).
+### Chemical NER mentions by trial (NCT ID).
 
 ```{r ner_by_trial}
-drugs_leadmine <- merge(drugs_leadmine, drugs[,c("id", "nct_id")], by="id")
-ner <- drugs_leadmine[!is.na(smiles), .(.N), by="nct_id"]
-sprintf("Mentions by study: %d / %d (%.1f%%)", nrow(ner), length(unique(drugs$nct_id)), 100*nrow(ner)/length(unique(drugs$nct_id)))
+cner <- merge(cner, drugs[,c("id", "nct_id")], by="id")
+cner_this <- cner[!is.na(smiles), .(.N), by="nct_id"]
+sprintf("Mentions by study: %d / %d (%.1f%%)", nrow(cner_this), length(unique(drugs$nct_id)), 100*nrow(cner_this)/length(unique(drugs$nct_id)))
 ```
 
-## NER mentions by drug, i.e. name in AACT.
+### Chemical NER mentions by drug, i.e. name in AACT.
 
 ```{r ner_by_drug}
-ner <- drugs_leadmine[!is.na(smiles), .(.N), by="OriginalText"]
-sprintf("Mentions by drug name: %d / %d (%.1f%%)", nrow(ner), length(unique(drugs$name)), 100*nrow(ner)/length(unique(drugs$name)))
+cner_this <- cner[!is.na(smiles), .(.N), by="OriginalText"]
+sprintf("Mentions by drug name: %d / %d (%.1f%%)", nrow(cner_this), length(unique(drugs$name)), 100*nrow(cner_this)/length(unique(drugs$name)))
 ```
 
 # PUBCHEM:
@@ -233,15 +262,15 @@ chembl_act <- read_delim("data/aact_drugs_chembl_activity_pchembl.tsv", "\t", co
   value = col_double()))
 sprintf("ChEMBL activities: %d", nrow(chembl_act))
 sprintf("ChEMBL activities molecules: %d ; targets: %d ; documents: %d", length(unique(chembl_act$molecule_chembl_id)), length(unique(chembl_act$target_chembl_id)), length(unique(chembl_act$document_chembl_id)))
-plot_ly(x=chembl_act$pchembl_value, type="histogram") %>%
-  layout(title=paste0("AACT: ChEMBL Activities, pChembl values<br>(N_total = ", nrow(chembl_act), ")<br>pChembl = -log<sub>10</sub>({IC50|EC50|LC50})"), xaxis=list(title="pChembl"), yaxis=list(title="N"),
-         margin=list(t=120), font=list(family="Arial", size=20), showlegend=F)
+plot_ly(x=chembl_act$pchembl_value, type="histogram", nbinsx=20) %>%
+  layout(title=paste0("AACT: ChEMBL Activities, pChembl values<br>(N_total = ", nrow(chembl_act), ")<br>pChembl = -log<sub>10</sub>({I|E|L}C50})"), xaxis=list(title="pChembl"), yaxis=list(title="N"),
+         margin=list(t=140), font=list(family="Arial", size=20), showlegend=F)
 
 ```
 
 ## ChEMBL targets (via activities)
 
-```{r chembl_tgts}
+```{r message=FALSE}
 chembl_tgt <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
 sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt))
 ```
@@ -291,9 +320,12 @@ p3 <- plot_ly() %>%
 p3
 ```
 
-# Diseases NER with JensenLab Tagger 
-(id) is AACT primary key for detailed_descriptions table.
-Disease entities from JensenLab DOID dictionary, where `serialno` corresponds with DOID.
+# JensenLab Tagger Diseases NER
+With JensenLab DOID entities dictionary.
+On descriptions from detailed_descriptions table.
+
+* `serialno` corresponds with DOID.
+* `id` is AACT primary key.
 
 ```{r message=FALSE, echo=FALSE}
 dner <- read_delim("data/aact_descriptions_tagger_matches.tsv", "\t", 
@@ -307,17 +339,54 @@ dner <- merge(dner, descs, by="id", all.x=T, all.y=F)
 dner$id <- NULL
 dner$serialnm <- NULL
 dner <- dner[grepl("^DOID:", doid)] #Why not? "AmyCo:8" etc.? TBE.
-#
+```
+
+## Disambiguated total disease mentions by DOID.
+
+```{r}
 dner_totals <- dner[, .(N_mentions = .N), by=c("doid", "term")]
 dner_totals <- dner_totals[order(as.integer(sub("DOID:", "", doid)), term)]
-dner_totals <- dner_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse=";")), by=c("doid")]
+dner_totals <- dner_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse="; ")), by=c("doid")]
 dner_totals <- dner_totals[order(-N_mentions)]
 knitr::kable(dner_totals[1:20], caption="Top 20 diseases by total mentions")
-#
-dner <- dner[, .(N_mentions = .N), by=c("nct_id", "doid", "term")]
-dner <- dner[order(nct_id, as.integer(sub("DOID:", "", doid)), term)]
-dner <- dner[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse=";")), by=c("nct_id", "doid")]
-#
-
 ```
+
+## Disease mentions by study.
+Sort synonyms terms by frequency.
+
+```{r}
+dner <- dner[, .(N_mentions = .N), by=c("nct_id", "doid", "term")]
+dner <- dner[order(nct_id, -N_mentions, -as.integer(sub("DOID:", "", doid)))]
+dner <- dner[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collapse=";")), by=c("nct_id", "doid")]
+knitr::kable(dner[1:20], caption="Disease mentions by study")
+```
+
+## Aggregate by study (NCT_ID)
+
+```{r}
+links <- dner
+links$disease_term <- sub(";.*$", "", links$disease_terms)
+links <- links[, .(N_disease_mentions = paste0(N_mentions, collapse="; "), disease_terms=paste0(disease_term, collapse="; "), doids = paste0(doid, collapse="; ")), by=c("nct_id")]
+setkey(links, nct_id)
+```
+
+## Link to drugs
+Keep only studies including both disease and drug mentions.
+
+```{r}
+drug_links <- unique(drugs[!is.na(smiles), .(nct_id, name, EntityText, smiles)])
+drug_links <- drug_links[order(nct_id, smiles, EntityText, nchar(name))]
+drug_links <- drug_links[, .(N_chem_mentions=length(name), names = paste0(name, collapse="; "), EntityTexts = paste0(EntityText, collapse="; "), smiles = paste0(smiles, collapse="; ")), by="nct_id"]
+setkey(drug_links, nct_id)
+links <- links[drug_links]
+links <- links[!is.na(doids) & !is.na(smiles)]
+```
+
+## Link to targets
+
+
+## Link to references
+
+
+
 
