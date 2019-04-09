@@ -101,13 +101,15 @@ def DID2Documents(ifile, ofile, verbose):
         #print('DEBUG: document tags: %s'%(str(d.keys())), file=sys.stderr)
         #print('DEBUG: document: %s'%(str(d)), file=sys.stderr)
         d_vals=[(d[tag] if tag in d else '') for tag in d_tags]
+        if ndoc==0:
+          writer.writerow(d_tags)
         writer.writerow(d_vals)
         ndoc+=1
   print('Output documents: %d'%ndoc, file=sys.stderr)
 
 #############################################################################
-def Inchi2Molecule(ifile, ofile, verbose):
-  inchis = []
+def InchiKey2Molecule(ifile, ofile, verbose):
+  inkeys = []
   m_tags=[
 	'availability_type', 'biotherapeutic', 'black_box_warning', 'chebi_par_id', 
 	'chirality', 'dosed_ingredient', 'first_approval', 'first_in_class', 
@@ -120,20 +122,21 @@ def Inchi2Molecule(ifile, ofile, verbose):
   with open(ifile, 'r') as csvfile:
     reader = csv.reader(csvfile, delimiter='\t')
     for row in reader:
-      inchis.append(row[0])
-  print('Input inchis: %d'%len(inchis), file=sys.stderr)
+      inkeys.append(row[0])
+  print('Input inchikeys: %d'%len(inkeys), file=sys.stderr)
   n_mol=0;
   with open(ofile, 'w') as csvfile:
     writer = csv.writer(csvfile, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
-    for i in range(0, len(inchis), NCHUNK):
+    for i in range(0, len(inkeys), NCHUNK):
       mol = new_client.molecule
-      mols = mol.get(inchis[i:i+NCHUNK])
-      for m in mols:
+      mols = mol.get(inkeys[i:i+NCHUNK])
+      for ii,m in enumerate(mols):
+        inkey = inkeys[i+ii]
         #print('DEBUG: mol tags: %s'%(str(m.keys())), file=sys.stderr)
         #print('DEBUG: mol: %s'%(str(m)), file=sys.stderr)
-        m_vals=[(m[tag] if tag in m else '') for tag in m_tags]
+        m_vals=[inkey]+[(m[tag] if tag in m else '') for tag in m_tags]
         if n_mol==0:
-          writer.writerow(m_tags)
+          writer.writerow(['inchikey']+m_tags)
         writer.writerow(m_vals)
         n_mol+=1
   print('Output mols: %d'%n_mol, file=sys.stderr)
@@ -143,7 +146,7 @@ if __name__=='__main__':
 
   parser = argparse.ArgumentParser(
         description='ChEMBL REST API client: lookup data by IDs')
-  ops = ['cid2Activity', 'tid2Targetcomponents','did2Documents', 'inchi2Mol']
+  ops = ['cid2Activity', 'tid2Targetcomponents','did2Documents', 'inchikey2Mol']
   parser.add_argument("op",choices=ops,help='operation')
   parser.add_argument("--i",dest="ifile",help="input file, IDs")
   parser.add_argument("--o",dest="ofile",help="output (CSV)")
@@ -157,8 +160,8 @@ if __name__=='__main__':
 
   if args.op == 'cid2Activity':
     CID2Activity(args.ifile, args.ofile, args.verbose)
-  elif args.op == 'inchi2Mol':
-    Inchi2Molecule(args.ifile, args.ofile, args.verbose)
+  elif args.op == 'inchikey2Mol':
+    InchiKey2Molecule(args.ifile, args.ofile, args.verbose)
   elif args.op == 'tid2Targetcomponents':
     TID2Targetcomponents(args.ifile, args.ofile, args.verbose)
   elif args.op == 'did2Documents':

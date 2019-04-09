@@ -9,7 +9,9 @@
 ###
 ### ref: http://pubchem.ncbi.nlm.nih.gov/pug_rest/
 #############################################################################
-### Jeremy Yang
+### TODO: fix/improve the errors
+### "Error (Exception): 'NoneType' object has no attribute '__getitem__'"
+### "HTTP Error: HTTP Error 400: Bad Request"
 #############################################################################
 import os,sys,re,getopt,time
 import csv,urllib2

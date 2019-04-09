@@ -20,4 +20,6 @@ ${cwd}/sh/leadmine_utils.sh \
 	-o ${DATADIR}/aact_drugs_leadmine.tsv \
 	-v
 #
+###
+# SMILES with wildcard ('*') maybe not supported by downstream apps (e.g. PubChem).
 #

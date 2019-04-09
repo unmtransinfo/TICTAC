@@ -7,6 +7,8 @@ output:
     toc: yes
 ---
 
+_Powered by Rmarkdown._
+
 # Introduction
 
 * CTTI = Clinical Trials Transformation Initiative
@@ -111,14 +113,16 @@ sprintf("Interventional drug studies: %d ; unique NCT_IDs: %d", n_studies_inter_
 
 ```{r}
 drugs <- merge(drugs, studies, by="nct_id", all.x=T, all.y=F)
-knitr::kable(
-  merge(studies[, .(N_studies = .N), by="phase"], drugs[, .(N_drugs = .N), by="phase"], by="phase")[order(phase)], caption="Drug studies and drugs, by phase")
-knitr::kable(drugs[, .(.N), by="overall_status"][order(-N)], caption="Drugs (itv_ids), by study overall_status")
+knitr::kable(merge(studies[, .(N_studies = .N), by="phase"], drugs[, .(N_drugs = .N), by="phase"], by="phase")[order(phase)], caption="Drug studies and drugs, by phase")
+```
+```{r}
+knitr::kable(merge(studies[, .(N_studies = .N), by="overall_status"], drugs[, .(N_drugs = .N), by="overall_status"], by="overall_status")[order(overall_status)], caption="Drug studies and drugs, by overall_status")
 ```
 
 
-## Drugs by study start_year
-(To do: stack with study start_year.)
+
+## Drug studies and drugs by start_year
+
 ```{r counts_by_year, message=FALSE}
 p1 <- plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], drugs[, .(N_drugs = .N), by="start_year"], by="start_year"), x = ~start_year, name="studies", y = ~N_studies) %>%
 	add_trace(name="drugs", y = ~N_drugs) %>%
@@ -128,7 +132,7 @@ p1 <- plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year
 p1
 ```
 
-## Drug-trials by Phase and Status
+## Drug studies by Phase and Status
 
 ```{r studies_by_classification}
 ax0 <- list(showline=F,zeroline=F,showticklabels=F,showgrid=F)
@@ -199,7 +203,7 @@ cner_this <- cner[!is.na(smiles), .(.N), by="OriginalText"]
 sprintf("Mentions by drug name: %d / %d (%.1f%%)", nrow(cner_this), uniqueN(drugs$name), 100*nrow(cner_this)/uniqueN(drugs$name))
 ```
 
-# PUBCHEM:
+# PubChem:
 ## Intervention IDs to CIDs from PubChem (via SMILES)
 
 ```{r pubchem_compounds_input, message=FALSE}
@@ -227,8 +231,16 @@ pubchem <- read_delim("data/aact_drugs_smi_pubchem_cid2inchi.tsv", "\t")
 sprintf("PubChem CIDs with InChIKeys: %d", nrow(pubchem))
 ```
 
-# CHEMBL:
+# IDG/TCRD:
+For Target Development Level (TDL) and other metadata.
+
+```{r message=FALSE}
+tcrd_tgt <- read_delim("~/src/TCRD_tools/data/pharos_targets.tsv", "\t")
+```
+
+# ChEMBL:
 ## ChEMBL molecule IDs, and properties (via InChIKeys)
+Perhaps should instead use PubChem CIDs and UniChem.
 
 ```{r}
 chembl_mol <- read_delim("data/aact_drugs_inchi2chembl.tsv", "\t", 
@@ -281,19 +293,13 @@ plot_ly(x=chembl_act$pchembl_value, type="histogram", nbinsx=20) %>%
 ```{r message=FALSE}
 chembl_tgt <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
 sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt))
-```
-
-# IDG/TCRD:
-
-```{r message=FALSE}
-tcrd_tgt <- read_delim("~/src/TCRD_tools/data/pharos_targets.tsv", "\t")
 tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="accession")
 sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
 	nrow(tgt[!is.na(tgt$idgTDL),]))
 setDT(tgt)
 ```
 
-## Targets by organism (top 10):
+## ChEMBL targets by organism (top 10):
 
 ```{r}
 sprintf("Organisms: %d", uniqueN(tgt$organism))
@@ -312,7 +318,7 @@ sprintf("Human single-protein targets: %d ; unique UniProts: %d", nrow(tgt), uni
 
 ```
 
-## Targets by IDG Target Development Level (TDL):
+## ChEMBL targets by IDG TDL:
 
 ```{r}
 tdls <- c("Tdark", "Tbio", "Tchem", "Tclin")
@@ -377,10 +383,22 @@ dner <- dner[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collap
 knitr::kable(dner[1:20], caption="Disease mentions by study")
 ```
 
-# Identify and enumerate _drug, disease, target_ combinations associated by study (NCI_ID)
+# Identify and enumerate ___drug, disease, target___ combinations associated by study (NCI_ID)
 And include references.
 
-## Aggregate disease mentions by study (NCT_ID)
+Mappings:
+
+* (PubChem) `SMILES` &rarr; `CID`
+* (PubChem) `CID` &rarr; `INCHIKEY`
+* (ChEMBL) `INCHIKEY` &rarr; `MOLECULE_CHEMBL_ID`
+* (ChEMBL) `MOLECULE_CHEMBL_ID` &rarr; `ACTIVITY_ID`
+* (ChEMBL) `ACTIVITY_ID` &rarr; `TARGET_CHEMBL_ID`
+* (ChEMBL) `TARGET_CHEMBL_ID` &rarr; `COMPONENT_ID`
+* (ChEMBL) `COMPONENT_ID` &rarr; `ACCESSION`
+* (ChEMBL) `ACTIVITY_ID` &rarr; `DOCUMENT_CHEMBL_ID`
+* (ChEMBL) `DOCUMENT_CHEMBL_ID` &rarr; `PUBMED_ID`
+
+## Aggregate disease mentions by study (`NCT_ID`)
 
 ```{r}
 links <- dner
