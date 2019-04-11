@@ -71,20 +71,14 @@ printf "Mols (from ChEMBL): %d\n" ${n_chembl_mol}
 #This takes several hours.
 ${cwd}/python/chembl_fetchbyid.py -v \
 	--i data/aact_drugs_ink2chembl.chemblid \
-	--o data/aact_drugs_chembl_activity_pchembl.tsv \
+	--o data/aact_drugs_chembl_activity.tsv \
 	cid2Activity
 #
-n_chembl_act=$(cat data/aact_drugs_chembl_activity_pchembl.tsv |sed -e '1d' |wc -l)
+n_chembl_act=$(cat data/aact_drugs_chembl_activity.tsv |sed -e '1d' |wc -l)
 printf "Activities (from ChEMBL): %d\n" ${n_chembl_act}
 #
 ${cwd}/python/pandas_utils.py \
-	--i data/aact_drugs_chembl_activity_pchembl.tsv \
-	--coltags "activity_id,target_chembl_id" \
-	--o data/aact_drugs_chembl_act2tgt.tsv \
-	selectcols
-#
-${cwd}/python/pandas_utils.py \
-	--i data/aact_drugs_chembl_activity_pchembl.tsv \
+	--i data/aact_drugs_chembl_activity.tsv \
 	--coltags "target_chembl_id" \
 	selectcols \
 	|sed -e '1d' |sort -u \
@@ -107,7 +101,7 @@ printf "Target components (from ChEMBL): %d\n" ${n_chembl_tgtc}
 ###
 # 
 ${cwd}/python/pandas_utils.py \
-	--i data/aact_drugs_chembl_activity_pchembl.tsv \
+	--i data/aact_drugs_chembl_activity.tsv \
 	--coltags "document_chembl_id" \
 	selectcols \
 	|sed -e '1d' |sort -u \

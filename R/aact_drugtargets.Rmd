@@ -41,7 +41,7 @@ _Powered by Rmarkdown._
 
 `TARGET_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `COMPONENT_ID`
 
-`COMPONENT_ID` &rarr;(ChEMBL)&rarr; `ACCESSION`
+`COMPONENT_ID` &rarr;(ChEMBL)&rarr; `UNIPROT`
 
 `ACTIVITY_ID` &rarr;(ChEMBL)&rarr; `DOCUMENT_CHEMBL_ID`
 
@@ -57,8 +57,9 @@ _Powered by Rmarkdown._
 * (PubChem) `aact_drugs_smi_pubchem_cid.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid2ink.tsv`
 * (ChEMBL) `aact_drugs_ink2chembl.tsv`
-* (ChEMBL) `aact_drugs_chembl_activity_pchembl.tsv`
+* (ChEMBL) `aact_drugs_chembl_activity.tsv`
 * (ChEMBL) `aact_drugs_chembl_target_component.tsv`
+* (ChEMBL) `aact_drugs_chembl_document.tsv`
 * (IDG TCRD/Pharos) `pharos_targets.tsv`
 * (JensenLab Tagger) `aact_descriptions_tagger_matches.tsv`
 * (JensenLab Dictionary) `diseases_entities.tsv`
@@ -114,9 +115,9 @@ refs <- refs[, .(N_refs = .N, N_results_refs = sum(reference_type=="results_refe
 ## Drugs 
 Read file of all drugs in AACT.
 
-* `id` is AACT ID.
+* `id` is AACT `INTERVENTION_ID`, corresponding with an instance of a drug, dose, delivery, etc. in a study.
 * Note that one study may involve multiple drugs.
-* At this point a "drug" is identified by a name.
+* At this point a "drug" is imprecisely identified by name, generally one of many synonyms.
 
 ```{r message=FALSE}
 drugs <- read_delim("data/aact_drugs.tsv", "\t", col_types = "dcc")
@@ -261,7 +262,9 @@ sprintf("PubChem CIDs with InChIKeys: %d", nrow(pubchem))
 For Target Development Level (TDL) and other metadata.
 
 ```{r message=FALSE}
-tcrd_tgt <- read_delim("~/src/TCRD_tools/data/pharos_targets.tsv", "\t")
+tcrd_tgt <- read_delim("/home/data/TCRD/data/tcrd_targets.tsv", "\t", col_types=cols(.default=col_character()))
+setDT(tcrd_tgt)
+setnames(tcrd_tgt, old=c("tdl", "fam"), new=c("idgTDL", "idgFamily"))
 ```
 
 # ChEMBL:
@@ -275,37 +278,49 @@ sprintf("ChEMBL compounds mapped via InChIKeys: %d", nrow(chembl_mol))
 ```
 
 ## ChEMBL activities for mapped compounds
-Select only activities with pChembl values for confidence.
+Select only activities with pChembl values for relevance to protein targets and confidence.
 
 ```{r message=FALSE}
-chembl_act <- read_delim("data/aact_drugs_chembl_activity_pchembl.tsv", "\t", col_types=cols(
+chembl_act <- read_delim("data/aact_drugs_chembl_activity.tsv", "\t", col_types=cols(
   .default = col_character(),
   activity_id = col_double(),
   document_year = col_integer(),
   pchembl_value = col_double(),
-  published_value = col_double(),
   src_id = col_double(),
   standard_value = col_double(),
   target_tax_id = col_integer(),
   text_value = col_logical(),
   value = col_double()))
+setDT(chembl_act)
 sprintf("ChEMBL activities: %d", nrow(chembl_act))
-sprintf("ChEMBL activities molecules: %d ; targets: %d ; documents: %d", uniqueN(chembl_act$molecule_chembl_id), uniqueN(chembl_act$target_chembl_id), uniqueN(chembl_act$document_chembl_id))
+sprintf("ChEMBL activities molecules: %d ; canonical_smiles: %d ; targets: %d ; documents: %d", uniqueN(chembl_act$molecule_chembl_id), uniqueN(chembl_act$canonical_smiles), uniqueN(chembl_act$target_chembl_id), uniqueN(chembl_act$document_chembl_id))
 plot_ly(x=chembl_act$pchembl_value, type="histogram", nbinsx=20) %>%
-  layout(title=paste0("AACT: ChEMBL Activities, pChembl values<br>(N_total = ", nrow(chembl_act), ")<br>pChembl = -log<sub>10</sub>({I|E|L}C50})"), xaxis=list(title="pChembl"), yaxis=list(title="N"),
-         margin=list(t=140), font=list(family="Arial", size=20), showlegend=F)
+  layout(title=paste0("ChEMBL Activities, pChembl values<br>(N_total = ", nrow(chembl_act), ")"), 
+         xaxis=list(title="pChembl"), yaxis=list(title="N"),
+         margin=list(t=140), font=list(family="Monospace", size=20),
+         annotations=list(text="pChembl = -log<sub>10</sub>({I|E|L}C50})", showarrow=F, x=1, y=0.9, xref="paper", yref="paper", xanchor="right", font=list(size=14)),
+         showlegend=F)
+```
 
+### Activity and molecule counts by assay types
+
+```{r}
+atypes <- c(B = "Binding", F = "Functional", A = "ADMET", T = "Toxicity", P = "Physicochemical", U = "Unclassified")
+atype_counts <- chembl_act[,.(N_molecule = uniqueN(molecule_chembl_id), N_activity = .N), by="assay_type"][order(-N_activity)]
+atype_counts[, assay_type := sprintf("%s:%s", assay_type, atypes[assay_type])]
+knitr::kable(atype_counts, caption="Activity and molecule counts by assay types")
 ```
 
 ## ChEMBL targets (via activities)
 
 ```{r message=FALSE}
 chembl_tgt <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
+setDT(chembl_tgt)
+setnames(chembl_tgt, old="accession", new="uniprot")
 sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt))
-tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="accession", by.y="accession")
+tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="uniprot", by.y="uniprot")
 sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
 	nrow(tgt[!is.na(tgt$idgTDL),]))
-setDT(tgt)
 ```
 
 ## ChEMBL targets by organism:
@@ -323,7 +338,7 @@ tgt <- tgt[organism=="Homo sapiens"]
 sprintf("Human targets: %d", nrow(tgt))
 tgt <- tgt[target_type=="SINGLE PROTEIN"]
 knitr::kable(tgt[, .(.N), by="idgFamily"][order(-N)])
-sprintf("Human single-protein targets: %d ; unique UniProts: %d", nrow(tgt), uniqueN(tgt$accession))
+sprintf("Human single-protein targets: %d ; unique UniProts: %d", nrow(tgt), uniqueN(tgt$uniprot))
 
 ```
 
@@ -400,23 +415,59 @@ And include references.
 ## Aggregate disease mentions by study (`NCT_ID`)
 
 ```{r}
-links <- dner
-links$disease_term <- sub(";.*$", "", links$disease_terms)
+links <- dner[, .(disease_term := sub(";.*$", "", disease_terms))]
 links <- links[, .(N_disease_mentions = paste0(N_mentions, collapse="; "), disease_terms=paste0(disease_term, collapse="; "), doids = paste0(doid, collapse="; ")), by=c("nct_id")]
 setkey(links, nct_id)
 ```
 
 ## Link to drugs
+
+<center>
+`NCT_ID` &rarr;(NextMove:LeadMine)&rarr; `SMILES`
+
+`SMILES` &rarr;(PubChem)&rarr; `CID`
+</center>
+
 Keep only studies including both disease and drug mentions.
 
 ```{r}
-drug_links <- unique(drugs[!is.na(smiles), .(nct_id, name, EntityText, smiles)])
+drug_links <- unique(drugs[!is.na(smiles), .(itv_id = id, nct_id, name, EntityText, smiles)])
+drug_links <- merge(drug_links, drug2cid, by="itv_id")
 drug_links <- drug_links[order(nct_id, smiles, EntityText, nchar(name))]
-drug_links <- drug_links[, .(N_chem_mentions=length(name), names = paste0(name, collapse="; "), EntityTexts = paste0(EntityText, collapse="; "), smiles = paste0(smiles, collapse="; ")), by="nct_id"]
+drug_links <- drug_links[, .(N_chem_mentions=length(name), PUBCHEM_CIDs = paste0(cid, collapse="; "), names = paste0(name, collapse="; "), EntityTexts = paste0(EntityText, collapse="; "), smiles = paste0(smiles, collapse="; ")), by="nct_id"]
 setkey(drug_links, nct_id)
 links <- links[drug_links]
 links <- links[!is.na(doids) & !is.na(smiles)]
 sprintf("studies linked to 1+ drugs AND 1+ diseases: %d", uniqueN(links$nct_id))
+```
+
+## PubChem to ChEMBL (molecules)
+
+<center>
+`CID` &rarr;(PubChem)&rarr; `INCHIKEY`
+
+`INCHIKEY` &rarr;(ChEMBL)&rarr; `MOLECULE_CHEMBL_ID`
+
+`MOLECULE_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `ACTIVITY_ID`
+</center>
+
+```{r message=FALSE}
+cid2ink <- read_delim("data/aact_drugs_smi_pubchem_cid2ink.tsv", "\t")
+setDT(cid2ink)
+sprintf("CIDs: %d ; INCHIKEYs: %d ; pairs: %d",
+	uniqueN(cid2ink$CID), uniqueN(cid2ink$InChIKey), nrow(cid2ink)) 
+ink2chembl <- read_delim("data/aact_drugs_ink2chembl.tsv", "\t", col_types = cols(
+	.default = col_character(), 
+	first_approval=col_integer(), 
+	usan_year=col_integer(), 
+	withdrawn_year=col_integer()))
+setDT(ink2chembl)
+sprintf("INCHIKEYs: %d ; MOLECULE_CHEMBL_IDs: %d ; pairs: %d",
+	uniqueN(ink2chembl$inchikey), uniqueN(ink2chembl$molecule_chembl_id), nrow(ink2chembl)) 
+sprintf("MOLECULE_CHEMBL_IDs: %d ; TARGET_CHEMBL_IDs: %d ; ACTIVITY_IDs: %d ; DOCUMENT_CHEMBL_IDs: %d",
+	uniqueN(chembl_act$molecule_chembl_id), uniqueN(chembl_act$target_chembl_id),
+	uniqueN(chembl_act$activity_id), uniqueN(chembl_act$document_chembl_id))
+cid2chembl <- merge(cid2ink, ink2chembl, by.x="InChIKey", by.y="inchikey")
 ```
 
 ## Link to targets
@@ -426,51 +477,25 @@ sprintf("studies linked to 1+ drugs AND 1+ diseases: %d", uniqueN(links$nct_id))
 
 `TARGET_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `COMPONENT_ID`
 
-`COMPONENT_ID` &rarr;(ChEMBL)&rarr; `ACCESSION`
+`COMPONENT_ID` &rarr;(ChEMBL)&rarr; `UNIPROT`
 </center>
 
 ```{r message=FALSE}
-act2tgt <- read_delim("data/aact_drugs_chembl_act2tgt.tsv", "\t", col_types="cc")
 sprintf("ACTIVITY_IDs: %d ; TARGET_CHEMBL_IDs: %d ; pairs: %d",
-	uniqueN(act2tgt$activity_id), uniqueN(act2tgt$target_chembl_id), nrow(act2tgt)) 
+	uniqueN(chembl_act$activity_id), uniqueN(chembl_act$target_chembl_id), nrow(chembl_act))
 tgt2tc <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
 setDT(tgt2tc)
+setnames(tgt2tc, old="accession", new="uniprot")
 sprintf("COMPONENT_IDs: %d ; TARGET_CHEMBL_IDs: %d ; pairs: %d",
 	uniqueN(tgt2tc$component_id), uniqueN(tgt2tc$target_chembl_id), nrow(tgt2tc)) 
-sprintf("ACCESSIONs: %d ; SINGLE_PROTEIN ACCESSIONs: %d",
-	uniqueN(tgt2tc$accession), uniqueN(tgt2tc[target_type=="SINGLE PROTEIN", .(accession)]))
+sprintf("UNIPROTs: %d ; SINGLE_PROTEIN UNIPROTs: %d",
+	uniqueN(tgt2tc$uniprot), uniqueN(tgt2tc[target_type=="SINGLE PROTEIN", .(uniprot)]))
 ```
-
-<center>
-`CID` &rarr;(PubChem)&rarr; `INCHIKEY`
-
-`INCHIKEY` &rarr;(ChEMBL)&rarr; `MOLECULE_CHEMBL_ID`
-
-`MOLECULE_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `ACTIVITY_ID`
-
-`ACTIVITY_ID` &rarr;(ChEMBL)&rarr; `DOCUMENT_CHEMBL_ID`
-</center>
-
-```{r message=FALSE}
-cid2ink <- read_delim("data/aact_drugs_smi_pubchem_cid2ink.tsv", "\t")
-sprintf("CIDs: %d ; INCHIKEYs: %d ; pairs: %d",
-	uniqueN(cid2ink$CID), uniqueN(cid2ink$InChIKey), nrow(cid2ink)) 
-ink2chembl <- read_delim("data/aact_drugs_ink2chembl.tsv", "\t", col_types = cols(
-  .default = col_character(), 
-  first_approval=col_integer(), 
-  usan_year=col_integer(), 
-  withdrawn_year=col_integer()))
-sprintf("INCHIKEYs: %d ; MOLECULE_CHEMBL_IDs: %d ; pairs: %d",
-	uniqueN(ink2chembl$inchikey), uniqueN(ink2chembl$molecule_chembl_id), nrow(ink2chembl)) 
-act <- read_delim("data/aact_drugs_chembl_activity_pchembl.tsv", "\t")
-sprintf("MOLECULE_CHEMBL_IDs: %d ; TARGET_CHEMBL_IDs: %d ; ACTIVITY_IDs: %d ; DOCUMENT_CHEMBL_IDs: %d",
-	uniqueN(act$molecule_chembl_id), uniqueN(act$target_chembl_id),
-	uniqueN(act$activity_id), uniqueN(act$document_chembl_id))
-```
-
 ## Link to PubMed
 
 <center>
+`ACTIVITY_ID` &rarr;(ChEMBL)&rarr; `DOCUMENT_CHEMBL_ID`
+
 `DOCUMENT_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `PUBMED_ID`
 </center>
 
