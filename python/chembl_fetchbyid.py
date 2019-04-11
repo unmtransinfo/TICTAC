@@ -26,7 +26,8 @@ act_tags_selected = ['activity_id', 'assay_chembl_id', 'assay_type', 'src_id',
 	'units', 'qudt_units', 'uo_units', 'published_units', 'standard_units',
 	'type', 'published_type', 'standard_type']
 #
-def CID2Activity(ifile, ofile, verbose):
+def CID2Activity(args):
+  ifile, ofile, verbose = args.ifile, args.ofile, args.verbose
   cids = []
   with open(ifile, 'r') as csvfile:
     reader = csv.reader(csvfile, delimiter='\t')
@@ -35,9 +36,11 @@ def CID2Activity(ifile, ofile, verbose):
   print('Input CIDs: %d'%len(cids), file=sys.stderr)
   tags=None;
   n_act=0;
+  i_start=(args.skip if args.skip else 0)
+  i_end = min(args.nmax, len(cids)-i_start) if args.nmax else (len(cids)-i_start)
   with open(ofile, 'w') as csvfile:
     writer = csv.writer(csvfile, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
-    for i in range(0, len(cids), NCHUNK):
+    for i in range(i_start, i_end, NCHUNK):
       #print('DEBUG: Request IDs: %s'%(','.join(cids[i:i + NCHUNK])), file=sys.stderr)
       acts = new_client.activity.filter(molecule_chembl_id__in=cids[i:i+NCHUNK]).only(act_tags_selected)
       for act in acts:
@@ -49,11 +52,12 @@ def CID2Activity(ifile, ofile, verbose):
         writer.writerow([(act[tag] if tag in act else '') for tag in tags])
         n_act+=1
       if verbose:
-        print('Progress: %d / %d ; activities: %d'%(i, len(cids), n_act), file=sys.stderr)
+        print('Progress: CIDs: %d / %d ; activities: %d'%(i-i_start, i_end-i_start, n_act), file=sys.stderr)
   print('Output activities (with pchembl): %d'%n_act, file=sys.stderr)
 
 #############################################################################
-def TID2Targetcomponents(ifile, ofile, verbose):
+def TID2Targetcomponents(args):
+  ifile, ofile, verbose = args.ifile, args.ofile, args.verbose
   tids = []
   t_tags=['target_chembl_id','target_type','organism', 'species_group_flag', 'tax_id']
   tc_tags=['component_id','component_type','component_description','relationship', 'accession']
@@ -82,7 +86,8 @@ def TID2Targetcomponents(ifile, ofile, verbose):
   print('Output target components (PROTEIN): %d'%ntc, file=sys.stderr)
 
 #############################################################################
-def DID2Documents(ifile, ofile, verbose):
+def DID2Documents(args):
+  ifile, ofile, verbose = args.ifile, args.ofile, args.verbose
   dids = []
   d_tags=['document_chembl_id', 'doc_type', 'src_id', 'pubmed_id',
 	'patent_id', 'doi', 'doi_chembl', 'year', 'journal', 'authors',
@@ -108,7 +113,8 @@ def DID2Documents(ifile, ofile, verbose):
   print('Output documents: %d'%ndoc, file=sys.stderr)
 
 #############################################################################
-def InchiKey2Molecule(ifile, ofile, verbose):
+def InchiKey2Molecule(args):
+  ifile, ofile, verbose = args.ifile, args.ofile, args.verbose
   inkeys = []
   m_tags=[
 	'availability_type', 'biotherapeutic', 'black_box_warning', 'chebi_par_id', 
@@ -150,6 +156,8 @@ if __name__=='__main__':
   parser.add_argument("op",choices=ops,help='operation')
   parser.add_argument("--i",dest="ifile",help="input file, IDs")
   parser.add_argument("--o",dest="ofile",help="output (CSV)")
+  parser.add_argument("--skip", type=int)
+  parser.add_argument("--nmax", type=int)
   parser.add_argument("-v","--verbose",action="count")
   args = parser.parse_args()
 
@@ -159,11 +167,11 @@ if __name__=='__main__':
     parser.error('Output file required.')
 
   if args.op == 'cid2Activity':
-    CID2Activity(args.ifile, args.ofile, args.verbose)
+    CID2Activity(args)
   elif args.op == 'inchikey2Mol':
-    InchiKey2Molecule(args.ifile, args.ofile, args.verbose)
+    InchiKey2Molecule(args)
   elif args.op == 'tid2Targetcomponents':
-    TID2Targetcomponents(args.ifile, args.ofile, args.verbose)
+    TID2Targetcomponents(args)
   elif args.op == 'did2Documents':
-    DID2Documents(args.ifile, args.ofile, args.verbose)
+    DID2Documents(args)
  

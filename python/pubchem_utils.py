@@ -37,10 +37,8 @@
 ###  identifier strings (source, inchikey, listkey); single identifier string
 ###  (name, smiles; inchi by POST only)
 ##############################################################################
-### Jeremy Yang
-##############################################################################
-import sys,os,re,getopt,types,math,time
-import urllib,urllib2,httplib
+import sys,os,re,types,math,time
+import urllib,urllib2
 import csv,json
 import xml.dom.minidom #replace with ETree
 #
@@ -158,23 +156,18 @@ def Cid2Sids(base_url,cid,verbose=0):
 #############################################################################
 def Smi2Ids(base_url,smi,verbose):
   d=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib2.quote(smi,''),parse_json=True,verbose=verbose)
-  ids=None
-  try:
-    ids=d['IdentifierList']
-    #print >>sys.stderr, 'DEBUG: ids = %s'%str(ids)
-  except Exception, e:
-    print >>sys.stderr, 'Error (Exception): %s'%e
-  return ids
+  if d and d.has_key('IdentifierList'):
+    return d['IdentifierList']
+  else:
+    return None
 
 #############################################################################
 def Smi2Cids(base_url,smi,verbose):
   ids = Smi2Ids(base_url,smi,verbose)
-  cids=[]
-  try:
-    cids=ids['CID']
-  except Exception, e:
-    print >>sys.stderr, 'Error (Exception): %s'%e
-  return cids
+  if ids and ids.has_key('CID'):
+    return ids['CID']
+  else:
+    return []
 
 #############################################################################
 #  sids: '846753,846754,846755,846760,846761,3712736,3712737'

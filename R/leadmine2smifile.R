@@ -24,5 +24,5 @@ message(sprintf("Unique drug smiles: %d", length(unique(drugs_smi$smiles))))
 # Aggregate by same smiles.
 drugs_smi <- drugs_smi[,  .(names = paste(name, collapse="; ")), by="smiles"]
 drugs_smi <- drugs_smi[order(nchar(drugs_smi$smiles))]
-writeLines(format_tsv(drugs_smi), stdout())
+writeLines(format_tsv(drugs_smi, col_names=F), stdout())
 #
