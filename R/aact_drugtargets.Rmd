@@ -48,7 +48,7 @@ _Powered by Rmarkdown._
 * (ChEMBL) `aact_drugs_chembl_target_component.tsv`
 * (ChEMBL) `aact_drugs_chembl_document.tsv`
 * (IDG TCRD/Pharos) `pharos_targets.tsv`
-* (JensenLab Tagger) `aact_descriptions_tagger_matches.tsv`
+* (JensenLab Tagger) `aact_descriptions_tagger_disease_matches.tsv`
 * (JensenLab Dictionary) `diseases_entities.tsv`
 
 > `nct_id` is the study ID.
@@ -61,6 +61,7 @@ base::date()
 ```{r setup, echo=TRUE, message=FALSE}
 library(readr)
 library(data.table)
+library(tm)
 library(stringr)
 library(plotly, quietly=T)
 ```
@@ -360,7 +361,7 @@ Likely false positives, manually removed:
 * Also root term "DISEASE" is uninteresting.
 
 ```{r message=FALSE, echo=FALSE}
-dner <- read_delim("data/aact_descriptions_tagger_matches.tsv", "\t", 
+dner <- read_delim("data/aact_descriptions_tagger_disease_matches.tsv", "\t", 
                    col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
 dent <- read_delim("/home/data/jensenlab/data/diseases_entities.tsv", "\t", col_names=c("serialnm", "doid"), col_types="c-c")
 setDT(dner)
@@ -371,8 +372,9 @@ dner <- merge(dner, descs, by="id", all.x=T, all.y=F)
 dner[, id:=NULL]
 dner[, serialnm:=NULL]
 dner <- dner[grepl("^DOID:", doid)] #Why not? "AmyCo:8" etc.? TBE.
-badterms <- c("disease", "can", "face")
-dner <- dner[!(tolower(term) %in% badterms)]
+dbad <- c("disease", "can", "face")
+dner <- dner[!(tolower(term) %in% dbad)]
+sprintf("Total disease mentions: %d (in %d studies)", nrow(dner), uniqueN(studies$nct_id))
 ```
 
 ## Disease mention totals by merging to resolved Disease Ontology term (DOID).
@@ -395,6 +397,61 @@ dner <- dner[order(nct_id, -N_mentions, -as.integer(sub("DOID:", "", doid)))]
 dner <- dner[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collapse=";")), by=c("nct_id", "doid")]
 knitr::kable(dner[nct_id %in% base::sample(unique(dner$nct_id), 10)], caption="Disease mentions by study (Random sample of studies)")
 ```
+
+# JensenLab Tagger targets NER (human proteins)
+
+Many false positives due to synonomy collisions with common words (e.g. "Aim 1", "Nut").
+
+```{r}
+tner <- read_delim("data/aact_descriptions_tagger_target_matches.tsv", "\t", 
+                   col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
+tent <- read_delim("/home/data/jensenlab/data/human_entities.tsv", "\t", col_names=c("serialnm", "ensp"), col_types="c-c")
+setDT(tner)
+setDT(tent)
+tner <- merge(tner, tent, by="serialnm", all.x=T, all.y=F)
+tner <- merge(tner, descs, by="id", all.x=T, all.y=F)
+tner[, id:=NULL]
+tner[, serialnm:=NULL]
+tner <- tner[grepl("^ENSP", ensp)]
+tbad <- c("post", "end", "type", "aim", "impact", "pilot", "arms", "large", "set", "mass",
+"men", "light", "step", "damage", "tube", "task", "rest", "past", "sex", "call",
+"art", "simple", "find", "white", "bid", "stop", "met", "ask", "soft",
+"fast", "red", "lab", "gas", "app", "aid", "great", "act", "held", "mask",
+"kit", "minor", "fusion", "statin", "prep", "tip", "flap", "mail", "prep",
+"top", "rank", "map", "era", "gamma", "hrs", "net", "hot", "cap", "april", "cap",
+"spatial", "pad", "max", "sit", "bag", "chop", "wire", "med", "grip", "coil",
+"mark", "nodal", "arch", "gov", "bad", "talk", "killer", "nail", "cope", "lobe",
+"pace", "fur", "van", "cast", "mix", "flame", "flip", "opt", "lamp", "heel",
+"spin","miss", "pick", "shot", "traits", "tele", "cat", "prof", "lap", "pen", 
+"mast", "lethal", "yrs", "bite", "toll", "wise", "fats", "clip", "grid", "apps",
+"fix", "std", "jet", "flash", "tactile", "bright", "clock", "caps")
+tbad <- union(tbad, stopwords("SMART"))
+tner <- tner[!(tolower(term) %in% tbad)]
+sprintf("Total target mentions: %d (in %d studies)", nrow(tner), uniqueN(studies$nct_id))
+```
+
+## Target mention totals by merging to resolved Ensembl ID (ENSP).
+
+```{r}
+tner_totals <- tner[, .(N_mentions = .N), by=c("ensp", "term")]
+tner_totals <- tner_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse="; ")), by=c("ensp")]
+tner_totals <- tner_totals[order(-N_mentions)]
+tner_totals$terms <- truncate.ellipsis(tner_totals$terms, 200)
+knitr::kable(tner_totals[1:20], caption="Top 20 human proteins by total mentions")
+```
+
+
+## Target mentions by study.
+Sort synonyms terms by frequency.
+
+```{r}
+tner <- tner[, .(N_mentions = .N), by=c("nct_id", "ensp", "term")]
+tner <- tner[order(nct_id, -N_mentions)]
+tner <- tner[, .(N_mentions = sum(N_mentions), target_terms=paste0(term, collapse=";")), by=c("nct_id", "ensp")]
+knitr::kable(tner[nct_id %in% base::sample(unique(tner$nct_id), 10)], caption="Target mentions by study (Random sample of studies)")
+```
+
+
 
 # Enumerate ___study-drug-disease-target___ links.
 

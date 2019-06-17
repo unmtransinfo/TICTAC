@@ -7,7 +7,7 @@ import pandas
 if __name__=='__main__':
   parser = argparse.ArgumentParser(
         description='Pandas utilities for simple datafile transformations.')
-  ops = ['csv2tsv', 'summary','showcols','selectcols','uvalcounts','sortbycols','deduplicate']
+  ops = ['csv2tsv', 'summary','showcols','selectcols','uvalcounts','colvalcounts','sortbycols','deduplicate']
   parser.add_argument("op", choices=ops, help='operation')
   parser.add_argument("--i", dest="ifile", help="input (CSV|TSV)")
   parser.add_argument("--o", dest="ofile", help="output (CSV|TSV)")
@@ -16,7 +16,7 @@ if __name__=='__main__':
   parser.add_argument("-v", "--verbose", action="count")
   args = parser.parse_args()
 
-  if args.op in ('selectcols', 'uvalcounts', 'sortbycols'):
+  if args.op in ('selectcols', 'uvalcounts', 'colvalcounts', 'sortbycols'):
     if not (args.cols or args.coltags): 
       parser.error('%s requires --cols or --coltags.'%args.op)
 
@@ -62,6 +62,14 @@ if __name__=='__main__':
       if cols and j not in cols: continue
       if coltags and tag not in coltags: continue
       print('%d. %s: %d'%(j+1,tag,df[tag].nunique()))
+
+  elif args.op == 'colvalcounts':
+    for j,tag in enumerate(df.columns):
+      if cols and j not in cols: continue
+      if coltags and tag not in coltags: continue
+      print('%d. %s:'%(j+1, tag))
+      for key,val in df[tag].value_counts().iteritems():
+        print('\t%6d: %s'%(val, key))
 
   else:
     parser.error('Unknown operation: %s'%args.op)
