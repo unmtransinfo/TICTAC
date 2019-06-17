@@ -7,9 +7,9 @@ output:
     toc: yes
 ---
 
-_Powered by Rmarkdown._
-
 # Introduction
+
+ClinicalTrials.gov was first released in 2000. As of March 2019, ClinicalTrials.gov includes 300,676 research studies in all 50 states and in 208 countries.   The the CTTI AACT project and database provides a harmonizing schema and convenient access. However, there remain major challenges to knowledge discovery using these data, such as lack of standard terminology.  To address this, for the use case of elucidating drug target hypotheses, we have used state of the art domain specialized text mining with synonym resolution for specific classes of entities: (1) chemicals and (2) diseases. Chemicals are identified and resolved using NextMove Leadmine. Diseases, indications and other phenotypic terms are mined via JensenLab Tagger with Disease Ontology dictionary, and NLM supplied MeSH terms. Protein targets are associated via ChEMBL bioactivities on molecular structure cross-referencing. Another fundamental challenge is to assess confidence of inferences from noisy and disparate data. We propose a scoring system for assessing confidence for target hypotheses inferred from aggregated clinical trials, with emphasis on higher confidence, novel predictions with the potential to illuminate the understudied druggable genome. _(Paragraph excerpted from manuscript draft.)_
 
 * CTTI = Clinical Trials Transformation Initiative
 * AACT = Aggregate Analysis of ClinicalTrials.gov
@@ -19,6 +19,13 @@ _Powered by Rmarkdown._
 * <https:/www.nextmovesoftware.com>
 * <https://bitbucket.org/larsjuhljensen/tagger>
 * <http://download.jensenlab.org/>
+
+## Issues
+
+* Prior belief is that target NER is not likely to be useful, since clinical trials descriptive text is not 
+generally written to communicate molecular mechanisms to research scientists, but with focus on _clinical_ 
+efficacy and safety. In due diligence we perform target NER, but how to quantify concordance or refutation with
+our prior belief?
 
 ## Identifier mappings:
 
@@ -184,7 +191,7 @@ cner_totals <- cner[!is.na(smiles), .(N_mentions = .N), by=c("smiles", "Original
 cner_totals <- cner_totals[order(smiles, OriginalText)]
 cner_totals <- cner_totals[, .(N_mentions = sum(N_mentions), names=paste0(OriginalText, collapse="; ")), by=c("smiles")]
 cner_totals <- cner_totals[order(-N_mentions)]
-cner_totals[["smi2img"]] <- sprintf("<img src=\"http://localhost:8080/cdkdepict/depict/cow/svg?smi=%s&h=50&w=80&zoom=3\">", sapply(cner_totals$smiles, URLencode, reserved=T))
+cner_totals[["smi2img"]] <- sprintf("<img src=\"http://pasilla.health.unm.edu/tomcat/cdkdepict/depict/cow/svg?smi=%s&h=50&w=80&zoom=3\">", sapply(cner_totals$smiles, URLencode, reserved=T))
 knitr::kable(cner_totals[1:20, .(smi2img, N_mentions, names)], caption="Top 20 drugs by total mentions")
 ```
 
@@ -577,5 +584,5 @@ Evidence weighted by:
 * Study publications (results better)
 * Study date (later better, or at least more novel)
 
-
-
+---
+_Powered by Rmarkdown._
