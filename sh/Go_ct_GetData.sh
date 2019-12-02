@@ -27,7 +27,6 @@
 #############################################################################
 #
 set -e
-set -x
 #
 DBHOST="aact-db.ctti-clinicaltrials.org"
 DBNAME="aact"

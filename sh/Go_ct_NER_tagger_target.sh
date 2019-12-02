@@ -26,7 +26,9 @@ echo "9606" >$DATADIR/human_types.tsv
 # Fields: docid, paragraph, sentence, ch_first, ch_last, term, type, serialno.
 # (serialno from the names file, which resolves synonyms.)
 ###
-cat ${DATADIR}/aact_descriptions.tsv \
+descfile="${DATADIR}/aact_descriptions.tsv"
+taggerfile="$DATADIR/aact_descriptions_tagger_target_matches.tsv"
+cat ${descfile} \
 	|sed -e 's/^/:/' \
 	|awk -F '\t' '{print $1 "\t" $2 "\t\t\t" $3}' \
 	| ${TAGGER_DIR}/tagcorpus \
@@ -35,5 +37,11 @@ cat ${DATADIR}/aact_descriptions.tsv \
 	--names=$DICT_DIR/human_names.tsv \
 	--types=$DATADIR/human_types.tsv \
 	--stopwords=$DATADIR/tagger_global.tsv \
-	--out-matches=$DATADIR/aact_descriptions_tagger_target_matches.tsv
+	--out-matches=$taggerfile
 #
+# Compute entities per 1000 chars rate.
+n_chr=$(cat ${descfile} |sed -e '1d' |awk -F '\t' '{print $3}' |wc -m)
+n_ent=$(cat $taggerfile |wc -l)
+eptc=$(echo "1000 * $n_ent / $n_chr" |bc)
+printf "Entities per 1000 chars: %.2f\n" "${eptc}"
+# 6.64

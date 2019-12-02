@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 '''
 	MeSH XML utility functions.
-
-	Jeremy Yang
 '''
 #############################################################################
 ### MeSH XML
@@ -22,7 +20,7 @@
 ### Terms can have multiple TreeNumbers; diseases can be in non-disease cateories,
 ### in addition to a disease category.
 #############################################################################
-import sys,os,re,getopt,codecs,gzip
+import sys,os,re,gzip,argparse,logging
 
 try:
   import xml.etree.cElementTree as ElementTree
@@ -129,78 +127,30 @@ def Supp2Csv(branch, fin, fout, verbose):
 #############################################################################
 if __name__=='__main__':
   PROG=os.path.basename(sys.argv[0])
-  branch='C'
-  def ErrorExit(msg):
-    print(msg)
-    sys.exit(1)
-  usage='''
-%(PROG)s - MeSH XML utility
+  logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+  parser = argparse.ArgumentParser(description="MeSH XML utility",
+	epilog=('Branches: '+('; '.join(['%s: %s'%(k,BRANCHES[k]) for k in sorted(BRANCHES.keys())]))))
+  ops= ['desc2csv', 'supp2csv']
+  parser.add_argument("op", choices=ops, help='operation')
+  parser.add_argument("--i", dest="ifile", required=True, help="input MeSH XML (.xml[.gz]))")
+  parser.add_argument("--o", dest="ofile", help="output (TSV)")
+  parser.add_argument("--branch", choices=BRANCHES.keys(), default="C", help="top-level branch of MeSH tree")
+  parser.add_argument("-v", "--verbose", action="count", default=0)
+  args = parser.parse_args()
 
-required:
-  --i IFILE ............ input MeSH XML file [stdin]
+  if not args.ifile:
+    parser.error('Input file required.')
 
-operations:
-  --desc2csv ............ descriptors XML input
-  --supp2csv ............ supplementary records XML input
+  fin = gzip.open(args.ifile) if re.search('\.gz$', args.ifile, re.I) else open(args.ifile)
+  fout = open(args.ofile, "w") if args.ofile else sys.stdout
 
-options:
-  --o OFILE ............ output file
-  --branch BRANCH ...... top-level branch of MeSH tree [%(BRANCH)s]
-  --force .............. ignore UTF-8 encoding errors
-  --v[v] ............... verbose [very]
-  --h .................. help
-
-Branches:
-	%(BRANCHLIST)s
-'''%{	'PROG':PROG,
-	'BRANCH':branch,
-	'BRANCHLIST':('\n\t'.join(['%s: %s'%(k,BRANCHES[k]) for k in sorted(BRANCHES.keys())]))
-	}
-  ifile=None; ofile=None;
-  desc2csv=False; 
-  supp2csv=False; 
-  force=False;
-  verbose=0;
-  opts,pargs = getopt.getopt(sys.argv[1:],'',['h','v','vv','i=','o=','branch=',
-	'force', 'desc2csv', 'supp2csv'  ])
-  if not opts: ErrorExit(usage)
-  for (opt,val) in opts:
-    if opt=='--h': ErrorExit(usage)
-    elif opt=='--i': ifile=val
-    elif opt=='--o': ofile=val
-    elif opt=='--branch': branch=val
-    elif opt=='--desc2csv': desc2csv=True
-    elif opt=='--supp2csv': supp2csv=True
-    elif opt=='--force': force=True
-    elif opt=='--vvv': verbose=3
-    elif opt=='--vv': verbose=2
-    elif opt=='--v': verbose=1
-    else: ErrorExit('Illegal option: %s'%val)
-
-  codecs_mode = "ignore" if force else "replace"
-  root=None
-  if ifile:
-    fin=codecs.open(ifile,"r","UTF-8",codecs_mode)
-    if not fin: ErrorExit('ERROR: failed to open: %s'%ifile)
-  else:
-    fin=codecs.getreader("UTF-8")(sys.stdin)
-
-  if ofile:
-    fout=codecs.open(ofile,"w","UTF-8",codecs_mode)
-    if not fout: ErrorExit('ERROR: cannot open outfile: %s'%ofile)
-  else:
-    fout=codecs.getwriter("UTF-8")(sys.stdout,errors=codecs_mode)
-
-  if branch not in BRANCHES:
-    ErrorExit('ERROR: invalid branch: %s'%branch)
-
-  if desc2csv:
-    Desc2Csv(branch, fin, fout, verbose)
+  if args.op == "desc2csv":
+    Desc2Csv(args.branch, fin, fout, args.verbose)
     fout.close()
 
-  elif supp2csv:
-    Supp2Csv(branch, fin, fout, verbose)
+  elif args.op == "supp2csv":
+    Supp2Csv(args.branch, fin, fout, args.verbose)
     fout.close()
 
   else:
-    ErrorExit('No operation specified.')
+    parser.error('Unknown operation: %s'%args.op)

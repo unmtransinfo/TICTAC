@@ -12,15 +12,17 @@ DATADIR="$cwd/data"
 #
 ###
 #MeSH:
-MESHDIR="/home/data/MeSH/2018"
+#MESHYEAR="2018"
+MESHYEAR="2020"
+MESHDIR="/home/data/MeSH/${MESHYEAR}"
 DICTDIR="${DATADIR}/dict/mesh"
 #
-python/mesh_xml_utils.py --desc2csv --branch "C" \
-        --i $MESHDIR/desc2018.xml \
+${cwd}/python/mesh_xml_utils.py desc2csv --branch "C" \
+        --i $MESHDIR/desc${MESHYEAR}.xml.gz \
         --o $DATADIR/mesh_disease.tsv
 #
-python/mesh_xml_utils.py --supp2csv --branch "C" \
-        --i $MESHDIR/supp2018.xml \
+${cwd}/python/mesh_xml_utils.py supp2csv --branch "C" \
+        --i $MESHDIR/supp${MESHYEAR}.xml.gz \
         --o $DATADIR/mesh_supp_disease.tsv
 #
 cat $DATADIR/mesh_disease.tsv \

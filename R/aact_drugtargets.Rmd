@@ -24,8 +24,10 @@ ClinicalTrials.gov was first released in 2000. As of March 2019, ClinicalTrials.
 
 * Prior belief is that target NER is not likely to be useful, since clinical trials descriptive text is not 
 generally written to communicate molecular mechanisms to research scientists, but with focus on _clinical_ 
-efficacy and safety. In due diligence we perform target NER, but how to quantify concordance or refutation with
-our prior belief?
+efficacy and safety. In due diligence we perform target NER, and to quantify concordance or refutation with
+our prior belief, we also perform target NER on arbitrary non-biomedical text, tweets from the Twitter API for
+__\#brexit__ (26 Nov 2019). We find that 8.64 target entities per 1000 chars in the tweets, vs. 6.63 in the clinical trials
+descriptions. While not proof this does support our belief and less direct method via chemical NER.
 
 ## Identifier mappings:
 
@@ -65,7 +67,7 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE)
 base::date()
 ```
 
-```{r setup, echo=TRUE, message=FALSE}
+```{r setup, echo=FALSE, message=FALSE}
 library(readr)
 library(data.table)
 library(tm)
@@ -147,7 +149,7 @@ knitr::kable(merge(studies[, .(N_studies = .N), by="overall_status"], drugs[, .(
 
 ```{r message=FALSE}
 ax0 <- list(showline=F,zeroline=F,showticklabels=F,showgrid=F)
-p2 <- plot_ly() %>%
+plot_ly() %>%
   add_pie(data=drugs[, .(.N), by="phase"], labels=~phase, values=~N, sort=F,
           textinfo="label+percent", textposition="inside", domain=list(x=c(0, 0.5), y=c(0, 1))) %>%
   add_pie(data = drugs[, .(.N), by="overall_status"], labels=~overall_status, values=~N,
@@ -156,20 +158,18 @@ p2 <- plot_ly() %>%
                   xanchor = "center", xref = "paper", yref = "paper", showarrow = F,
                   text = c("Phase", "Overall status"),
                   font = list(family = "Arial", size = 20)) %>%
-  layout(title=paste0("AACT: Drug trials by Phase and Status<br>(N_total = ", nrow(drugs), ")"),
+  layout(title=paste0("AACT: Drug trials by phase and status<br>(N_total = ", nrow(drugs), ")"),
          xaxis=ax0, yaxis=ax0, margin=list(t=120), font=list(family="Arial", size=20), showlegend=F)
-p2
 ```
 
 ## Drug studies and drugs by start_year
 
 ```{r message=FALSE}
-p1 <- plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], drugs[, .(N_drugs = .N), by="start_year"], by="start_year"), x = ~start_year, name="studies", y = ~N_studies) %>%
+plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], drugs[, .(N_drugs = .N), by="start_year"], by="start_year"), x = ~start_year, name="studies", y = ~N_studies) %>%
 	add_trace(name="drugs", y = ~N_drugs) %>%
-	layout(title="AACT: Studies and drugs vs. start_year", xaxis=list(range=c(1990, 2020), tickangle=-45), yaxis=list(title="N"),
+	layout(title="AACT: Studies and drugs vs. start year", xaxis=list(range=c(1990, 2020), tickangle=-45), yaxis=list(title="N"),
 	       barmode="stack",
 	       margin=list(t=120), font=list(family="Monospace", size=20))
-p1
 ```
 
 # NextMove Leadmine Chemical NER
@@ -180,7 +180,7 @@ Now we can use cheminformatically rigorous counts for drugs as active pharmaceut
 ```{r message=FALSE}
 cner <- read_delim("data/aact_drugs_leadmine.tsv",  "\t", escape_double=F, trim_ws=T)
 setDT(cner)
-setnames(cner, old=c("DocName","ResolvedForm"), new=c("id","smiles"))
+setnames(cner, old=c("DocName", "ResolvedForm"), new=c("id","smiles"))
 sprintf("Drug unique SMILES resolved by LeadMine: %d ; unique intervention IDs: %d", uniqueN(cner$smiles), uniqueN(cner$id))
 ```
 ## Chemical NER mentions
@@ -345,12 +345,11 @@ tdl_counts <- tgt[, .(.N), by = "idgTDL"]
 tdl_counts$tdl_color <- ifelse(tdl_counts$idgTDL=="Tdark", "gray", ifelse(tdl_counts$idgTDL=="Tbio", "red", ifelse(tdl_counts$idgTDL=="Tchem", "green", ifelse(tdl_counts$idgTDL=="Tclin", "blue", NA))))
 tdl_counts$idgTDL <- factor(tdl_counts$idgTDL, levels=tdls)
 sprintf("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N)
-p3 <- plot_ly() %>%
+plot_ly() %>%
 	add_trace(type="bar", data=tdl_counts, x=~idgTDL, y=~N, marker=list(color=~tdl_color),
 	          text=~N, textposition="auto") %>%
 	layout(title="Targets by IDG Target Development Level (TDL)",
 	       xaxis=list(title="TDL"), margin=list(t=120), font=list(family="Monospace", size=20))
-p3
 ```
 
 # JensenLab Tagger Diseases NER
