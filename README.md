@@ -62,8 +62,9 @@ Dependencies:
 * [PubChem REST API](http://pubchem.ncbi.nlm.nih.gov/rest/pug/)
 * [ChEMBL REST API](https://www.ebi.ac.uk/chembl/ws)
 * [ChEMBL webresource client](https://github.com/chembl/chembl_webresource_client) \(Python client library\).
-* [nextmove-tools](https://github.com/unmtransinfo/nextmove-tools) \(local Java library\)
 * [JensenLab](https://jensenlab.org/) [Tagger](https://bitbucket.org/larsjuhljensen/tagger/).
+* [NextMove LeadMine](http://nextmovesoftware.com).
+* [nextmove-tools](https://github.com/unmtransinfo/nextmove-tools)
 
 ### Association semantics:
 * **keywords**, **conditions**, **studies** and **summaries**: reported terms and free text which may be text mined for intended associations.
