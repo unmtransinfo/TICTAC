@@ -1,6 +1,8 @@
 #!/bin/sh
 #############################################################################
 #
+printf "Executing: %s\n" "$(basename $0)"
+#
 cwd=$(pwd)
 #
 NM_ROOT="/home/app/nextmove"

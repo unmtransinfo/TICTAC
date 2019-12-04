@@ -50,9 +50,9 @@ def main():
   if not fin:
     parser.error('cannot open: %s'%(args.ifile))
   if args.ofile:
-    fout=file(args.ofile, 'w')
+    fout = open(args.ofile, 'w')
   else:
-    fout=sys.stdout
+    fout = sys.stdout
 
   logging.info(time.asctime())
 

@@ -5,10 +5,12 @@
 #   * https://github.com/unmtransinfo/nextmove-tools (LeadMine API client)
 ###
 #
+printf "Executing: %s\n" "$(basename $0)"
+#
 set -e
 set -x
 #
-DATE=$(date +'%Y%M%d')
+DATE=$(date +'%Y%m%d')
 #
 cwd=$(pwd)
 #

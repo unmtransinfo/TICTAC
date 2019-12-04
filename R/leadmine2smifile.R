@@ -12,7 +12,9 @@ if (length(args)>0)
   quit()  
 }
 
-drugs_leadmine <- read_delim(ifile,  "\t", escape_double=F, trim_ws=T)
+drugs_leadmine <- read_delim(ifile,  "\t", escape_double=F, trim_ws=T,
+	col_types=cols(.default=col_character(),
+	BegIndex=col_double(), CorrectionDistance=col_double()))
 setDT(drugs_leadmine)
 setnames(drugs_leadmine, old=c("DocName", "ResolvedForm"), new=c("id", "smiles"))
 #

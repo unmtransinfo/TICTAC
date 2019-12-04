@@ -1,6 +1,7 @@
 #!/bin/bash
-#############################################################################
-#############################################################################
+###
+#
+printf "Executing: %s\n" "$(basename $0)"
 #
 cwd=$(pwd)
 #
@@ -11,8 +12,8 @@ ${cwd}/R/leadmine2smifile.R data/aact_drugs_leadmine.tsv \
 	|grep -v '\*' \
 	>data/aact_drugs_smi.smi
 #
-${cwd}/python/pubchem_mols2ids.py \
-	--v \
+${cwd}/python/pubchem_mols2ids.py --v \
+	--ifmt "smiles" \
 	--i data/aact_drugs_smi.smi \
 	--o data/aact_drugs_smi_pubchem_cid.tsv
 #
@@ -32,10 +33,6 @@ printf "SMI2CID hit rate (from PubChem): (%d / %d = %.1f%%)\n" \
 # cids2inchi gets both InChI and InChIKey
 ${cwd}/python/pubchem_query.py cids2inchi --v \
 	--i data/aact_drugs_smi_pubchem.cid \
-	--o data/aact_drugs_smi_pubchem_cid2ink.csv
-#
-${cwd}/python/pandas_utils.py csv2tsv \
-	--i data/aact_drugs_smi_pubchem_cid2ink.csv \
 	--o data/aact_drugs_smi_pubchem_cid2ink.tsv
 #
 ${cwd}/python/pandas_utils.py selectcols \
@@ -48,15 +45,13 @@ n_ink=$(cat data/aact_drugs_smi_pubchem.ink |wc -l)
 printf "InChIKeys (from PubChem): %d\n" ${n_ink}
 ###
 # 3334/3801 found
-${cwd}/python/chembl_fetchbyid.py \
+${cwd}/python/chembl_fetchbyid.py inchikey2Mol \
 	--i data/aact_drugs_smi_pubchem.ink \
-	--o data/aact_drugs_ink2chembl.tsv \
-	inchikey2Mol
+	--o data/aact_drugs_ink2chembl.tsv
 #
-${cwd}/python/pandas_utils.py \
+${cwd}/python/pandas_utils.py selectcols \
 	--i data/aact_drugs_ink2chembl.tsv \
 	--coltags "molecule_chembl_id" \
-	selectcols \
 	|sed -e '1d' |sort -u \
 	>data/aact_drugs_ink2chembl.chemblid
 #
@@ -65,10 +60,9 @@ printf "Mols (from ChEMBL): %d\n" ${n_chembl_mol}
 #
 ###
 #This takes several hours.
-${cwd}/python/chembl_fetchbyid.py -v \
+${cwd}/python/chembl_fetchbyid.py cid2Activity -v \
 	--i data/aact_drugs_ink2chembl.chemblid \
-	--o data/aact_drugs_chembl_activity.tsv \
-	cid2Activity
+	--o data/aact_drugs_chembl_activity.tsv
 #
 n_chembl_act=$(cat data/aact_drugs_chembl_activity.tsv |sed -e '1d' |wc -l)
 printf "Activities (from ChEMBL): %d\n" ${n_chembl_act}
@@ -82,15 +76,13 @@ ${cwd}/python/pandas_utils.py selectcols \
 n_chembl_tgt=$(cat data/aact_drugs_chembl_target.chemblid |wc -l)
 printf "Targets (from ChEMBL): %d\n" ${n_chembl_tgt}
 #
-${cwd}/python/chembl_fetchbyid.py -v \
+${cwd}/python/chembl_fetchbyid.py tid2Targetcomponents -v \
 	--i data/aact_drugs_chembl_target.chemblid \
-	--o data/aact_drugs_chembl_target_component.tsv \
-	tid2Targetcomponents
+	--o data/aact_drugs_chembl_target_component.tsv
 #
-n_chembl_tgtc=$(${cwd}/python/pandas_utils.py \
+n_chembl_tgtc=$(${cwd}/python/pandas_utils.py selectcols \
 	--i data/aact_drugs_chembl_target_component.tsv \
 	--coltags "component_id" \
-	selectcols \
 	|sed -e '1d' |wc -l)
 printf "Target components (from ChEMBL): %d\n" ${n_chembl_tgtc}
 ###

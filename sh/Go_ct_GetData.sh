@@ -28,6 +28,8 @@
 #
 set -e
 #
+printf "Executing: %s\n" "$(basename $0)"
+#
 DBHOST="aact-db.ctti-clinicaltrials.org"
 DBNAME="aact"
 #

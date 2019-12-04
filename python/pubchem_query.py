@@ -17,15 +17,11 @@ API_BASE_PATH='/rest/pug'
 ##############################################################################
 if __name__=='__main__':
   PROG=os.path.basename(sys.argv[0])
-
-  logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-
   ops = [ "list_substancesources", "list_assaysources", "smi2cid", "name2sids",
         "name2cids", "cids2smi", "cids2ism", "cids2sdf", "cids2props", "cids2inchi",
         "cids2synonyms", "cids2sids", "cids2assaysummary", "sids2cids", "sids2sdf",
         "sids2assaysummary", "aid2name", "assaydescribe", "assaydescriptions",
         "assayresults" ]
-
   parser = argparse.ArgumentParser(description="PubChem PUG REST client")
   parser.add_argument("op",choices=ops,help='operation')
   parser.add_argument("--i", dest="ifile", help="input IDs file (CID|SID)")
@@ -41,6 +37,9 @@ if __name__=='__main__':
   parser.add_argument("--o", dest="ofile", help="output (TSV)")
   parser.add_argument("-v", "--verbose", default=0, action="count")
   args = parser.parse_args()
+
+  logging.basicConfig(format='%(levelname)s:%(message)s', level=(
+	logging.DEBUG if args.verbose>1 else logging.INFO))
 
   BASE_URL = 'https://'+args.api_host+args.api_base_path
 

@@ -38,9 +38,10 @@
 ###  (name, smiles; inchi by POST only)
 ##############################################################################
 import sys,os,re,math,time,logging
+from io import StringIO
 import urllib,urllib.request,urllib.parse
 import csv,json
-#import xml.dom.minidom #replace with ETree
+import pandas as pd
 #
 import rest_utils
 import time_utils
@@ -92,29 +93,24 @@ def Cid2Sdf(base_url,id_query,verbose=0):
 #############################################################################
 def Cid2Smiles(base_url, id_query, verbose=0):
   url=(base_url+'/compound/cid/%d/property/IsomericSMILES/JSON'%id_query)
-  if verbose>2: logging.info('URL: %s'%url)
   d=rest_utils.GetURL(url, parse_json=True, verbose=verbose)
   try:
     props = d['PropertyTable']['Properties']
     smi=props[0]['IsomericSMILES']
   except Exception as  e:
     logging.info('Error (Exception): %s'%e)
-    #logging.info('DEBUG: d = %s'%str(d))
     smi=None
   return smi
 
 ##############################################################################
 def Sid2Sdf(base_url, id_query, verbose=0):
   url=(base_url+'/substance/sid/%d/SDF'%id_query)
-  if verbose>2: logging.info('URL: %s'%url)
-  #txt=rest_utils.GetURL(url,headers={'Accept':'%s'%OFMTS['TXT']},verbose=verbose)
-  txt=rest_utils.GetURL(url,verbose=verbose)
+  txt=rest_utils.GetURL(url, verbose=verbose)
   return txt
 
 #############################################################################
 def Sid2AssaySummaryCSV(base_url,id_query,verbose=0):
   txt=rest_utils.GetURL(base_url+'/substance/sid/%d/assaysummary/CSV'%id_query,verbose=verbose)
-  #logging.info('DEBUG: 1st line: %s'%txt.splitlines()[0])
   return txt
 
 #############################################################################
@@ -125,9 +121,7 @@ def Sid2Cid(base_url,sid,verbose=0):
     cid=infos[0]['CID'][0]
   except Exception as  e:
     logging.info('Error (Exception): %s'%e)
-    #logging.info('DEBUG: d = %s'%str(d))
     cid=None
-  #logging.info('DEBUG: sid=%s ; cid=%s'%(sid,cid))
   return cid
 
 #############################################################################
@@ -137,15 +131,14 @@ def Sid2Smiles(base_url,sid,verbose=0):
 
 #############################################################################
 def Cid2Sids(base_url,cid,verbose=0):
-  d=rest_utils.GetURL(base_url+'/compound/cid/%d/sids/JSON'%cid,parse_json=True,verbose=verbose)
+  d=rest_utils.GetURL(base_url+'/compound/cid/%d/sids/JSON'%cid, parse_json=True, verbose=verbose)
   sids=[]
   try:
     infos = d['InformationList']['Information']
     for info in infos:
       sids.extend(info['SID'])
-  except Exception as  e:
+  except Exception as e:
     logging.info('Error (Exception): %s'%e)
-    #logging.info('DEBUG: d = %s'%str(d))
   return sids
 
 #############################################################################
@@ -154,17 +147,17 @@ def Cid2Sids(base_url,cid,verbose=0):
 ### specifies "safe" chars to not quote, '/' being the default, so specify
 ### '' for no safe chars.
 #############################################################################
-def Smi2Ids(base_url,smi,verbose):
-  d=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib.parse.quote(smi,''),parse_json=True,verbose=verbose)
-  if d and d.has_key('IdentifierList'):
+def Smi2Ids(base_url, smi, verbose):
+  d=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib.parse.quote(smi, ''), parse_json=True, verbose=verbose)
+  if d and 'IdentifierList' in d:
     return d['IdentifierList']
   else:
     return None
 
 #############################################################################
-def Smi2Cids(base_url,smi,verbose):
-  ids = Smi2Ids(base_url,smi,verbose)
-  if ids and ids.has_key('CID'):
+def Smi2Cids(base_url, smi, verbose):
+  ids = Smi2Ids(base_url, smi, verbose)
+  if ids and 'CID' in ids:
     return ids['CID']
   else:
     return []
@@ -174,9 +167,8 @@ def Smi2Cids(base_url,smi,verbose):
 #  cids: '644415,5767160,644417,644418,644420'
 #  Very slow -- progress?
 #############################################################################
-def Sids2Cids(base_url,ids,verbose=0):
+def Sids2Cids(base_url, ids, verbose=0):
   ## Use method POST; put SIDs in data.
-  #ids_txt='sid='+(','.join(map(lambda x:str(x), ids)))
   ids_dict={'sid':(','.join(map(lambda x:str(x), ids)))}
   rval=rest_utils.PostURL(url=base_url+'/substance/sid/cids/TXT?cids_type=standardized',
 	headers={'Accept':OFMTS['TXT'],'Content-type':'application/x-www-form-urlencoded'},
@@ -192,7 +184,7 @@ def Sids2Cids(base_url,ids,verbose=0):
   return cids
 
 #############################################################################
-def Sids2CidsCSV(base_url,ids,fout,verbose=0):
+def Sids2CidsTSV(base_url, ids, fout, verbose=0):
   t0 = time.time()
   fout.write('sid,cid\n')
   n_in=0; n_out=0; n_err=0;
@@ -213,8 +205,8 @@ def Sids2CidsCSV(base_url,ids,fout,verbose=0):
   logging.info('errors: %d'%n_err)
 
 #############################################################################
-def Cids2SidsCSV(base_url,ids,fout,verbose=0):
-  fout.write('cid,sid\n')
+def Cids2SidsTSV(base_url,ids,fout,verbose=0):
+  fout.write('cid\tsid\n')
   n_out=0; n_err=0;
   for cid in ids:
     try:
@@ -224,13 +216,10 @@ def Cids2SidsCSV(base_url,ids,fout,verbose=0):
       logging.info('Error (Exception): %s'%e)
       n_err+=1
       continue
-      #logging.info('DEBUG: d = %s'%str(d))
     for sid in sids:
-      fout.write('%s,%s\n'%(cid,sid))
+      fout.write('%s\t%s\n'%(cid,sid))
       n_out+=1
-  logging.info('cids in: %d'%len(ids))
-  logging.info('sids out: %d'%n_out)
-  logging.info('errors: %d'%n_err)
+  logging.info('CIDs in: %d; SIDs out: %d; errors: %d'%(len(ids), n_out, n_err))
 
 #############################################################################
 def Cids2Assaysummary(base_url,ids,fout,verbose=0):
@@ -247,9 +236,7 @@ def Cids2Assaysummary(base_url,ids,fout,verbose=0):
       if i==0 and n_out>0: continue #1 header only
       fout.write('%s\n'%(row))
       n_out+=1
-  logging.info('cids in: %d'%len(ids))
-  logging.info('assay summaries out: %d'%n_out)
-  logging.info('errors: %d'%n_err)
+  logging.info('CIDs in: %d; assay summaries out: %d; errors: %d'%(len(ids), n_out, n_err))
 
 #############################################################################
 def Sids2Assaysummary(base_url, ids, fout, verbose=0):
@@ -266,9 +253,7 @@ def Sids2Assaysummary(base_url, ids, fout, verbose=0):
       if i==0 and n_out>0: continue #1 header only
       fout.write('%s\n'%(row))
       n_out+=1
-  logging.info('sids in: %d'%len(ids))
-  logging.info('assay summaries out: %d'%n_out)
-  logging.info('errors: %d'%n_err)
+  logging.info('SIDs in: %d; assay summaries out: %d; errors: %d'%(len(ids), n_out, n_err))
 
 #############################################################################
 def Cids2Properties(base_url, ids, fout, verbose):
@@ -278,9 +263,14 @@ def Cids2Properties(base_url, ids, fout, verbose):
   rval=rest_utils.PostURL(url=base_url+'/compound/cid/property/IsomericSMILES,MolecularFormula,MolecularWeight,XLogP,TPSA/CSV',
 	headers={'Accept':OFMTS['CSV'],'Content-type':'application/x-www-form-urlencoded'},
 	data=ids_dict)
-  lines=rval.splitlines()
-  for line in lines:
-    fout.write(line+'\n')
+
+  #lines=rval.splitlines()
+  #for line in lines:
+  #  fout.write(line+'\n')
+
+  df = pd.read_csv(StringIO(rval), sep=',')
+  df.to_csv(fout, sep='\t', index=False)
+  logging.info("Input IDs: {0}; Output records: {1}".format(len(ids), df.shape[0]))
 
 #############################################################################
 def Cids2Inchi(base_url, ids, fout, verbose):
@@ -290,9 +280,15 @@ def Cids2Inchi(base_url, ids, fout, verbose):
   rval=rest_utils.PostURL(url=base_url+'/compound/cid/property/InChI,InChIKey/CSV',
 	headers={'Accept':OFMTS['TSV'],'Content-type':'application/x-www-form-urlencoded'},
 	data=ids_dict, verbose=verbose)
-  lines=rval.splitlines()
-  for line in lines:
-    fout.write(line+'\n')
+
+  #lines=rval.splitlines()
+  #for line in lines:
+  #  fout.write(line+'\n')
+  #logging.info("Input IDs: {0}; Output InChIs: {1}".format(len(ids), len(lines)-1))
+
+  df = pd.read_csv(StringIO(rval), sep=',')
+  df.to_csv(fout, sep='\t', index=False)
+  logging.info("Input IDs: {0}; Output InChIs: {1}".format(len(ids), df.shape[0]))
 
 #############################################################################
 ### Request in chunks.  Works for 50, and not for 200 (seems to be a limit).
@@ -311,20 +307,20 @@ def Cids2Sdf(base_url,ids,fout,verbose):
 #############################################################################
 ### Request in chunks.  Works for 50, and not for 200 (seems to be a limit).
 #############################################################################
-def Sids2Sdf(base_url,sids,fout,skip,nmax,verbose):
+def Sids2Sdf(base_url, sids, fout, skip, nmax, verbose):
   n_sid_in=0; n_sdf_out=0;
   if verbose:
     if skip: logging.info('skip: [1-%d]'%skip)
   nchunk=50; nskip_this=skip;
   while True:
     if nskip_this>=len(sids): break
-    nchunk=min(nchunk,nmax-(nskip_this-skip))
+    nchunk=min(nchunk, nmax-(nskip_this-skip))
     n_sid_in+=nchunk
-    idstr=(','.join(map(lambda x:str(x),sids[nskip_this:nskip_this+nchunk])))
-    txt=rest_utils.PostURL(base_url+'/substance/sid/SDF',data={'sid':idstr},verbose=verbose)
+    idstr=(','.join(map(lambda x:str(x), sids[nskip_this:nskip_this+nchunk])))
+    txt=rest_utils.PostURL(base_url+'/substance/sid/SDF', data={'sid':idstr}, verbose=verbose)
     if txt:
       fout.write(txt)
-      eof = re.compile(r'^\$\$\$\$',re.M)
+      eof = re.compile(r'^\$\$\$\$', re.M)
       n_sdf_out_this = len(eof.findall(txt))
       n_sdf_out+=n_sdf_out_this
 
@@ -333,14 +329,14 @@ def Sids2Sdf(base_url,sids,fout,skip,nmax,verbose):
       logging.info('NMAX limit reached: %d'%nmax)
       break
 
-  #logging.info('sids in: %d ; sdfs out: %d'%(n_sid_in,n_sdf_out))
+  #logging.info('sids in: %d ; sdfs out: %d'%(n_sid_in, n_sdf_out))
 
   return n_sid_in,n_sdf_out
 
 #############################################################################
 ### Request returns CSV format CID,"SMILES" which must be fixed.
 #############################################################################
-def Cids2Smiles(base_url,ids,isomeric,fout,verbose):
+def Cids2Smiles(base_url, ids, isomeric, fout, verbose):
   t0 = time.time()
   nchunk=50; nskip_this=0;
   n_in=0; n_out=0; n_err=0;
@@ -348,34 +344,32 @@ def Cids2Smiles(base_url,ids,isomeric,fout,verbose):
     if nskip_this>=len(ids): break
     ids_this = ids[nskip_this:nskip_this+nchunk]
     n_in+=len(ids_this)
-    idstr=(','.join(map(lambda x:str(x),ids_this)))
+    idstr=(','.join(map(lambda x:str(x), ids_this)))
     d={'cid':idstr}
     prop = 'IsomericSMILES' if isomeric else 'CanonicalSMILES'
-    txt=rest_utils.PostURL(base_url+'/compound/cid/property/%s/CSV'%prop,data=d,verbose=verbose)
+    txt=rest_utils.PostURL(base_url+'/compound/cid/property/%s/CSV'%prop, data=d, verbose=verbose)
     if not txt:
       n_err+=1
       break
     lines=txt.splitlines()
     for line in lines:
-      cid,smi = re.split(',',line)
+      cid,smi = re.split(',', line)
       if cid.upper()=='CID': continue #header
       try:
         cid=int(cid)
       except:
         continue
-      smi=smi.replace('"','')
-      fout.write('%s %d\n'%(smi,cid))
+      smi=smi.replace('"', '')
+      fout.write('%s %d\n'%(smi, cid))
       n_out+=1
     nskip_this+=nchunk
     if verbose>0 and (n_in%1000)==0:
-      logging.info('processed: %6d / %6d (%.1f%%); elapsed time: %s'%(n_in,len(ids), 100.0*n_in/len(ids),time_utils.NiceTime(time.time()-t0)))
-  logging.info('cids in: %d'%n_in)
-  logging.info('smiles out: %d'%n_out)
-  logging.info('errors: %d'%n_err)
+      logging.info('processed: %6d / %6d (%.1f%%); elapsed time: %s'%(n_in, len(ids), 100.0*n_in/len(ids), time_utils.NiceTime(time.time()-t0)))
+  logging.info('CIDs in: %d; SMILES out: %d; errors: %d'%(n_in, n_out, n_err))
   return
 
 #############################################################################
-def Inchi2Cids(base_url,inchi,verbose):
+def Inchi2Cids(base_url, inchi, verbose):
   '''	Must be POST with "Content-Type: application/x-www-form-urlencoded"
 	or "Content-Type: multipart/form-data" with the POST body formatted accordingly.
 	See: http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html and
@@ -402,15 +396,20 @@ def Inchi2Cids(base_url,inchi,verbose):
   return cids
 
 #############################################################################
-def Aid2DescriptionXML(base_url,id_query,verbose=0):
-  x=rest_utils.GetURL(base_url+'/assay/aid/%d/description/XML'%id_query,verbose=verbose)
+def Aid2DescriptionXML(base_url, id_query, verbose=0):
+  x=rest_utils.GetURL(base_url+'/assay/aid/%d/description/XML'%id_query, verbose=verbose)
   return x
 
 #############################################################################
-def GetAssayDescriptions(base_url,ids,fout,skip,nmax,verbose=0):
-  import xpath
+def GetAssayDescriptions(base_url, ids, fout, skip, nmax, verbose=0):
+  #import xml.dom.minidom #old
+  #import xpath #old
+  from xml.etree import ElementTree #newer
+  from xml.parsers import expat #newer
+
   fout.write('ID,Source,Name,Target,Date\n')
-  adesc_xpath='/PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription'
+  #adesc_xpath='/PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription'
+  adesc_xpath='./PC-AssayContainer/PC-AssaySubmit/PC-AssaySubmit_assay/PC-AssaySubmit_assay_descr/PC-AssayDescription'
   tag_name='PC-AssayDescription_name'
   tag_source='PC-DBTracking_name'
   tag_year='Date-std_year'
@@ -422,23 +421,45 @@ def GetAssayDescriptions(base_url,ids,fout,skip,nmax,verbose=0):
     n_in+=1
     if skip and n_in<skip: continue
     if nmax and n_out==nmax: break
-    xmlstr=rest_utils.GetURL(base_url+'/assay/aid/%d/description/XML'%aid,verbose=verbose)
-    dom=xml.dom.minidom.parseString(xmlstr)
-    desc_nodes = xpath.find(adesc_xpath,dom)
+
+    #Old way.
+    #xmlstr=rest_utils.GetURL(base_url+'/assay/aid/%d/description/XML'%aid,verbose=verbose)
+    #dom=xml.dom.minidom.parseString(xmlstr)
+    #desc_nodes = xpath.find(adesc_xpath,dom)
+    #for desc_node in desc_nodes:
+    #  name=xpath.findvalue('//%s'%tag_name,desc_node)
+    #  source=xpath.findvalue('//%s'%tag_source,desc_node)
+    #  year=xpath.findvalue('//%s'%tag_year,desc_node)
+    #  month=xpath.findvalue('//%s'%tag_month,desc_node)
+    #  day=xpath.findvalue('//%s'%tag_day,desc_node)
+    #  ymd = (year+month+day) if (year and month and day) else ''
+    #  tgtname=xpath.findvalue('//%s'%tag_tgtname,desc_node)
+    #  fout.write('%d,"%s","%s","%s",%s\n'%(aid,source,name,(tgtname if tgtname else ''),ymd))
+    #  n_out+=1
+
+    #Newer way.
+    url = (base_url+'/assay/aid/%s/description/XML'%aid)
+    logging.debug(url)
+    tree = ElementTree.parse(urllib.request.urlopen(base_url+'/assay/aid/%s/description/XML'%aid))
+    root = tree.getroot()
+    #logging.debug(ElementTree.tostring(root))
+    #print(ElementTree.tostring(root, encoding='utf-8'), file=sys.stderr)
+    desc_nodes = tree.findall(adesc_xpath)
+    logging.debug('desc_nodes: %d'%len(desc_nodes))
     for desc_node in desc_nodes:
-      name=xpath.findvalue('//%s'%tag_name,desc_node)
-      source=xpath.findvalue('//%s'%tag_source,desc_node)
-      year=xpath.findvalue('//%s'%tag_year,desc_node)
-      month=xpath.findvalue('//%s'%tag_month,desc_node)
-      day=xpath.findvalue('//%s'%tag_day,desc_node)
+      name=desc_node.find('//%s'%tag_name).text
+      source=desc_node.find('//%s'%tag_source).text
+      year=desc_node.find('//%s'%tag_year).text
+      month=desc_node.find('//%s'%tag_month).text
+      day=desc_node.find('//%s'%tag_day).text
       ymd = (year+month+day) if (year and month and day) else ''
-      tgtname=xpath.findvalue('//%s'%tag_tgtname,desc_node)
-      fout.write('%d,"%s","%s","%s",%s\n'%(aid,source,name,(tgtname if tgtname else ''),ymd))
+      tgtname=desc_node.find('//%s'%tag_tgtname).text
+      fout.write('%d\t"%s"\t"%s"\t"%s"\t%s\n'%(aid, source, name, (tgtname if tgtname else ''), ymd))
       n_out+=1
 
 #############################################################################
 def OutcomeCode(txt):
-  return OUTCOME_CODES[txt.lower()] if OUTCOME_CODES.has_key(txt.lower()) else OUTCOME_CODES['unspecified']
+  return OUTCOME_CODES[txt.lower()] if txt.lower() in OUTCOME_CODES else OUTCOME_CODES['unspecified']
 
 #############################################################################
 def GetAssayResults_Screening2(base_url,aids,sids,fout,skip,nmax,verbose=0):
@@ -535,7 +556,7 @@ Must chunk the SIDs, since requests limited to 10k SIDs.
       if not type(rval) is dict:
         logging.info('Error: %s'%(str(rval)))
         break
-      pcac = rval['PC_AssayContainer'] if rval.has_key('PC_AssayContainer') else None
+      pcac = rval['PC_AssayContainer'] if 'PC_AssayContainer' in rval else None
       if len(pcac)<1:
         logging.info('Error: [%s] empty PC_AssayContainer.'%aid)
         break
@@ -545,17 +566,17 @@ Must chunk the SIDs, since requests limited to 10k SIDs.
         if not assay: continue
         if verbose>2:
           logging.info(json.dumps(assay,indent=2))
-        ameta = assay['assay'] if assay.has_key('assay') else None
-        adata = assay['data'] if assay.has_key('data') else None
+        ameta = assay['assay'] if 'assay' in assay else None
+        adata = assay['data'] if 'data' in assay else None
         if not ameta: logging.info('Error: [%s] no metadata.'%aid)
         if not adata: logging.info('Error: [%s] no data.'%aid)
         for datum in adata:
-          sid = datum['sid'] if datum.has_key('sid') else ''
-          outcome = datum['outcome'] if datum.has_key('outcome') else ''
-          version = datum['version'] if datum.has_key('version') else ''
-          rank = datum['rank'] if datum.has_key('rank') else ''
-          date = datum['date'] if datum.has_key('date') else {}
-          year = date['std']['year'] if date.has_key('std') and date['std'].has_key('year') else ''
+          sid = datum['sid'] if 'sid' in datum else ''
+          outcome = datum['outcome'] if 'outcome' in datum else ''
+          version = datum['version'] if 'version' in datum else ''
+          rank = datum['rank'] if 'rank' in datum else ''
+          date = datum['date'] if 'date' in datum else {}
+          year = date['std']['year'] if 'std' in date and 'year' in date['std'] else ''
           fout.write('%d,%s,%d,%s,%s,%s\n'%(aid,sid,OutcomeCode(outcome),version,rank,year))
           fout.flush()
           n_out_this+=1
@@ -568,32 +589,39 @@ Must chunk the SIDs, since requests limited to 10k SIDs.
 #############################################################################
 def AssayXML2NameAndSource(xmlstr):
   '''Required: xpath - XPath Queries For DOM Trees, http://py-dom-xpath.googlecode.com/'''
-  import xpath
-  dom=xml.dom.minidom.parseString(xmlstr)
   tag_name='PC-AssayDescription_name'
-  name=xpath.findvalue('//%s'%tag_name,dom)  ##1st
   tag_source='PC-DBTracking_name'
-  source=xpath.findvalue('//%s'%tag_source,dom)  ##1st
+
+  #import xpath #old
+  #dom=xml.dom.minidom.parseString(xmlstr)
+  #name=xpath.findvalue('//%s'%tag_name,dom)  ##1st
+  #source=xpath.findvalue('//%s'%tag_source,dom)  ##1st
+
+  from xml.etree import ElementTree #newer
+
+  root = ElementTree.fromstring(xmlstr)
+  name=root.find('//%s'%tag_name).text  ##1st
+  source=root.find('//%s'%tag_sourcedom).text  ##1st
+
   return name,source
 
 #############################################################################
-def DescribeAssay(base_url,id_query,verbose=0):
+def DescribeAssay(base_url, id_query, verbose=0):
   rval=rest_utils.GetURL(base_url+'/assay/aid/%d/description/JSON'%id_query,parse_json=True,verbose=verbose)
-  #logging.info(json.dumps(rval,indent=2))
   assays = rval['PC_AssayContainer']
-  print('aid,name,assay_group,project_category,activity_outcome_method')
+  print('aid\tname\tassay_group\tproject_category\tactivity_outcome_method')
   for assay in assays:
     aid = assay['assay']['descr']['aid']['id']
     name = assay['assay']['descr']['name']
     assay_group = assay['assay']['descr']['assay_group'][0]
     project_category = assay['assay']['descr']['project_category']
     activity_outcome_method = assay['assay']['descr']['activity_outcome_method']
-    vals = [aid,name,assay_group,project_category,activity_outcome_method]
-    print(','.join(map(lambda s: '"%s"'%s, vals)))
+    vals = [aid, name, assay_group, project_category, activity_outcome_method]
+    print('\t'.join(vals))
   return
 
 #############################################################################
-def Name2Sids(base_url,name,verbose):
+def Name2Sids(base_url, name, verbose):
   d=rest_utils.GetURL(base_url+'/substance/name/%s/sids/JSON'%urllib.parse.quote(name),parse_json=True,verbose=verbose)
   #return d[u'IdentifierList'][u'SID']
   return d['IdentifierList']['SID']
@@ -626,8 +654,8 @@ def Cid2Synonyms(base_url,cid,verbose):
   return list(synonyms)
 
 #############################################################################
-def Cids2Synonyms(base_url,cids,fout,skip,nmax,verbose):
-  fout.write('"cid","sids","synonyms"\n')
+def Cids2Synonyms(base_url, cids, fout, skip, nmax, verbose):
+  fout.write('CID\tSIDs\tsynonyms\n')
   sids = set([])
   i_cid=0;
   for cid in cids:
@@ -640,24 +668,23 @@ def Cids2Synonyms(base_url,cids,fout,skip,nmax,verbose):
       synonyms_this = Sid2Synonyms(base_url,sid,verbose)
       synonyms |= set(synonyms_this)
     synonyms_nice = SortCompoundNamesByNiceness(list(synonyms))[:10]
-    fout.write('%d,"%s","%s"\n'%(
-	cid,
-	';'.join(map(lambda x:str(x),sids_this)),
+    fout.write('%d\t%s\t%s\n'%(cid,
+	';'.join(map(lambda x:str(x), sids_this)),
 	';'.join(synonyms_nice)))
     if verbose:
       if synonyms_nice: s1=synonyms_nice[0]
       else: s1=None
-      logging.info('%d. cid=%d: sids: %d ; synonyms: %d (%s)'%(i_cid,cid,len(sids_this),len(synonyms),s1))
+      logging.info('%d. CID=%d: SIDs: %d ; synonyms: %d (%s)'%(i_cid,cid,len(sids_this),len(synonyms),s1))
     fout.flush()
     if nmax and i_cid>=(skip+nmax): break
   if verbose:
-    logging.info('total sids: %d'%(len(sids)))
+    logging.info('total SIDs: %d'%(len(sids)))
 
 #############################################################################
-def Name2Cids(base_url,name,verbose):
-  sids=Name2Sids(base_url,name,verbose)
+def Name2Cids(base_url, name, verbose):
+  sids=Name2Sids(base_url, name, verbose)
   cids={}
-  for cid in Sids2Cids(base_url,sids,verbose):
+  for cid in Sids2Cids(base_url, sids, verbose):
     cids[cid]=True
   cids=cids.keys()
   cids.sort() 
@@ -670,10 +697,10 @@ def NameNicenessScore(name):
   pat_text = re.compile(r'^[A-Za-z ]+$')
   if pat_proper.match(name): score+=100
   elif pat_text.match(name): score+=50
-  elif re.match(r'^[A-z][A-z][A-z][A-z][A-z][A-z][A-z].*$',name): score+=10
-  if re.search(r'[\[\]\{\}]',name): score-=50
-  if re.search(r'[_/\(\)]',name): score-=10
-  if re.search(r'\d',name): score-=10
+  elif re.match(r'^[A-z][A-z][A-z][A-z][A-z][A-z][A-z].*$', name): score+=10
+  if re.search(r'[\[\]\{\}]', name): score-=50
+  if re.search(r'[_/\(\)]', name): score-=10
+  if re.search(r'\d', name): score-=10
   score -= math.fabs(7-len(name))    #7 is optimal!
   return score
 
@@ -688,22 +715,16 @@ def SortCompoundNamesByNiceness(names):
   return [name for score,name in names_ranked]
 
 #############################################################################
-def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbose):
+def GetCpdAssayStats(base_url, cid, smiles, aidset, fout_mol, fout_act, aidhash, verbose):
   aids_tested=set(); aids_active=set();
   sids_tested=set(); sids_active=set();
   n_sam=0; n_sam_active=0; mol_active=False; mol_found=False;
 
   try:
-    fcsv=rest_utils.GetURL(base_url+'/compound/cid/%d/assaysummary/CSV'%cid,verbose=verbose)
+    fcsv=rest_utils.GetURL(base_url+'/compound/cid/%d/assaysummary/CSV'%cid, verbose=verbose)
   except Exception as e:
-    logging.info('ERROR: [%d] REST request failed; response code = %d'%(cid,e.code))
-    #if not http_errs.has_key(e.code): http_errs[e.code]=1
-    #else: http_errs[e.code]+=1
-    fout_mol.write("%s %d\n"%(smiles,cid))
-    return mol_found,mol_active,n_sam,n_sam_active
-  except Exception as e:
-    logging.info('ERROR: [%d] REST request failed; %s'%(cid,e))
-    fout_mol.write("%s %d\n"%(smiles,cid))
+    logging.info('ERROR: [%d] REST request failed; %s'%(cid, e))
+    fout_mol.write("%s %d\n"%(smiles, cid))
     return mol_found,mol_active,n_sam,n_sam_active
   mol_found=True
 
@@ -743,7 +764,7 @@ x:'"%s"'%x),csvReader.fieldnames))))
       return mol_found,mol_active,n_sam,n_sam_active
 
     if aidset:
-      if not aidset.has_key(aid):
+      if aid not in aidset:
         continue
       #logging.info('DEBUG: AID [%d] ok (pre-selected).'%(aid))
 
@@ -751,7 +772,7 @@ x:'"%s"'%x),csvReader.fieldnames))))
     n_sam+=1
     aidhash[aid]=True
     act_outcome=csvrow['Bioactivity Outcome'].lower()
-    if OUTCOME_CODES.has_key(act_outcome):
+    if act_outcome in OUTCOME_CODES:
       fout_act.write("%d,%d,%d,%d\n"%(cid,sid,aid,OUTCOME_CODES[act_outcome]))
     else:
       if verbose>2:
@@ -848,7 +869,7 @@ def GetCpdAssayData(base_url,cid_query,aidset,fout,verbose):
       continue
 
     n_act+=1
-    outcome_code = OUTCOME_CODES[outcome.lower()] if OUTCOME_CODES.has_key(outcome.lower()) else 0
+    outcome_code = OUTCOME_CODES[outcome.lower()] if outcome.lower() in OUTCOME_CODES else 0
 
     fout.write('%d,%d,%d,%d,%.3f\n'%(cid,sid,aid,outcome_code,actval))
 

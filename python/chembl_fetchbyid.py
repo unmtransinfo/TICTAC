@@ -6,7 +6,7 @@
 #############################################################################
 ### Not all fields included. Lists/dicts excluded.
 #############################################################################
-import sys,os,argparse,csv
+import sys,os,argparse,csv,logging
 
 from chembl_webresource_client.new_client import new_client
 
@@ -46,8 +46,8 @@ def CID2Activity(cids, args, fout):
       writer.writerow([(act[tag] if tag in act else '') for tag in tags])
       n_act+=1
     if args.verbose:
-      print('Progress: CIDs: %d / %d ; activities: %d'%(i-i_start, i_end-i_start, n_act), file=sys.stderr)
-  print('Output activities: %d'%n_act, file=sys.stderr)
+      logging.info('Progress: CIDs: %d / %d ; activities: %d'%(i-i_start, i_end-i_start, n_act))
+  logging.info('Output activities: %d'%n_act)
 
 #############################################################################
 def TID2Targetcomponents(tids, args, fout):
@@ -68,7 +68,7 @@ def TID2Targetcomponents(tids, args, fout):
         tc_vals=[(tc[tag] if tag in tc else '') for tag in tc_tags]
         writer.writerow(t_vals+tc_vals)
         ntc+=1
-  print('Output target components (PROTEIN): %d'%ntc, file=sys.stderr)
+  logging.info('Output target components (PROTEIN): %d'%ntc)
 
 #############################################################################
 def DID2Documents(dids, args, fout):
@@ -85,7 +85,7 @@ def DID2Documents(dids, args, fout):
         writer.writerow(d_tags)
       writer.writerow(d_vals)
       ndoc+=1
-  print('Output documents: %d'%ndoc, file=sys.stderr)
+  logging.info('Output documents: %d'%ndoc)
 
 #############################################################################
 def InchiKey2Molecule(inkeys, args, fout):
@@ -111,21 +111,23 @@ def InchiKey2Molecule(inkeys, args, fout):
         writer.writerow(['inchikey']+m_tags)
       writer.writerow(m_vals)
       n_mol+=1
-  print('Output mols: %d'%n_mol, file=sys.stderr)
+  logging.info('Output mols: %d'%n_mol)
 
 #############################################################################
 if __name__=='__main__':
+  logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
   parser = argparse.ArgumentParser(
         description='ChEMBL REST API client: lookup by IDs')
   ops = ['cid2Activity', 'tid2Targetcomponents', 'did2Documents', 'inchikey2Mol']
   parser.add_argument("op", choices=ops, help='operation')
   parser.add_argument("--i", dest="ifile", help="input file, IDs")
   parser.add_argument("--id", help="input IDs")
-  parser.add_argument("--o", dest="ofile", help="output (CSV)")
+  parser.add_argument("--o", dest="ofile", help="output (TSV)")
   parser.add_argument("--skip", type=int)
   parser.add_argument("--nmax", type=int)
   parser.add_argument("--include_phenotypic", action="store_true", help="(activity) else pChembl required")
-  parser.add_argument("-v","--verbose", action="count")
+  parser.add_argument("-v","--verbose", default=0, action="count")
   args = parser.parse_args()
 
   if not (args.ifile or args.id):
@@ -144,14 +146,19 @@ if __name__=='__main__':
         ids.append(row[0])
   elif args.id:
     ids.append(args.id)
-  print('Input IDs: %d'%len(ids), file=sys.stderr)
+  logging.info('Input IDs: %d'%len(ids))
 
   if args.op == 'cid2Activity':
     CID2Activity(ids, args, fout)
+
   elif args.op == 'inchikey2Mol':
     InchiKey2Molecule(ids, args, fout)
+
   elif args.op == 'tid2Targetcomponents':
     TID2Targetcomponents(ids, args, fout)
+
   elif args.op == 'did2Documents':
     DID2Documents(ids, args, fout)
  
+  else:
+    parser.error('Unknown operation: %s'%args.op)

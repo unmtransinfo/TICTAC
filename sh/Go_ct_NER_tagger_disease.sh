@@ -3,6 +3,8 @@
 ### See http://download.jensenlab.org/ for dictionaries, e.g.
 ### http://download.jensenlab.org/human_dictionary.tar.gz
 
+printf "Executing: %s\n" "$(basename $0)"
+
 cwd=$(pwd)
 
 DATADIR="${cwd}/data"

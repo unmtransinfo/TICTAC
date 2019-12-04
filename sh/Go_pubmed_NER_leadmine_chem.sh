@@ -1,6 +1,7 @@
 #!/bin/sh
-#############################################################################
-#############################################################################
+###
+#
+printf "Executing: %s\n" "$(basename $0)"
 #
 cwd=$(pwd)
 #
@@ -11,11 +12,14 @@ DATADIR="/home/data/TCRD/data"
 #
 date
 #
+DBUSR="$USER"
+DBPW="assword"
+#
 #############################################################################
 # Use "pubmed" table from TCRD:
 #(2547706 rows in March 2019)
 #Some processing errors due to newlines in abstracts(?).
-${cwd}/sh/runsql_my.sh -h juniper.health.unm.edu -u $DBUSR -p $DBPW \
+${cwd}/sh/runsql_my.sh -h juniper.health.unm.edu -u "$DBUSR" -p "$DBPW" \
 	-n tcrd \
 	-f ${cwd}/sql/tcrd_pubmed.sql -c \
 	|gzip -c \

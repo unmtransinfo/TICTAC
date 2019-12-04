@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+printf "Executing: %s\n" "$(basename $0)"
+#
 cwd=$(pwd)
 #
 NM_ROOT="/home/app/nextmove"
@@ -43,9 +45,8 @@ for srcdict in $srcdicts ; do
 	DICTNAME=$(basename $srcdict|sed -e 's/\.txt$//')
 	CFXFILE="$DICTDIR/${DICTNAME}.cfx"
 	printf "%s terms: %d\n" $(basename $srcdict) $(cat $srcdict |wc -l)
-	#Case insensitive
-	LMOPTS="-i"
+	# "-i" = case insensitive
 	printf "Compiling Source dictionary: %s\n" $(basename $srcdict)
-	java -jar $COMPILE_JAR $LMOPTS $srcdict $CFXFILE
+	java -jar $COMPILE_JAR -i $srcdict --out $CFXFILE
 done
 #
