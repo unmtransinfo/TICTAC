@@ -1,286 +1,163 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ##############################################################################
 ### pubchem_query.py - utility app for the PubChem PUG REST API.
 ###
-###
 ### Jeremy Yang
-###  7 Aug 2014
 ##############################################################################
-import sys,os,re,getopt,types,codecs,time
+import sys,os,re,argparse,time,logging
 #
 import time_utils
 import pubchem_utils
-#
-PROG=os.path.basename(sys.argv[0])
 #
 API_HOST='pubchem.ncbi.nlm.nih.gov'
 API_BASE_PATH='/rest/pug'
 #
 #############################################################################
-usage='''\
-%(PROG)s - (PUG REST client)
-required (one of):
-        --list_substancesources
-        --list_assaysources
-        --cpd_smi2id SMILES
-        --name2sids ..................... (requires NAME)
-        --name2cids ..................... (requires NAME)
-
-requires CIDs:
-        --cids2smi ...................... output SMI
-        --cids2ism ...................... output isomeric SMI
-        --cids2sdf ...................... output SDF
-        --cids2props .................... molecular properties
-        --cids2inchi .................... InChi + InChiKey
-        --cids2synonyms .................
-        --cids2sids .....................  
-        --cids2assaysummary .............  
-
-requires SIDs:
-        --sids2cids .....................  
-        --sids2sdf ...................... output SDF
-        --sids2assaysummary .............  
-
-
-requires AIDs:
-        --describe_assay ................
-        --aid2name ......................
-        --assaydescriptions .............
-
-requires AIDs and SIDs:
-        --assayresults ..................
-
-options:
-	--i IFILE ....................... input IDs file (CID|SID)
-	--id ID ......................... input ID (CID|SID)
-	--iaid AIDFILE .................. input AIDs file
-	--aid AID ....................... input AID
-	--name NAME ..................... name query
-	--o OFILE .......................
-	--api_host HOST ................. [%(API_HOST)s]
-	--api_base_path PATH ............ [%(API_BASE_PATH)s]
-        --skip N ........................ skip (input IDs)
-        --nmax N ........................ max count (input IDs)
-        --v ............................. verbose
-        --h ............................. this help
-'''%{'PROG':PROG,'API_HOST':API_HOST,'API_BASE_PATH':API_BASE_PATH}
-
-def ErrorExit(msg):
-  print >>sys.stderr,msg
-  sys.exit(1)
 
 ##############################################################################
 if __name__=='__main__':
-  id_query=None; name_query=None; ifile=None; ofile=''; verbose=0;
-  aid_query=None; ifile_aid=None;
-  describe_assay=False; 
-  list_assaysources=False; list_substancesources=False;
-  cpd_smi2id=''; 
-  sids2cids=False;
-  cids2sids=False;
-  cids2assaysummary=False;
-  sids2assaysummary=False;
-  cids2props=False; cids2smi=False; cids2sdf=False; sids2sdf=False; cid2synonyms=False;
-  cids2ism=False;
-  cids2inchi=False; 
-  cids2synonyms=False; aid2name=False; assaydescriptions=False; assayresults=False;
-  name2sids=False; name2cids=False;
-  skip=0; nmax=sys.maxint;
-  dbusr=None; dbpw=None;
-  opts,pargs=getopt.getopt(sys.argv[1:],'',['i=','o=',
-	'id=', 'iaid=', 'aid=',
-	'describe_assay', 'cpd_smi2id=', 'aid2name', 'assaydescriptions', 'assayresults',
-	'sids2cids', 'cids2props', 'cids2smi', 'cids2sdf', 'sids2sdf', 'name2sids', 'name2cids',
-	'cids2sids','cids2ism',
-	'cids2inchi',
-	'cids2assaysummary', 
-	'sids2assaysummary', 
-	'name=', 'cid2synonyms', 'cids2synonyms', 'list_assaysources', 'list_substancesources',
-	'api_host=','api_base_path=','dbusr=','dbpw=',
-	'skip=', 'nmax=','version=','help','v','vv','vvv'])
-  if not opts: ErrorExit(usage)
-  for (opt,val) in opts:
-    if opt=='--help': ErrorExit(usage)
-    elif opt=='--o': ofile=val
-    elif opt=='--i': ifile=val
-    elif opt=='--iaid': ifile_aid=val
-    elif opt=='--id': id_query=int(val)
-    elif opt=='--aid': aid_query=int(val)
-    elif opt=='--dbusr': dbusr=val
-    elif opt=='--dbpw': DBPW=val
-    elif opt=='--describe_assay': describe_assay=True
-    elif opt=='--aid2name': aid2name=True
-    elif opt=='--assaydescriptions': assaydescriptions=True
-    elif opt=='--assayresults': assayresults=True
-    elif opt=='--cpd_smi2id': cpd_smi2id=val
-    elif opt=='--sids2cids': sids2cids=True
-    elif opt=='--cids2sids': cids2sids=True
-    elif opt=='--cids2props': cids2props=True
-    elif opt=='--cids2sdf': cids2sdf=True
-    elif opt=='--sids2sdf': sids2sdf=True
-    elif opt=='--cids2smi': cids2smi=True
-    elif opt=='--cids2ism': cids2ism=True
-    elif opt=='--cids2inchi': cids2inchi=True
-    elif opt=='--cids2assaysummary': cids2assaysummary=True
-    elif opt=='--sids2assaysummary': sids2assaysummary=True
-    elif opt=='--name2sids': name2sids=True
-    elif opt=='--name2cids': name2cids=True
-    elif opt=='--name': name_query=val
-    elif opt=='--cid2synonyms': cid2synonyms=True
-    elif opt=='--cids2synonyms': cids2synonyms=True
-    elif opt=='--list_assaysources': list_assaysources=True
-    elif opt=='--list_substancesources': list_substancesources=True
-    elif opt=='--api_host': API_HOST=val
-    elif opt=='--api_base_path': API_BASE_PATH=val
-    elif opt=='--skip': skip=int(val)
-    elif opt=='--nmax': nmax=int(val)
-    elif opt=='--v': verbose=1
-    elif opt=='--vv': verbose=2
-    elif opt=='--vvv': verbose=3
-    else: ErrorExit('Illegal option: %s'%(opt))
+  PROG=os.path.basename(sys.argv[0])
 
-  BASE_URI='https://'+API_HOST+API_BASE_PATH
+  logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-  if ofile:
-    fout=open(ofile,"w+")
-    #fout=codecs.open(ofile,"w","utf8","replace")
-    if not fout: ErrorExit('ERROR: cannot open outfile: %s'%ofile)
+  ops = [ "list_substancesources", "list_assaysources", "smi2cid", "name2sids",
+        "name2cids", "cids2smi", "cids2ism", "cids2sdf", "cids2props", "cids2inchi",
+        "cids2synonyms", "cids2sids", "cids2assaysummary", "sids2cids", "sids2sdf",
+        "sids2assaysummary", "aid2name", "assaydescribe", "assaydescriptions",
+        "assayresults" ]
+
+  parser = argparse.ArgumentParser(description="PubChem PUG REST client")
+  parser.add_argument("op",choices=ops,help='operation')
+  parser.add_argument("--i", dest="ifile", help="input IDs file (CID|SID)")
+  parser.add_argument("--id", dest="id_query", help="input ID (CID|SID)")
+  parser.add_argument("--aid", dest="aid_query", help="input AID")
+  parser.add_argument("--iaid", dest="ifile_aid", help="input AIDs file")
+  parser.add_argument("--name", dest="name_query", help="name query")
+  parser.add_argument("--smiles", dest="smi_query", help="SMILES query")
+  parser.add_argument("--api_host", default=API_HOST)
+  parser.add_argument("--api_base_path", default=API_BASE_PATH)
+  parser.add_argument("--skip", type=int, default=0)
+  parser.add_argument("--nmax", type=int, default=0)
+  parser.add_argument("--o", dest="ofile", help="output (TSV)")
+  parser.add_argument("-v", "--verbose", default=0, action="count")
+  args = parser.parse_args()
+
+  BASE_URL = 'https://'+args.api_host+args.api_base_path
+
+  if args.ofile:
+    fout = open(args.ofile, "w")
   else:
-    fout=sys.stdout
-    #fout=codecs.getwriter('utf8')(sys.stdout,errors="replace")
+    fout = sys.stdout
 
   ids=[]
-  if ifile:
-    fin=open(ifile)
-    if not fin: ErrorExit('ERROR: cannot open ifile: %s'%ifile)
+  if args.ifile:
+    fin=open(args.ifile)
+    if not fin: parser.error('ERROR: cannot open ifile: %s'%args.ifile)
     while True:
       line=fin.readline()
       if not line: break
       try:
         ids.append(int(line.rstrip()))
       except:
-        print >>sys.stderr, 'ERROR: bad input ID: %s'%line
+        logging.info('ERROR: bad input ID: %s'%line)
         continue
-    if verbose:
-      print >>sys.stderr, '%s: input IDs: %d'%(PROG,len(ids))
+    if args.verbose:
+      logging.info('%s: input IDs: %d'%(PROG,len(ids)))
     fin.close()
     id_query=ids[0]
-  elif id_query:
-    ids=[id_query]
+  elif args.id_query:
+    ids=[args.id_query]
 
   aids=[]
-  if ifile_aid:
-    fin=open(ifile_aid)
-    if not fin: ErrorExit('ERROR: cannot open ifile: %s'%ifile_aid)
+  if args.ifile_aid:
+    fin=open(args.ifile_aid)
+    if not fin: parser.error('ERROR: cannot open ifile: %s'%args.ifile_aid)
     while True:
       line=fin.readline()
       if not line: break
       try:
         aids.append(int(line.rstrip()))
       except:
-        print >>sys.stderr, 'ERROR: bad input AID: %s'%line
+        logging.info('ERROR: bad input AID: %s'%line)
         continue
     if verbose:
-      print >>sys.stderr, '%s: input AIDs: %d'%(PROG,len(aids))
+      logging.info('%s: input AIDs: %d'%(PROG,len(aids)))
     fin.close()
     aid_query=aids[0]
-  elif aid_query:
-    aids=[aid_query]
+  elif args.aid_query:
+    aids=[args.aid_query]
 
   t0=time.time()
 
-  if describe_assay:
-    pubchem_utils.DescribeAssay(BASE_URI,aid_query,verbose)
+  if args.op == 'list_assaysources':
+    pubchem_utils.ListAssaySources(BASE_URL, fout, args.verbose)
 
-  elif list_assaysources:
-    pubchem_utils.ListAssaySources(BASE_URI,fout,verbose)
+  elif args.op == 'list_substancesources':
+    pubchem_utils.ListSubstanceSources(BASE_URL, fout, args.verbose)
 
-  elif list_substancesources:
-    pubchem_utils.ListSubstanceSources(BASE_URI,fout,verbose)
+  elif args.op == 'cids2synonyms':
+    pubchem_utils.Cids2Synonyms(BASE_URL, ids, fout, args.skip, args.nmax, args.verbose)
 
-  #elif cid2synonyms:
-  #  if not id_query: ErrorExit('ERROR: CID required\n'+usage)
-  #  synonyms = pubchem_utils.Cid2Synonyms(BASE_URI,id_query,verbose)
-  #  synonyms = pubchem_utils.SortCompoundNamesByNiceness(synonyms)
-  #  for s in synonyms:
-  #    print '%d: %s'%(id_query,s)
+  elif args.op == 'cids2props':
+    pubchem_utils.Cids2Properties(BASE_URL, ids, fout, args.verbose)
 
-  elif cids2synonyms:
-    if not ifile: ErrorExit('ERROR: CID[s] required\n'+usage)
-    pubchem_utils.Cids2Synonyms(BASE_URI,ids,fout,skip,nmax,verbose)
+  elif args.op == 'cids2inchi':
+    pubchem_utils.Cids2Inchi(BASE_URL, ids, fout, args.verbose)
 
-  elif cpd_smi2id:
-    print pubchem_utils.Smi2Cid(BASE_URI,cpd_smi2id,verbose)
+  elif args.op == 'cids2sids':
+    pubchem_utils.Cids2SidsCSV(BASE_URL, ids, fout, args.verbose)
 
-  elif sids2cids:
-    #sids=map(lambda x:int(x),re.split(r'\s*,\s*',sids2cids))
-    pubchem_utils.Sids2CidsCSV(BASE_URI,ids,fout,verbose)
+  elif args.op == 'cids2smi':
+    pubchem_utils.Cids2Smiles(BASE_URL, ids, False, fout, args.verbose)
 
-  elif cids2props:
-    #cids=map(lambda x:int(x),re.split(r'\s*,\s*',cids2props))
-    pubchem_utils.Cids2Properties(BASE_URI,ids,fout,verbose)
+  elif args.op == 'cids2ism':
+    pubchem_utils.Cids2Smiles(BASE_URL, ids, True, fout, args.verbose)
 
-  elif cids2inchi:
-    #cids=map(lambda x:int(x),re.split(r'\s*,\s*',cids2props))
-    pubchem_utils.Cids2Inchi(BASE_URI,ids,fout,verbose)
+  elif args.op == 'cids2sdf':
+    pubchem_utils.Cids2Sdf(BASE_URL, ids, fout, args.verbose)
 
-  elif cids2sids:
-    pubchem_utils.Cids2SidsCSV(BASE_URI,ids,fout,verbose)
+  elif args.op == 'cids2assaysummary':
+    pubchem_utils.Cids2Assaysummary(BASE_URL, ids, fout, args.verbose)
 
-  elif name2sids:
-    if not name_query: ErrorExit('ERROR: name required\n'+usage)
-    sids=pubchem_utils.Name2Sids(BASE_URI,name_query,verbose)
-    for sid in sids: print '%d'%sid
+  elif args.op == 'sids2cids':
+    pubchem_utils.Sids2CidsCSV(BASE_URL, ids, fout, args.verbose)
 
-  elif name2cids:
-    if not name_query: ErrorExit('ERROR: name required\n'+usage)
-    cids=pubchem_utils.Name2Cids(BASE_URI,name_query,verbose)
-    for cid in cids: print '%d'%cid
+  elif args.op == 'sids2assaysummary':
+    pubchem_utils.Sids2Assaysummary(BASE_URL, ids, fout, args.verbose)
 
-  elif aid2name:
-    if not aid_query: ErrorExit('ERROR: AID required\n'+usage)
-    xmlstr=pubchem_utils.Aid2DescriptionXML(BASE_URI,aid_query,verbose)
-    name,source = pubchem_utils.AssayXML2NameAndSource(xmlstr)
-    print '%d:\n\tName: %s\n\tSource: %s'%(aid2name,name,source)
+  elif args.op == 'sids2sdf':
+    n_sid_in, n_sdf_out = pubchem_utils.Sids2Sdf(BASE_URL, ids, fout, args.skip, args.nmax, args.verbose)
+    logging.info('%s, %s: sids in: %d ; sdfs out: %d'%(ifile, ofile, n_sid_in, n_sdf_out))
 
-  elif assaydescriptions:
-    if not aid_query: ErrorExit('ERROR: AID[s] required\n'+usage)
-    pubchem_utils.GetAssayDescriptions(BASE_URI,aids,fout,skip,nmax,verbose)
+  elif args.op == 'name2sids':
+    sids=pubchem_utils.Name2Sids(BASE_URL, args.name_query, args.verbose)
+    for sid in sids: print('%d'%sid)
 
-  elif assayresults:
-    if not aid_query: ErrorExit('ERROR: AID[s] required\n'+usage)
-    if not id_query: ErrorExit('ERROR: SID[s] required\n'+usage)
-    #n_in,n_out = pubchem_utils.GetAssayResults_Screening(BASE_URI,aids,ids,fout,skip,nmax,verbose)
-    #print >>sys.stderr, '%s,%s: aids in: %d ; results out: %d'%(ifile,ofile,n_in,n_out)
+  elif args.op == 'smi2cid':
+    if not args.smi_query: parser.error('ERROR: SMILES required')
+    print(pubchem_utils.Smi2Cid(BASE_URL, args.smi, args.verbose))
 
-    pubchem_utils.GetAssayResults_Screening2(BASE_URI,aids,ids,fout,skip,nmax,verbose)
+  elif args.op == 'name2cids':
+    cids=pubchem_utils.Name2Cids(BASE_URL, args.name_query, args.verbose)
+    for cid in cids: print('%d'%cid)
 
-  elif cids2sdf:
-    if not id_query: ErrorExit('ERROR: CID[s] required\n'+usage)
-    pubchem_utils.Cids2Sdf(BASE_URI,ids,fout,verbose)
+  elif args.op == 'aid2name':
+    xmlstr=pubchem_utils.Aid2DescriptionXML(BASE_URL, args.aid_query, args.verbose)
+    name, source = pubchem_utils.AssayXML2NameAndSource(xmlstr)
+    print('%d:\n\tName: %s\n\tSource: %s'%(aid2name, name, source))
 
-  elif cids2assaysummary:
-    if not id_query: ErrorExit('ERROR: CID[s] required\n'+usage)
-    pubchem_utils.Cids2Assaysummary(BASE_URI,ids,fout,verbose)
+  elif args.op == 'assaydescribe':
+    pubchem_utils.DescribeAssay(BASE_URL, args.aid_query, args.verbose)
 
-  elif sids2assaysummary:
-    if not id_query: ErrorExit('ERROR: SID[s] required\n'+usage)
-    pubchem_utils.Sids2Assaysummary(BASE_URI,ids,fout,verbose)
+  elif args.op == 'assaydescriptions':
+    pubchem_utils.GetAssayDescriptions(BASE_URL, aids, fout, args.skip, args.nmax, args.verbose)
 
-  elif cids2smi:
-    if not id_query: ErrorExit('ERROR: CID[s] required\n'+usage)
-    pubchem_utils.Cids2Smiles(BASE_URI,ids,False,fout,verbose)
-
-  elif cids2ism:
-    if not id_query: ErrorExit('ERROR: CID[s] required\n'+usage)
-    pubchem_utils.Cids2Smiles(BASE_URI,ids,True,fout,verbose)
-
-  elif sids2sdf:
-    n_sid_in,n_sdf_out = pubchem_utils.Sids2Sdf(BASE_URI,ids,fout,skip,nmax,verbose)
-    print >>sys.stderr, '%s,%s: sids in: %d ; sdfs out: %d'%(ifile,ofile,n_sid_in,n_sdf_out)
+  elif args.op == 'assayresults':
+    #Requires AIDs and SIDs.
+    pubchem_utils.GetAssayResults_Screening2(BASE_URL, aids, ids, fout, args.skip, args.nmax, args.verbose)
 
   else:
-    ErrorExit('ERROR: no operation specified.\n'+usage)
+    parser.error('ERROR: no operation specified.')
 
-  if verbose:
-    print >>sys.stderr, ("total elapsed time: %s"%(time_utils.NiceTime(time.time()-t0)))
+  if args.verbose:
+    logging.info(("total elapsed time: %s"%(time_utils.NiceTime(time.time()-t0))))

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #############################################################################
 ### pubchem_mols2ids.py - From PubChem PUG REST API, 
 ### 
@@ -13,93 +13,67 @@
 ### "Error (Exception): 'NoneType' object has no attribute '__getitem__'"
 ### "HTTP Error: HTTP Error 400: Bad Request"
 #############################################################################
-import os,sys,re,getopt,time
-import csv,urllib2
+import os,sys,re,argparse,time,logging
 
 import time_utils
 import pubchem_utils
 
 API_HOST="pubchem.ncbi.nlm.nih.gov"
 API_BASE_PATH="/rest/pug"
-API_BASE_URL="http://"+API_HOST+API_BASE_PATH
 
 #############################################################################
 def main():
   global PROG,SCRATCHDIR
   PROG=os.path.basename(sys.argv[0])
   SCRATCHDIR=os.getcwd()+'/data/scratch'
-  nchunk=50;
 
-  usage='''
-  %(PROG)s - fetch CIDs for input SMILES or InChI (PUG REST client)
+  ifmts = ['smiles', 'inchi']
+  logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+  parser = argparse.ArgumentParser(description="fetch CIDs for input SMILES or InChI (PUG REST client)")
+  parser.add_argument("--i", dest="ifile", help="input molecule file")
+  parser.add_argument("--ifmt", choices=ifmts, default="smiles", help="input format")
+  parser.add_argument("--api_host", default=API_HOST)
+  parser.add_argument("--api_base_path", default=API_BASE_PATH)
+  parser.add_argument("--skip", type=int, default=0)
+  parser.add_argument("--nmax", type=int, default=0)
+  parser.add_argument("--nchunk", type=int, default=50, help="IDs per PUG request")
+  parser.add_argument("--o", dest="ofile", help="output IDs file")
+  parser.add_argument("-v", "--verbose", default=0, action="count")
+  args = parser.parse_args()
 
-  required:
-  --i INFILE .............. input molecule file
-  --o OUTFILE ............. output IDs file
+  BASE_URL = 'https://'+args.api_host+args.api_base_path
 
-  options:
-  --nmax N ................ maximum N IDs
-  --skip N ................ skip N IDs
-  --nchunk N .............. IDs per PUG request [%(NCHUNK)d]
-  --inchi ................. inchi input (default SMILES)
-  --v ..................... verbose
-  --vv .................... very verbose
-  --h ..................... this help
-'''%{'PROG':PROG,'NCHUNK':nchunk}
+  if not args.ifile:
+    parser.error('input file required.')
 
-  def ErrorExit(msg):
-    print >>sys.stderr,msg
-    sys.exit(1)
-
-  ifile=None; ofile=None; verbose=0; nskip=0; nmax=0; 
-  inchi=False;
-  opts,pargs = getopt.getopt(sys.argv[1:],'',['h','v','vv','i=','o=','skip=','nmax=','nchunk=','inchi'])
-  if not opts: ErrorExit(usage)
-  for (opt,val) in opts:
-    if opt=='--h': ErrorExit(usage)
-    elif opt in ('--i','--in'): ifile=val
-    elif opt in ('--o','--out'): ofile=val
-    elif opt in ('--n','--nmax'): nmax=int(val)
-    elif opt=='--inchi': inchi=True
-    elif opt=='--nchunk': nchunk=int(val)
-    elif opt=='--skip': nskip=int(val)
-    elif opt=='--vv': verbose=2
-    elif opt=='--v': verbose=1
-    else: ErrorExit('Illegal option: %s'%val)
-
-  if not ifile:
-    ErrorExit('input file required\n'+usage)
-
-  fin=file(ifile)
+  fin = open(args.ifile)
   if not fin:
-    ErrorExit('cannot open: %s\n%s'%(ifile,usage))
-  if ofile:
-    fout=file(ofile,'w')
+    parser.error('cannot open: %s'%(args.ifile))
+  if args.ofile:
+    fout=file(args.ofile, 'w')
   else:
     fout=sys.stdout
 
-  print >>sys.stderr, time.asctime()
+  logging.info(time.asctime())
 
   t0=time.time()
 
   ### For each SMILES, query using URI like:
   ### http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/CCCC/cids/TXT
 
-  nmol=0; 
-  nmol_notfound=0
-  n_id=0; 
-  n_id_out=0; 
+  nmol=0; nmol_notfound=0
+  n_id=0; n_id_out=0; 
   while True:
     line=fin.readline()
     if not line: break
     nmol+=1
-    if nskip and nmol<=nskip:
+    if args.skip and nmol<=args.skip:
       continue
-    if nmax and nmol>(nmax+nskip): break
+    if args.nmax and nmol>(args.nmax+args.skip): break
     line=line.rstrip()
     fields=line.split()
     if len(fields)<1:
-      print >>sys.stderr, 'Warning: bad line; no SMILES [%d]: %s'%(nmol,line)
+      logging.info('Warning: bad line; no SMILES [%d]: %s'%(nmol,line))
       continue
     qry=fields[0]
     if len(fields)>1:
@@ -108,18 +82,18 @@ def main():
       name='%s'%nmol
 
     try:
-      if inchi:
-        cids=pubchem_utils.Inchi2Cids(API_BASE_URL,qry,verbose)
+      if args.ifmt == 'inchi':
+        cids=pubchem_utils.Inchi2Cids(BASE_URL, qry, args.verbose)
       else:
-        cids=pubchem_utils.Smi2Cids(API_BASE_URL,qry,verbose)
-    except Exception,e:
-      print >>sys.stderr, 'ERROR: REST request failed (%s): %s %s'%(e,qry,name)
+        cids=pubchem_utils.Smi2Cids(BASE_URL, qry, args.verbose)
+    except Exception as e:
+      logging.info('ERROR: REST request failed (%s): %s %s'%(e,qry,name))
       nmol_notfound+=1
-      fout.write("%s\tNA\t%s\n"%(qry,name))
+      fout.write("%s\tNA\t%s\n"%(qry, name))
       continue
 
     cids_str=(';'.join(map(lambda x:str(x),cids)))
-    fout.write("%s\t%s\t%s\n"%(qry,cids_str,name))
+    fout.write("%s\t%s\t%s\n"%(qry, cids_str, name))
     if len(cids)==1 and cids[0]==0:
       nmol_notfound+=1
     else:
@@ -127,17 +101,17 @@ def main():
       n_id_out+=n_id
 
     if nmol>0 and (nmol%100)==0:
-      print >>sys.stderr, ("nmol = %d ; elapsed time: %s\t[%s]"%(nmol,time_utils.NiceTime(time.time()-t0),time.asctime()))
-    if nmol==nmax:
+      logging.info(("nmol = %d ; elapsed time: %s\t[%s]"%(nmol, time_utils.NiceTime(time.time()-t0), time.asctime())))
+    if nmol==args.nmax:
       break
 
   fout.close()
 
-  print >>sys.stderr, 'mols read: %d'%(nmol)
-  print >>sys.stderr, 'mols not found: %d'%(nmol_notfound)
-  print >>sys.stderr, 'ids found: %d'%(n_id)
-  print >>sys.stderr, 'ids out: %d'%(n_id_out)
-  print >>sys.stderr, ("total elapsed time: %s"%(time_utils.NiceTime(time.time()-t0)))
+  logging.info('mols read: %d'%(nmol))
+  logging.info('mols not found: %d'%(nmol_notfound))
+  logging.info('ids found: %d'%(n_id))
+  logging.info('ids out: %d'%(n_id_out))
+  logging.info(("total elapsed time: %s"%(time_utils.NiceTime(time.time()-t0))))
 
 #############################################################################
 if __name__=='__main__':

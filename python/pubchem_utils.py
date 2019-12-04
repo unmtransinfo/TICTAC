@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 ##############################################################################
 ### pubchem_utils.py - utility functions for the PubChem PUG REST API.
 ###
@@ -37,10 +37,10 @@
 ###  identifier strings (source, inchikey, listkey); single identifier string
 ###  (name, smiles; inchi by POST only)
 ##############################################################################
-import sys,os,re,types,math,time
-import urllib,urllib2
+import sys,os,re,math,time,logging
+import urllib,urllib.request,urllib.parse
 import csv,json
-import xml.dom.minidom #replace with ETree
+#import xml.dom.minidom #replace with ETree
 #
 import rest_utils
 import time_utils
@@ -52,6 +52,7 @@ OFMTS={
 	'ASNB':'application/ber-encoded',
 	'SDF':'application/x-mdl-sdfile',
 	'CSV':'text/csv',
+	'TSV':'text/tsv',
 	'PNG':'image/png',
 	'TXT':'text/plain'
 	}
@@ -61,52 +62,51 @@ OUTCOME_CODES = {'inactive':1,'active':2,'inconclusive':3,'unspecified':4,'probe
 #############################################################################
 def ListSubstanceSources(base_url,fout,verbose):
   rval=rest_utils.GetURL(base_url+'/sources/substance/JSON',parse_json=True,verbose=verbose)
-  #print >>sys.stderr, json.dumps(rval,indent=2)
   sources = rval['InformationList']['SourceName']
   n_src=0;
   for source in sorted(sources):
     fout.write('"%s"\n'%source)
     n_src+=1
-  print >>sys.stderr, 'n_src: %d'%n_src
+  logging.info('n_src: %d'%n_src)
   return
 
 #############################################################################
 def ListAssaySources(base_url,fout,verbose):
   rval=rest_utils.GetURL(base_url+'/sources/assay/JSON',parse_json=True,verbose=verbose)
-  #print >>sys.stderr, json.dumps(rval,indent=2)
+  #logging.info(json.dumps(rval,indent=2))
   sources = rval['InformationList']['SourceName']
   n_src=0;
   for source in sorted(sources):
     fout.write('"%s"\n'%source)
     n_src+=1
-  print >>sys.stderr, 'n_src: %d'%n_src
+  logging.info('n_src: %d'%n_src)
   return
 
 ##############################################################################
 def Cid2Sdf(base_url,id_query,verbose=0):
   url=(base_url+'/compound/cid/%d/SDF'%id_query)
-  if verbose>2: print >>sys.stderr, 'URL: %s'%url
+  if verbose>2: logging.info('URL: %s'%url)
   txt=rest_utils.GetURL(url,verbose=verbose)
   return txt
 
 #############################################################################
-def Cid2Smiles(base_url,id_query,verbose=0):
+def Cid2Smiles(base_url, id_query, verbose=0):
   url=(base_url+'/compound/cid/%d/property/IsomericSMILES/JSON'%id_query)
-  if verbose>2: print >>sys.stderr, 'URL: %s'%url
-  d=rest_utils.GetURL(url,parse_json=True,verbose=verbose)
+  if verbose>2: logging.info('URL: %s'%url)
+  d=rest_utils.GetURL(url, parse_json=True, verbose=verbose)
   try:
     props = d['PropertyTable']['Properties']
     smi=props[0]['IsomericSMILES']
-  except Exception, e:
-    print >>sys.stderr, 'Error (Exception): %s'%e
-    #print >>sys.stderr, 'DEBUG: d = %s'%str(d)
+  except Exception as  e:
+    logging.info('Error (Exception): %s'%e)
+    #logging.info('DEBUG: d = %s'%str(d))
     smi=None
   return smi
 
 ##############################################################################
-def Sid2Sdf(base_url,id_query,verbose=0):
+def Sid2Sdf(base_url, id_query, verbose=0):
   url=(base_url+'/substance/sid/%d/SDF'%id_query)
-  if verbose>2: print >>sys.stderr, 'URL: %s'%url
+  if verbose>2: logging.info('URL: %s'%url)
   #txt=rest_utils.GetURL(url,headers={'Accept':'%s'%OFMTS['TXT']},verbose=verbose)
   txt=rest_utils.GetURL(url,verbose=verbose)
   return txt
@@ -114,7 +114,7 @@ def Sid2Sdf(base_url,id_query,verbose=0):
 #############################################################################
 def Sid2AssaySummaryCSV(base_url,id_query,verbose=0):
   txt=rest_utils.GetURL(base_url+'/substance/sid/%d/assaysummary/CSV'%id_query,verbose=verbose)
-  #print >>sys.stderr, 'DEBUG: 1st line: %s'%txt.splitlines()[0]
+  #logging.info('DEBUG: 1st line: %s'%txt.splitlines()[0])
   return txt
 
 #############################################################################
@@ -123,11 +123,11 @@ def Sid2Cid(base_url,sid,verbose=0):
   try:
     infos = d['InformationList']['Information']
     cid=infos[0]['CID'][0]
-  except Exception, e:
-    print >>sys.stderr, 'Error (Exception): %s'%e
-    #print >>sys.stderr, 'DEBUG: d = %s'%str(d)
+  except Exception as  e:
+    logging.info('Error (Exception): %s'%e)
+    #logging.info('DEBUG: d = %s'%str(d))
     cid=None
-  #print >>sys.stderr, 'DEBUG: sid=%s ; cid=%s'%(sid,cid)
+  #logging.info('DEBUG: sid=%s ; cid=%s'%(sid,cid))
   return cid
 
 #############################################################################
@@ -143,9 +143,9 @@ def Cid2Sids(base_url,cid,verbose=0):
     infos = d['InformationList']['Information']
     for info in infos:
       sids.extend(info['SID'])
-  except Exception, e:
-    print >>sys.stderr, 'Error (Exception): %s'%e
-    #print >>sys.stderr, 'DEBUG: d = %s'%str(d)
+  except Exception as  e:
+    logging.info('Error (Exception): %s'%e)
+    #logging.info('DEBUG: d = %s'%str(d))
   return sids
 
 #############################################################################
@@ -155,7 +155,7 @@ def Cid2Sids(base_url,cid,verbose=0):
 ### '' for no safe chars.
 #############################################################################
 def Smi2Ids(base_url,smi,verbose):
-  d=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib2.quote(smi,''),parse_json=True,verbose=verbose)
+  d=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib.parse.quote(smi,''),parse_json=True,verbose=verbose)
   if d and d.has_key('IdentifierList'):
     return d['IdentifierList']
   else:
@@ -176,19 +176,14 @@ def Smi2Cids(base_url,smi,verbose):
 #############################################################################
 def Sids2Cids(base_url,ids,verbose=0):
   ## Use method POST; put SIDs in data.
-  ids_txt='sid='+(','.join(map(lambda x:str(x),ids)))
-  #print >>sys.stderr, 'DEBUG: ids_txt = %s'%ids_txt
-  req=urllib2.Request(url=base_url+'/substance/sid/cids/TXT?cids_type=standardized',
+  #ids_txt='sid='+(','.join(map(lambda x:str(x), ids)))
+  ids_dict={'sid':(','.join(map(lambda x:str(x), ids)))}
+  rval=rest_utils.PostURL(url=base_url+'/substance/sid/cids/TXT?cids_type=standardized',
 	headers={'Accept':OFMTS['TXT'],'Content-type':'application/x-www-form-urlencoded'},
-	data=ids_txt
-	)
-  #print >>sys.stderr, 'DEBUG: req.get_method() = %s'%req.get_method()
-  #print >>sys.stderr, 'DEBUG: req.has_data() = %s'%req.has_data()
-  f=urllib2.urlopen(req)
+	data=ids_dict)
   cids=[]
-  while True:
-    line=f.readline()
-    if not line: break
+  lines=rval.splitlines()
+  for line in lines:
     try:
       cid=int(line)
       cids.append(cid)
@@ -206,16 +201,16 @@ def Sids2CidsCSV(base_url,ids,fout,verbose=0):
     cid = Sid2Cid(base_url,sid,verbose)
     try:
       cid=int(cid)
-    except Exception, e:
+    except Exception as  e:
       n_err+=1
       continue
     fout.write('%d,%d\n'%(sid,cid))
     n_out+=1
     if verbose>0 and (n_in%1000)==0:
-      print >>sys.stderr, 'processed: %6d / %6d (%.1f%%); elapsed time: %s'%(n_in,len(ids), 100.0*n_in/len(ids),time_utils.NiceTime(time.time()-t0))
-  print >>sys.stderr, 'sids in: %d'%len(ids)
-  print >>sys.stderr, 'cids out: %d'%n_out
-  print >>sys.stderr, 'errors: %d'%n_err
+      logging.info('processed: %6d / %6d (%.1f%%); elapsed time: %s'%(n_in,len(ids), 100.0*n_in/len(ids),time_utils.NiceTime(time.time()-t0)))
+  logging.info('sids in: %d'%len(ids))
+  logging.info('cids out: %d'%n_out)
+  logging.info('errors: %d'%n_err)
 
 #############################################################################
 def Cids2SidsCSV(base_url,ids,fout,verbose=0):
@@ -225,17 +220,17 @@ def Cids2SidsCSV(base_url,ids,fout,verbose=0):
     try:
       d=rest_utils.GetURL(base_url+'/compound/cid/%s/sids/TXT'%cid,verbose=verbose)
       sids=d.splitlines()
-    except Exception, e:
-      print >>sys.stderr, 'Error (Exception): %s'%e
+    except Exception as  e:
+      logging.info('Error (Exception): %s'%e)
       n_err+=1
       continue
-      #print >>sys.stderr, 'DEBUG: d = %s'%str(d)
+      #logging.info('DEBUG: d = %s'%str(d))
     for sid in sids:
       fout.write('%s,%s\n'%(cid,sid))
       n_out+=1
-  print >>sys.stderr, 'cids in: %d'%len(ids)
-  print >>sys.stderr, 'sids out: %d'%n_out
-  print >>sys.stderr, 'errors: %d'%n_err
+  logging.info('cids in: %d'%len(ids))
+  logging.info('sids out: %d'%n_out)
+  logging.info('errors: %d'%n_err)
 
 #############################################################################
 def Cids2Assaysummary(base_url,ids,fout,verbose=0):
@@ -244,64 +239,60 @@ def Cids2Assaysummary(base_url,ids,fout,verbose=0):
     try:
       d=rest_utils.GetURL(base_url+'/compound/cid/%s/assaysummary/CSV'%cid,verbose=verbose)
       rows=d.splitlines()
-    except Exception, e:
-      print >>sys.stderr, 'Error (Exception): %s'%e
+    except Exception as  e:
+      logging.info('Error (Exception): %s'%e)
       n_err+=1
       continue
     for i,row in enumerate(rows):
       if i==0 and n_out>0: continue #1 header only
       fout.write('%s\n'%(row))
       n_out+=1
-  print >>sys.stderr, 'cids in: %d'%len(ids)
-  print >>sys.stderr, 'assay summaries out: %d'%n_out
-  print >>sys.stderr, 'errors: %d'%n_err
+  logging.info('cids in: %d'%len(ids))
+  logging.info('assay summaries out: %d'%n_out)
+  logging.info('errors: %d'%n_err)
 
 #############################################################################
-def Sids2Assaysummary(base_url,ids,fout,verbose=0):
+def Sids2Assaysummary(base_url, ids, fout, verbose=0):
   n_out=0; n_err=0;
   for sid in ids:
     try:
-      d=rest_utils.GetURL(base_url+'/substance/sid/%s/assaysummary/CSV'%sid,verbose=verbose)
+      d=rest_utils.GetURL(base_url+'/substance/sid/%s/assaysummary/CSV'%sid, verbose=verbose)
       rows=d.splitlines()
-    except Exception, e:
-      print >>sys.stderr, 'Error (Exception): %s'%e
+    except Exception as  e:
+      logging.info('Error (Exception): %s'%e)
       n_err+=1
       continue
-    for i,row in enumerate(rows):
+    for i, row in enumerate(rows):
       if i==0 and n_out>0: continue #1 header only
       fout.write('%s\n'%(row))
       n_out+=1
-  print >>sys.stderr, 'sids in: %d'%len(ids)
-  print >>sys.stderr, 'assay summaries out: %d'%n_out
-  print >>sys.stderr, 'errors: %d'%n_err
+  logging.info('sids in: %d'%len(ids))
+  logging.info('assay summaries out: %d'%n_out)
+  logging.info('errors: %d'%n_err)
 
 #############################################################################
-def Cids2Properties(base_url,ids,fout,verbose):
+def Cids2Properties(base_url, ids, fout, verbose):
   ## Use method POST; put CIDs in data.
-  ids_txt='cid='+(','.join(map(lambda x:str(x),ids)))
-  #print >>sys.stderr, 'DEBUG: ids_txt = %s'%ids_txt
-  req=urllib2.Request(url=base_url+'/compound/cid/property/IsomericSMILES,MolecularFormula,MolecularWeight,XLogP,TPSA/CSV',
+  #ids_txt='cid='+(','.join(map(lambda x:str(x),ids)))
+  ids_dict={'cid':(','.join(map(lambda x:str(x), ids)))}
+  rval=rest_utils.PostURL(url=base_url+'/compound/cid/property/IsomericSMILES,MolecularFormula,MolecularWeight,XLogP,TPSA/CSV',
 	headers={'Accept':OFMTS['CSV'],'Content-type':'application/x-www-form-urlencoded'},
-	data=ids_txt)
-  f=urllib2.urlopen(req)
-  while True:
-    line=f.readline()
-    if not line: break
-    fout.write(line)
+	data=ids_dict)
+  lines=rval.splitlines()
+  for line in lines:
+    fout.write(line+'\n')
 
 #############################################################################
-def Cids2Inchi(base_url,ids,fout,verbose):
+def Cids2Inchi(base_url, ids, fout, verbose):
   ## Use method POST; put CIDs in data.
-  ids_txt='cid='+(','.join(map(lambda x:str(x),ids)))
-  #print >>sys.stderr, 'DEBUG: ids_txt = %s'%ids_txt
-  req=urllib2.Request(url=base_url+'/compound/cid/property/InChI,InChIKey/CSV',
-	headers={'Accept':OFMTS['CSV'],'Content-type':'application/x-www-form-urlencoded'},
-	data=ids_txt)
-  f=urllib2.urlopen(req)
-  while True:
-    line=f.readline()
-    if not line: break
-    fout.write(line)
+  #ids_txt='cid='+(','.join(map(lambda x:str(x), ids)))
+  ids_dict={'cid':(','.join(map(lambda x:str(x), ids)))}
+  rval=rest_utils.PostURL(url=base_url+'/compound/cid/property/InChI,InChIKey/CSV',
+	headers={'Accept':OFMTS['TSV'],'Content-type':'application/x-www-form-urlencoded'},
+	data=ids_dict, verbose=verbose)
+  lines=rval.splitlines()
+  for line in lines:
+    fout.write(line+'\n')
 
 #############################################################################
 ### Request in chunks.  Works for 50, and not for 200 (seems to be a limit).
@@ -323,7 +314,7 @@ def Cids2Sdf(base_url,ids,fout,verbose):
 def Sids2Sdf(base_url,sids,fout,skip,nmax,verbose):
   n_sid_in=0; n_sdf_out=0;
   if verbose:
-    if skip: print >>sys.stderr, 'skip: [1-%d]'%skip
+    if skip: logging.info('skip: [1-%d]'%skip)
   nchunk=50; nskip_this=skip;
   while True:
     if nskip_this>=len(sids): break
@@ -339,10 +330,10 @@ def Sids2Sdf(base_url,sids,fout,skip,nmax,verbose):
 
     nskip_this+=nchunk
     if nmax and (nskip_this-skip)>=nmax:
-      print >>sys.stderr, 'NMAX limit reached: %d'%nmax
+      logging.info('NMAX limit reached: %d'%nmax)
       break
 
-  #print >>sys.stderr, 'sids in: %d ; sdfs out: %d'%(n_sid_in,n_sdf_out)
+  #logging.info('sids in: %d ; sdfs out: %d'%(n_sid_in,n_sdf_out))
 
   return n_sid_in,n_sdf_out
 
@@ -377,10 +368,10 @@ def Cids2Smiles(base_url,ids,isomeric,fout,verbose):
       n_out+=1
     nskip_this+=nchunk
     if verbose>0 and (n_in%1000)==0:
-      print >>sys.stderr, 'processed: %6d / %6d (%.1f%%); elapsed time: %s'%(n_in,len(ids), 100.0*n_in/len(ids),time_utils.NiceTime(time.time()-t0))
-  print >>sys.stderr, 'cids in: %d'%n_in
-  print >>sys.stderr, 'smiles out: %d'%n_out
-  print >>sys.stderr, 'errors: %d'%n_err
+      logging.info('processed: %6d / %6d (%.1f%%); elapsed time: %s'%(n_in,len(ids), 100.0*n_in/len(ids),time_utils.NiceTime(time.time()-t0)))
+  logging.info('cids in: %d'%n_in)
+  logging.info('smiles out: %d'%n_out)
+  logging.info('errors: %d'%n_err)
   return
 
 #############################################################################
@@ -391,29 +382,18 @@ def Inchi2Cids(base_url,inchi,verbose):
 	http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST_Tutorial.html
   '''
   ofmt='TXT'
-  #ofmt='XML'
   cid=None
   url="http://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchi/cids/%s"%ofmt ### URL ok?
-  #body_data=('\n'.join(map(lambda x:urllib2.quote(x),inchis)))
-  body_data=('inchi='+urllib2.quote(inchi))
-  req=urllib2.Request(url=url,
+  if verbose>1: logging.info('url="%s"; inchi="%s"'%(url,inchi))
+  #body_data=('inchi='+urllib.parse.quote(inchi))
+  body_dict={'inchi':urllib.parse.quote(inchi)}
+  rval=rest_utils.PostURL(url=url,
 	headers={'Content-Type':'application/x-www-form-urlencoded','Accept':OFMTS[ofmt]},
 	data=body_data)
-  if verbose>1:
-    print >>sys.stderr, 'url="%s"; inchi="%s"'%(url,inchi)
-  #print >>sys.stderr, 'DEBUG: req.get_type() = %s'%req.get_type()
-  #print >>sys.stderr, 'DEBUG: req.get_method() = %s'%req.get_method()
-  #print >>sys.stderr, 'DEBUG: req.get_host() = %s'%req.get_host()
-  #print >>sys.stderr, 'DEBUG: req.get_full_url() = %s'%req.get_full_url()
-  #print >>sys.stderr, 'DEBUG: req.header_items() = %s'%req.header_items()
-  #print >>sys.stderr, 'DEBUG: req.get_data() = %s'%req.get_data()
   #
-  f=urllib2.urlopen(req)
-  
   cids=[]
-  while True:
-    line=f.readline()
-    if not line: break
+  lines=rval.splitlines()
+  for line in lines:
     try:
       cid=int(line)
       cids.append(cid)
@@ -467,8 +447,8 @@ In this version of the function, use the "concise" mode to download full data
 for each AID, then iterate through SIDs and use local hash.
 '''
   if verbose:
-    if skip: print >>sys.stderr, 'skip: [1-%d]'%skip
-    if nmax: print >>sys.stderr, 'NMAX: %d'%nmax
+    if skip: logging.info('skip: [1-%d]'%skip)
+    if nmax: logging.info('NMAX: %d'%nmax)
   n_aid_in=0; n_aid_done=0; n_out=0;
   nchunk_sid=100;
   #fout.write('aid,sid,outcome,version,rank,year\n')
@@ -480,25 +460,25 @@ for each AID, then iterate through SIDs and use local hash.
     if nmax and n_aid_done>=nmax: break
     n_aid_done+=1
     if verbose>1:
-      print >>sys.stderr, 'Request: (%d) [AID=%d] SID count: %d'%(n_aid_done,aid,len(sids))
+      logging.info('Request: (%d) [AID=%d] SID count: %d'%(n_aid_done,aid,len(sids)))
     try:
       url = base_url+'/assay/aid/%d/concise/JSON'%(aid)
-      print >>sys.stderr, 'DEBUG: %s'%(url)
+      logging.info('DEBUG: %s'%(url))
       rval = rest_utils.GetURL(url,parse_json=True,verbose=verbose)
-    except Exception, e:
-      print >>sys.stderr, 'Error: %s'%(e)
+    except Exception as e:
+      logging.info('Error: %s'%(e))
       break
 
-    if not type(rval)==types.DictType:
-      #print >>sys.stderr, 'Error: %s'%(str(rval))
+    if not type(rval) is dict:
+      #logging.info('Error: %s'%(str(rval)))
       f = open("z.z", "w")
       f.write(str(rval))
       f.close()
-      print >>sys.stderr, 'DEBUG: rval not DictType.  See z.z'
+      logging.info('DEBUG: rval not DictType.  See z.z')
       break
     adata = {} # data this assay
     tags_this = rval["Table"]["Columns"]["Column"]
-    print >>sys.stderr, 'DEBUG: tags_this = %s'%(str(tags_this))
+    logging.info('DEBUG: tags_this = %s'%(str(tags_this)))
     j_sid = None;
     j_res = None;
     if not tags:
@@ -513,7 +493,7 @@ for each AID, then iterate through SIDs and use local hash.
     for row in rows:
       cells = row["Cell"]
       if len(cells) != len(tags):
-        print >>sys.stderr, 'Error: n_cells != n_tags (%d != %d)'%(len(cells), len(tags))
+        logging.info('Error: n_cells != n_tags (%d != %d)'%(len(cells), len(tags)))
         continue
 
       sid = cells[j_sid]
@@ -528,8 +508,8 @@ def GetAssayResults_Screening(base_url,aids,sids,fout,skip,nmax,verbose=0):
 Must chunk the SIDs, since requests limited to 10k SIDs.
 '''
   if verbose:
-    if skip: print >>sys.stderr, 'skip: [1-%d]'%skip
-    if nmax: print >>sys.stderr, 'NMAX: %d'%nmax
+    if skip: logging.info('skip: [1-%d]'%skip)
+    if nmax: logging.info('NMAX: %d'%nmax)
   n_aid_in=0; n_aid_done=0; n_out=0;
   nchunk_sid=100;
   fout.write('aid,sid,outcome,version,rank,year\n')
@@ -540,35 +520,35 @@ Must chunk the SIDs, since requests limited to 10k SIDs.
     if nmax and n_aid_done>=nmax: break
     n_aid_done+=1
     if verbose>1:
-      print >>sys.stderr, 'Request: (%d) [AID=%d] SID count: %d'%(n_aid_done,aid,len(sids))
+      logging.info('Request: (%d) [AID=%d] SID count: %d'%(n_aid_done,aid,len(sids)))
     nskip_sid=0;
     while True:
       if nskip_sid>=len(sids): break
       if verbose>1:
-        print >>sys.stderr, '(%d) [AID=%s] ; SIDs [%d-%d of %d] ; measures: %d'%(n_aid_done,aid,nskip_sid+1,min(nskip_sid+nchunk_sid,len(sids)),len(sids),n_out_this)
+        logging.info('(%d) [AID=%s] ; SIDs [%d-%d of %d] ; measures: %d'%(n_aid_done,aid,nskip_sid+1,min(nskip_sid+nchunk_sid,len(sids)),len(sids),n_out_this))
       sidstr=(','.join(map(lambda x:str(x),sids[nskip_sid:nskip_sid+nchunk_sid])))
       try:
         rval = rest_utils.GetURL(base_url+'/assay/aid/%d/JSON?sid=%s'%(aid,sidstr),parse_json=True,verbose=verbose)
-      except Exception, e:
-        print >>sys.stderr, 'Error: %s'%(e)
+      except Exception as e:
+        logging.info('Error: %s'%(e))
         break
-      if not type(rval)==types.DictType:
-        print >>sys.stderr, 'Error: %s'%(str(rval))
+      if not type(rval) is dict:
+        logging.info('Error: %s'%(str(rval)))
         break
       pcac = rval['PC_AssayContainer'] if rval.has_key('PC_AssayContainer') else None
       if len(pcac)<1:
-        print >>sys.stderr, 'Error: [%s] empty PC_AssayContainer.'%aid
+        logging.info('Error: [%s] empty PC_AssayContainer.'%aid)
         break
       if len(pcac)>1:
-        print >>sys.stderr, 'NOTE: [%s] multiple assays in PC_AssayContainer.'%aid
+        logging.info('NOTE: [%s] multiple assays in PC_AssayContainer.'%aid)
       for assay in pcac:
         if not assay: continue
         if verbose>2:
-          print >>sys.stderr, json.dumps(assay,indent=2)
+          logging.info(json.dumps(assay,indent=2))
         ameta = assay['assay'] if assay.has_key('assay') else None
         adata = assay['data'] if assay.has_key('data') else None
-        if not ameta: print >>sys.stderr, 'Error: [%s] no metadata.'%aid
-        if not adata: print >>sys.stderr, 'Error: [%s] no data.'%aid
+        if not ameta: logging.info('Error: [%s] no metadata.'%aid)
+        if not adata: logging.info('Error: [%s] no data.'%aid)
         for datum in adata:
           sid = datum['sid'] if datum.has_key('sid') else ''
           outcome = datum['outcome'] if datum.has_key('outcome') else ''
@@ -581,7 +561,7 @@ Must chunk the SIDs, since requests limited to 10k SIDs.
           n_out_this+=1
       nskip_sid+=nchunk_sid
     if verbose>1:
-      print >>sys.stderr, 'Result: [AID=%d] total measures: %d'%(aid,n_out_this)
+      logging.info('Result: [AID=%d] total measures: %d'%(aid,n_out_this))
 
   return n_aid_in,n_out
 
@@ -599,9 +579,9 @@ def AssayXML2NameAndSource(xmlstr):
 #############################################################################
 def DescribeAssay(base_url,id_query,verbose=0):
   rval=rest_utils.GetURL(base_url+'/assay/aid/%d/description/JSON'%id_query,parse_json=True,verbose=verbose)
-  #print >>sys.stderr, json.dumps(rval,indent=2)
+  #logging.info(json.dumps(rval,indent=2))
   assays = rval['PC_AssayContainer']
-  print 'aid,name,assay_group,project_category,activity_outcome_method'
+  print('aid,name,assay_group,project_category,activity_outcome_method')
   for assay in assays:
     aid = assay['assay']['descr']['aid']['id']
     name = assay['assay']['descr']['name']
@@ -609,12 +589,12 @@ def DescribeAssay(base_url,id_query,verbose=0):
     project_category = assay['assay']['descr']['project_category']
     activity_outcome_method = assay['assay']['descr']['activity_outcome_method']
     vals = [aid,name,assay_group,project_category,activity_outcome_method]
-    print (','.join(map(lambda s: '"%s"'%s, vals)))
+    print(','.join(map(lambda s: '"%s"'%s, vals)))
   return
 
 #############################################################################
 def Name2Sids(base_url,name,verbose):
-  d=rest_utils.GetURL(base_url+'/substance/name/%s/sids/JSON'%urllib.quote(name),parse_json=True,verbose=verbose)
+  d=rest_utils.GetURL(base_url+'/substance/name/%s/sids/JSON'%urllib.parse.quote(name),parse_json=True,verbose=verbose)
   #return d[u'IdentifierList'][u'SID']
   return d['IdentifierList']['SID']
 
@@ -622,12 +602,11 @@ def Name2Sids(base_url,name,verbose):
 def Sid2Synonyms(base_url,sid,verbose):
   d=rest_utils.GetURL(base_url+'/substance/sid/%d/synonyms/JSON'%(sid),parse_json=True,verbose=verbose)
   if not d: return []
-  #if not type(d) is types.DictType: return []
   try:
     infos = d['InformationList']['Information']
-  except Exception, e:
-    print >>sys.stderr, 'Error (Exception): %s'%e
-    print >>sys.stderr, 'DEBUG: d = %s'%str(d)
+  except Exception as e:
+    logging.info('Error (Exception): %s'%e)
+    logging.info('DEBUG: d = %s'%str(d))
     return []
   if not infos: return []
   synonyms=[]
@@ -639,7 +618,7 @@ def Sid2Synonyms(base_url,sid,verbose):
 def Cid2Synonyms(base_url,cid,verbose):
   sids = Cid2Sids(base_url,cid,verbose)
   if verbose:
-    print >>sys.stderr,'cid=%d: sid count: %d'%(cid,len(sids))
+    logging.info('cid=%d: sid count: %d'%(cid,len(sids)))
   synonyms = set([])
   for sid in sids:
     synonyms_this = Sid2Synonyms(base_url,sid,verbose)
@@ -668,11 +647,11 @@ def Cids2Synonyms(base_url,cids,fout,skip,nmax,verbose):
     if verbose:
       if synonyms_nice: s1=synonyms_nice[0]
       else: s1=None
-      print >>sys.stderr,'%d. cid=%d: sids: %d ; synonyms: %d (%s)'%(i_cid,cid,len(sids_this),len(synonyms),s1)
+      logging.info('%d. cid=%d: sids: %d ; synonyms: %d (%s)'%(i_cid,cid,len(sids_this),len(synonyms),s1))
     fout.flush()
     if nmax and i_cid>=(skip+nmax): break
   if verbose:
-    print >>sys.stderr,'total sids: %d'%(len(sids))
+    logging.info('total sids: %d'%(len(sids)))
 
 #############################################################################
 def Name2Cids(base_url,name,verbose):
@@ -716,14 +695,14 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
 
   try:
     fcsv=rest_utils.GetURL(base_url+'/compound/cid/%d/assaysummary/CSV'%cid,verbose=verbose)
-  except urllib2.HTTPError,e:
-    print >>sys.stderr, 'ERROR: [%d] REST request failed; response code = %d'%(cid,e.code)
+  except Exception as e:
+    logging.info('ERROR: [%d] REST request failed; response code = %d'%(cid,e.code))
     #if not http_errs.has_key(e.code): http_errs[e.code]=1
     #else: http_errs[e.code]+=1
     fout_mol.write("%s %d\n"%(smiles,cid))
     return mol_found,mol_active,n_sam,n_sam_active
-  except Exception,e:
-    print >>sys.stderr, 'ERROR: [%d] REST request failed; %s'%(cid,e)
+  except Exception as e:
+    logging.info('ERROR: [%d] REST request failed; %s'%(cid,e))
     fout_mol.write("%s %d\n"%(smiles,cid))
     return mol_found,mol_active,n_sam,n_sam_active
   mol_found=True
@@ -731,15 +710,16 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
   try:
     csvReader=csv.DictReader(fcsv.splitlines(),fieldnames=None,restkey=None,restval=None,dialect='excel',delimiter=',',quotechar='"')
     csvrow=csvReader.next()    ## must do this to get fieldnames
-  except Exception,e:
-    print >>sys.stderr, 'ERROR: [CID=%d] CSV problem:%s'%(cid,e)
+  except Exception as e:
+    logging.info('ERROR: [CID=%d] CSV problem:%s'%(cid,e))
     fout_mol.write("%s %d\n"%(smiles,cid))
     return mol_found,mol_active,n_sam,n_sam_active
 
   for field in ('AID','CID','SID','Bioactivity Outcome','Bioassay Type'):
     if field not in csvReader.fieldnames:
-      print >>sys.stderr, 'ERROR: [CID=%d] bad CSV header, no "%s" field.'%(cid,field)
-      print >>sys.stderr, 'DEBUG: fieldnames: %s'%(','.join(map((lambda x:'"%s"'%x),csvReader.fieldnames)))
+      logging.info('ERROR: [CID=%d] bad CSV header, no "%s" field.'%(cid,field))
+      logging.info('DEBUG: fieldnames: %s'%(','.join(map((lambda
+x:'"%s"'%x),csvReader.fieldnames))))
       fout_mol.write("%s %d\n"%(smiles,cid))
       return mol_found,mol_active,n_sam,n_sam_active
 
@@ -756,16 +736,16 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
       sid=int(csvrow['SID'])
       csvrow_cid=int(csvrow['CID'])
     except:
-      print >>sys.stderr, 'ERROR: [CID=%d] bad CSV line; problem parsing: "%s"'%(cid,str(csvrow))
+      logging.info('ERROR: [CID=%d] bad CSV line; problem parsing: "%s"'%(cid,str(csvrow)))
       continue
     if cid!=csvrow_cid:
-      print >>sys.stderr, 'ERROR: Aaack! [CID=%d] CID mismatch: != %d'%(cid,csvrow_cid)
+      logging.info('ERROR: Aaack! [CID=%d] CID mismatch: != %d'%(cid,csvrow_cid))
       return mol_found,mol_active,n_sam,n_sam_active
 
     if aidset:
       if not aidset.has_key(aid):
         continue
-      #print >>sys.stderr, 'DEBUG: AID [%d] ok (pre-selected).'%(aid)
+      #logging.info('DEBUG: AID [%d] ok (pre-selected).'%(aid))
 
     ## Assay filtering done; now update statistics (sTested, sActive).
     n_sam+=1
@@ -775,7 +755,7 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
       fout_act.write("%d,%d,%d,%d\n"%(cid,sid,aid,OUTCOME_CODES[act_outcome]))
     else:
       if verbose>2:
-        print >>sys.stderr, '[%d] unrecognized outcome (CID=%d,AID=%d): "%s"'%(n_in,cid,aid,act_outcome)
+        logging.info('[%d] unrecognized outcome (CID=%d,AID=%d): "%s"'%(n_in,cid,aid,act_outcome))
 
     aids_tested.add(aid)
     sids_tested.add(sid)
@@ -786,7 +766,7 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
       sids_active.add(sid)
 
   if verbose>2:
-    print >>sys.stderr, '[CID=%d] CSV data lines: %d'%(cid,n_in)
+    logging.info('[CID=%d] CSV data lines: %d'%(cid,n_in))
 
   fout_mol.write("%s %d %d %d %d %d %d %d\n"%(
 	smiles,
@@ -798,7 +778,7 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
 	n_sam,
 	n_sam_active))
   if verbose>1:
-    print >>sys.stderr, (
+    logging.info((
 	"cid=%d,sTested=%d,sActive=%d,aTested=%d,aActive=%d,wTested=%d,wActive=%d"%(
 	cid,
 	len(sids_tested),
@@ -806,7 +786,7 @@ def GetCpdAssayStats(base_url,cid,smiles,aidset,fout_mol,fout_act,aidhash,verbos
 	len(aids_tested),
 	len(aids_active),
 	n_sam,
-	n_sam_active))
+	n_sam_active)))
 
   return mol_found,mol_active,n_sam,n_sam_active
 
@@ -815,8 +795,8 @@ def GetCpdAssayData(base_url,cid_query,aidset,fout,verbose):
 
   try:
     fcsv=rest_utils.GetURL(base_url+'/compound/cid/%d/assaysummary/CSV'%cid_query,verbose=verbose)
-  except Exception,e:
-    print >>sys.stderr, 'ERROR: [%d] REST request failed; %s'%(cid_query,e)
+  except Exception as e:
+    logging.info('ERROR: [%d] REST request failed; %s'%(cid_query,e))
     return False
 
   if not fcsv:
@@ -825,14 +805,14 @@ def GetCpdAssayData(base_url,cid_query,aidset,fout,verbose):
   try:
     csvReader=csv.DictReader(fcsv.splitlines(),fieldnames=None,restkey=None,restval=None,dialect='excel',delimiter=',',quotechar='"')
     csvrow=csvReader.next()    ## must do this to get fieldnames
-  except Exception,e:
-    print >>sys.stderr, 'ERROR: [CID=%d] CSV problem: %s'%(cid_query,e)
+  except Exception as e:
+    logging.info('ERROR: [CID=%d] CSV problem: %s'%(cid_query,e))
     return True
 
   for field in ('CID','SID','AID','Bioactivity Outcome','Activity Value [uM]'):
     if field not in csvReader.fieldnames:
-      print >>sys.stderr, 'ERROR: [CID=%d] bad CSV header, no "%s" field.'%(cid_query,field)
-      print >>sys.stderr, 'DEBUG: fieldnames: %s'%(','.join(map((lambda x:'"%s"'%x),csvReader.fieldnames)))
+      logging.info('ERROR: [CID=%d] bad CSV header, no "%s" field.'%(cid_query,field))
+      logging.info('DEBUG: fieldnames: %s'%(','.join(map((lambda x:'"%s"'%x),csvReader.fieldnames))))
       return True
 
   n_in=0; n_act=0;
@@ -848,15 +828,15 @@ def GetCpdAssayData(base_url,cid_query,aidset,fout,verbose):
       cid=int(csvrow['CID'])
       outcome=csvrow['Bioactivity Outcome']
     except:
-      print >>sys.stderr, 'ERROR: [CID=%d] bad CSV line; problem parsing.'%cid
-      #print >>sys.stderr, 'DEBUG: csvrow = %s'%str(csvrow)
+      logging.info('ERROR: [CID=%d] bad CSV line; problem parsing.'%cid)
+      #logging.info('DEBUG: csvrow = %s'%str(csvrow))
       continue
     if cid_query!=cid:
-      print >>sys.stderr, 'ERROR: Aaack! [CID=%d] CID mismatch: != %d'%(cid,int(csvrow['CID']))
+      logging.info('ERROR: Aaack! [CID=%d] CID mismatch: != %d'%(cid,int(csvrow['CID'])))
       return True
     if aid not in aidset:
       continue
-      #print >>sys.stderr, 'DEBUG: AID [%d] ok (pre-selected).'%(aid)
+      #logging.info('DEBUG: AID [%d] ok (pre-selected).'%(aid))
 
     if not csvrow['Activity Value [uM]']:
       continue
@@ -864,7 +844,7 @@ def GetCpdAssayData(base_url,cid_query,aidset,fout,verbose):
     try:
       actval=float(csvrow['Activity Value [uM]'])
     except:
-      print >>sys.stderr, 'ERROR: [CID=%d] bad CSV line; problem parsing activity: "%s"'%(cid,csvrow['Activity Value [uM]'])
+      logging.info('ERROR: [CID=%d] bad CSV line; problem parsing activity: "%s"'%(cid,csvrow['Activity Value [uM]']))
       continue
 
     n_act+=1
@@ -872,14 +852,14 @@ def GetCpdAssayData(base_url,cid_query,aidset,fout,verbose):
 
     fout.write('%d,%d,%d,%d,%.3f\n'%(cid,sid,aid,outcome_code,actval))
 
-  print >>sys.stderr, '[CID=%d] records: %2d ; activities: %2d'%(cid_query,n_in,n_act)
+  logging.info('[CID=%d] records: %2d ; activities: %2d'%(cid_query,n_in,n_act))
   return True
 
 #############################################################################
 if __name__=='__main__':
 
   if len(sys.argv)<2:
-    print 'Syntax: %s NAMEFILE'%sys.argv[0]
+    logging.error('Syntax: %s NAMEFILE'%sys.argv[0])
     sys.exit(1)
 
   fin = open(sys.argv[1])
@@ -887,4 +867,4 @@ if __name__=='__main__':
     line = fin.readline()
     if not line: break
     name=line.rstrip()
-    print '%s\t%d'%(name,NameNicenessScore(name))
+    print('%s\t%d'%(name,NameNicenessScore(name)))

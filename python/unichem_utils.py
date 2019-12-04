@@ -36,7 +36,7 @@ CLASSES
 """
 import sys,os,re,argparse,time,json
 #
-import rest_utils_py3 as rest_utils
+import rest_utils
 #
 PROG=os.path.basename(sys.argv[0])
 #

@@ -70,8 +70,8 @@ base::date()
 ```{r setup, echo=FALSE, message=FALSE}
 library(readr)
 library(data.table)
-library(tm)
-library(stringr)
+#library(tm)
+#library(stringr)
 library(plotly, quietly=T)
 ```
 
@@ -80,7 +80,6 @@ truncate.ellipsis <- function(txt, maxlen) {
   return (ifelse(nchar(txt)<maxlen, txt, sprintf("%s...", substr(txt, 1, maxlen-3))));
 }
 ```
-
 
 # Input studies and drugs
 ## Studies
@@ -404,61 +403,6 @@ dner <- dner[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collap
 knitr::kable(dner[nct_id %in% base::sample(unique(dner$nct_id), 10)], caption="Disease mentions by study (Random sample of studies)")
 ```
 
-# JensenLab Tagger targets NER (human proteins)
-
-Many false positives due to synonomy collisions with common words (e.g. "Aim 1", "Nut").
-
-```{r}
-tner <- read_delim("data/aact_descriptions_tagger_target_matches.tsv", "\t", 
-                   col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
-tent <- read_delim("/home/data/jensenlab/data/human_entities.tsv", "\t", col_names=c("serialnm", "ensp"), col_types="c-c")
-setDT(tner)
-setDT(tent)
-tner <- merge(tner, tent, by="serialnm", all.x=T, all.y=F)
-tner <- merge(tner, descs, by="id", all.x=T, all.y=F)
-tner[, id:=NULL]
-tner[, serialnm:=NULL]
-tner <- tner[grepl("^ENSP", ensp)]
-tbad <- c("post", "end", "type", "aim", "impact", "pilot", "arms", "large", "set", "mass",
-"men", "light", "step", "damage", "tube", "task", "rest", "past", "sex", "call",
-"art", "simple", "find", "white", "bid", "stop", "met", "ask", "soft",
-"fast", "red", "lab", "gas", "app", "aid", "great", "act", "held", "mask",
-"kit", "minor", "fusion", "statin", "prep", "tip", "flap", "mail", "prep",
-"top", "rank", "map", "era", "gamma", "hrs", "net", "hot", "cap", "april", "cap",
-"spatial", "pad", "max", "sit", "bag", "chop", "wire", "med", "grip", "coil",
-"mark", "nodal", "arch", "gov", "bad", "talk", "killer", "nail", "cope", "lobe",
-"pace", "fur", "van", "cast", "mix", "flame", "flip", "opt", "lamp", "heel",
-"spin","miss", "pick", "shot", "traits", "tele", "cat", "prof", "lap", "pen", 
-"mast", "lethal", "yrs", "bite", "toll", "wise", "fats", "clip", "grid", "apps",
-"fix", "std", "jet", "flash", "tactile", "bright", "clock", "caps")
-tbad <- union(tbad, stopwords("SMART"))
-tner <- tner[!(tolower(term) %in% tbad)]
-sprintf("Total target mentions: %d (in %d studies)", nrow(tner), uniqueN(studies$nct_id))
-```
-
-## Target mention totals by merging to resolved Ensembl ID (ENSP).
-
-```{r}
-tner_totals <- tner[, .(N_mentions = .N), by=c("ensp", "term")]
-tner_totals <- tner_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse="; ")), by=c("ensp")]
-tner_totals <- tner_totals[order(-N_mentions)]
-tner_totals$terms <- truncate.ellipsis(tner_totals$terms, 200)
-knitr::kable(tner_totals[1:20], caption="Top 20 human proteins by total mentions")
-```
-
-
-## Target mentions by study.
-Sort synonyms terms by frequency.
-
-```{r}
-tner <- tner[, .(N_mentions = .N), by=c("nct_id", "ensp", "term")]
-tner <- tner[order(nct_id, -N_mentions)]
-tner <- tner[, .(N_mentions = sum(N_mentions), target_terms=paste0(term, collapse=";")), by=c("nct_id", "ensp")]
-knitr::kable(tner[nct_id %in% base::sample(unique(tner$nct_id), 10)], caption="Target mentions by study (Random sample of studies)")
-```
-
-
-
 # Enumerate ___study-drug-disease-target___ links.
 
 And include references.
@@ -468,10 +412,10 @@ build a table of all associated combinations, then aggregate by study (`NCT_ID`)
 For DOIDs with multiple terms, keep only most common term for simplicity.
 
 ```{r}
-links <- copy(dner)
-links[, `:=`(disease_term = sub(";.*$", "", disease_terms), disease_terms = NULL, N_mentions = NULL)]
-#links <- links[, .(N_disease_mentions = paste0(N_mentions, collapse="; "), disease_terms=paste0(disease_term, collapse="; "), doids = paste0(doid, collapse="; ")), by=c("nct_id")]
-sprintf("study-disease links: %d", nrow(links))
+sddt_links <- copy(dner)
+sddt_links[, `:=`(disease_term = sub(";.*$", "", disease_terms), disease_terms = NULL, N_mentions = NULL)]
+#sddt_links <- sddt_links[, .(N_disease_mentions = paste0(N_mentions, collapse="; "), disease_terms=paste0(disease_term, collapse="; "), doids = paste0(doid, collapse="; ")), by=c("nct_id")]
+sprintf("study-disease links: %d", nrow(sddt_links))
 ```
 
 ## Link to drugs
@@ -486,10 +430,10 @@ drug_links <- unique(drugs[!is.na(smiles), .(nct_id, itv_id = id, drug_name = En
 drug_links <- merge(drug_links, drug2cid, by="itv_id")
 #drug_links <- drug_links[order(nct_id, smiles, EntityText, nchar(name))]
 #drug_links <- drug_links[, .(N_chem_mentions=length(name), PUBCHEM_CIDs = paste0(cid, collapse="; "), names = paste0(name, collapse="; "), EntityTexts = paste0(EntityText, collapse="; "), smiles = paste0(smiles, collapse="; ")), by="nct_id"]
-links <- merge(links, drug_links, by="nct_id")
-links <- links[!is.na(doid) & !is.na(cid)]
-sprintf("study-drug-disease links: %d", nrow(links))
-sprintf("studies with drug-disease links: %d", uniqueN(links$nct_id))
+sddt_links <- merge(sddt_links, drug_links, by="nct_id")
+sddt_links <- sddt_links[!is.na(doid) & !is.na(cid)]
+sprintf("study-drug-disease links: %d", nrow(sddt_links))
+sprintf("studies with drug-disease links: %d", uniqueN(sddt_links$nct_id))
 ```
 ## ChEMBL links to targets
 
@@ -520,11 +464,7 @@ cid2ink <- read_delim("data/aact_drugs_smi_pubchem_cid2ink.tsv", "\t")
 setDT(cid2ink)
 sprintf("CIDs: %d ; INCHIKEYs: %d ; pairs: %d",
 	uniqueN(cid2ink$CID), uniqueN(cid2ink$InChIKey), nrow(cid2ink)) 
-ink2chembl <- read_delim("data/aact_drugs_ink2chembl.tsv", "\t", col_types = cols(
-	.default = col_character(), 
-	first_approval=col_integer(), 
-	usan_year=col_integer(), 
-	withdrawn_year=col_integer()))
+ink2chembl <- read_delim("data/aact_drugs_ink2chembl.tsv", "\t", col_types=cols(.default=col_character(), first_approval=col_integer(), usan_year=col_integer(), withdrawn_year=col_integer()))
 setDT(ink2chembl)
 sprintf("INCHIKEYs: %d ; MOLECULE_CHEMBL_IDs: %d ; pairs: %d",
 	uniqueN(ink2chembl$inchikey), uniqueN(ink2chembl$molecule_chembl_id), nrow(ink2chembl)) 
@@ -541,18 +481,21 @@ sprintf("CID2UNIPROT links: %d ; CIDs: %d ; UNIPROTs: %d", nrow(mol2tgt), unique
 ### study-drug-disease-target links
 
 ```{r}
-links <- unique(merge(links, mol2tgt, by.x="cid", by.y="CID", allow.cartesian=T))
-sprintf("study-drug-disease-target links: %d", nrow(links))
-sprintf("studies: %d ; drugs: %d ; diseases: %d ; targets: %d", uniqueN(links$nct_id), uniqueN(links$cid), uniqueN(links$doid), uniqueN(links$uniprot))
-links <- merge(links, tgt[, .(uniprot, gene_symbol = sym, idgTDL)], by="uniprot")
-links <- links[, .(nct_id, drug_name, cid, disease_term, doid, gene_symbol, uniprot, idgTDL)]
-knitr::kable(links[sample(1:nrow(links), 12)], caption=sprintf("Sample of study-drug-disease-target links (N_total = %d)", nrow(links)))
+sddt_links <- unique(merge(sddt_links, mol2tgt, by.x="cid", by.y="CID", allow.cartesian=T))
+sprintf("study-drug-disease-target links: %d", nrow(sddt_links))
+sprintf("studies: %d ; drugs: %d ; diseases: %d ; targets: %d",
+uniqueN(sddt_links$nct_id), uniqueN(sddt_links$cid), uniqueN(sddt_links$doid),
+uniqueN(sddt_links$uniprot))
+sddt_links <- merge(sddt_links, tgt[, .(uniprot, gene_symbol = sym, idgTDL)], by="uniprot")
+sddt_links <- sddt_links[, .(nct_id, drug_name, cid, disease_term, doid, gene_symbol, uniprot, idgTDL)]
+knitr::kable(sddt_links[sample(1:nrow(sddt_links), 12)], caption=sprintf("Sample of
+study-drug-disease-target links (N_total = %d)", nrow(sddt_links)))
 ```
 
 ## TDL counts
 
 ```{r}
-knitr::kable(unique(links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
+knitr::kable(unique(sddt_links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
 ```
 
 ## PubMed references from AACT studies.

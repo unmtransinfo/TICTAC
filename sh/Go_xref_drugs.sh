@@ -29,22 +29,18 @@ printf "CIDs (from PubChem): %d\n" ${n_cid}
 printf "SMI2CID hit rate (from PubChem): (%d / %d = %.1f%%)\n" \
 	${n_cid} ${n_smi} $(echo "100 * $n_cid / $n_smi" |bc)
 ###
-# --cids2inchi gets both InChI and InChIKey
-${cwd}/python/pubchem_query.py \
+# cids2inchi gets both InChI and InChIKey
+${cwd}/python/pubchem_query.py cids2inchi --v \
 	--i data/aact_drugs_smi_pubchem.cid \
-	--cids2inchi \
-	--o data/aact_drugs_smi_pubchem_cid2ink.csv \
-	--v
+	--o data/aact_drugs_smi_pubchem_cid2ink.csv
 #
-${cwd}/python/pandas_utils.py \
+${cwd}/python/pandas_utils.py csv2tsv \
 	--i data/aact_drugs_smi_pubchem_cid2ink.csv \
-	--o data/aact_drugs_smi_pubchem_cid2ink.tsv \
-	csv2tsv
+	--o data/aact_drugs_smi_pubchem_cid2ink.tsv
 #
-${cwd}/python/pandas_utils.py \
+${cwd}/python/pandas_utils.py selectcols \
 	--i data/aact_drugs_smi_pubchem_cid2ink.tsv \
 	--coltags "InChIKey" \
-	selectcols \
 	|sed -e '1d' |sed -e 's/"//g' \
 	>data/aact_drugs_smi_pubchem.ink
 #
@@ -77,10 +73,9 @@ ${cwd}/python/chembl_fetchbyid.py -v \
 n_chembl_act=$(cat data/aact_drugs_chembl_activity.tsv |sed -e '1d' |wc -l)
 printf "Activities (from ChEMBL): %d\n" ${n_chembl_act}
 #
-${cwd}/python/pandas_utils.py \
+${cwd}/python/pandas_utils.py selectcols \
 	--i data/aact_drugs_chembl_activity.tsv \
 	--coltags "target_chembl_id" \
-	selectcols \
 	|sed -e '1d' |sort -u \
 	>data/aact_drugs_chembl_target.chemblid
 #
@@ -100,25 +95,22 @@ n_chembl_tgtc=$(${cwd}/python/pandas_utils.py \
 printf "Target components (from ChEMBL): %d\n" ${n_chembl_tgtc}
 ###
 # 
-${cwd}/python/pandas_utils.py \
+${cwd}/python/pandas_utils.py selectcols \
 	--i data/aact_drugs_chembl_activity.tsv \
 	--coltags "document_chembl_id" \
-	selectcols \
 	|sed -e '1d' |sort -u \
 	>data/aact_drugs_chembl_document.chemblid
 #
 n_chembl_doc=$(cat data/aact_drugs_chembl_document.chemblid |wc -l)
 printf "Documents (from ChEMBL): %d\n" ${n_chembl_doc}
 #
-${cwd}/python/chembl_fetchbyid.py -v \
+${cwd}/python/chembl_fetchbyid.py did2Documents -v \
 	--i data/aact_drugs_chembl_document.chemblid \
-	--o data/aact_drugs_chembl_document.tsv \
-	did2Documents
+	--o data/aact_drugs_chembl_document.tsv
 #
-n_chembl_pmid=$(${cwd}/python/pandas_utils.py \
+n_chembl_pmid=$(${cwd}/python/pandas_utils.py selectcols \
 	--i data/aact_drugs_chembl_document.tsv \
 	--coltags "pubmed_id" \
-	selectcols \
 	|sed -e '1d' |wc -l)
 printf "PubMed IDs (from ChEMBL): %d\n" ${n_chembl_pmid}
 #

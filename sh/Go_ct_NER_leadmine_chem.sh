@@ -4,8 +4,6 @@
 cwd=$(pwd)
 #
 NM_ROOT="/home/app/nextmove"
-#LEADMINE_JAR="${NM_ROOT}/leadmine-3.12/LeadMine/leadmine-3.12.jar"
-LEADMINE_JAR="${NM_ROOT}/leadmine-3.13/bin/leadmine.jar"
 #
 DATADIR="$cwd/data"
 #
@@ -14,7 +12,7 @@ DATADIR="$cwd/data"
 # and resolver. Must identify drugs by intervention ID, since may be multiple
 # drugs per trial ID (NCT_ID).
 ###
-${cwd}/sh/leadmine_utils.sh \
+java -jar /home/app/lib/unm_biocomp_nextmove-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
 	-i ${DATADIR}/aact_drugs.tsv \
 	-textcol 3 -unquote -idcol 1 \
 	-o ${DATADIR}/aact_drugs_leadmine.tsv \

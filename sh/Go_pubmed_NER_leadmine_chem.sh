@@ -26,7 +26,7 @@ ${cwd}/sh/runsql_my.sh -h juniper.health.unm.edu -u $DBUSR -p $DBPW \
 # total elapsed time: 02:25:46
 # Many "badly formed line" errors to be investigated.
 ###
-${cwd}/sh/leadmine_utils.sh \
+java -jar /home/app/lib/unm_biocomp_nextmove-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
 	-i ${DATADIR}/pubmed.tsv.gz \
 	-textcol 6 -idcol 1 \
 	-o ${DATADIR}/pubmed_leadmine.tsv \
