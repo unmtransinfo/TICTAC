@@ -1,7 +1,8 @@
 # Clinicaltrials.gov mining for drug target hypotheses
 
 Mining ClinicalTrials.gov for target hypotheses, with strong
-cheminformatics and medical terms text mining, powered by NextMove Software.
+cheminformatics and medical terms text mining, powered by NextMove LeadMine
+and JensenLab Tagger.
 
 ---
 
@@ -20,8 +21,9 @@ cheminformatics and medical terms text mining, powered by NextMove Software.
 * [How to avoid common problems when using ClinicalTrials.gov in research: 10 issues to consider](https://www.bmj.com/content/361/bmj.k1452), Tse et al., BMJ 2018; 361 doi: https://doi.org/10.1136/bmj.k1452 (Published 25 May 2018.
 * See also: <https://www.ctti-clinicaltrials.org/briefing-room/publications>
 
-### About NextMove LeadMine:
-* Text mining performed with [NextMove LeadMine](http://nextmovesoftware.com).
+### Text mining, aka Named Entity Recognition (NER)
+* Chemical NER by [NextMove LeadMine](http://nextmovesoftware.com).
+* Disease and gene NER by [JensenLab](https://jensenlab.org/) [Tagger](https://bitbucket.org/larsjuhljensen/tagger/).
 
 ### Purpose:
 * Associate drugs with diseases/phenotypes.
@@ -61,6 +63,7 @@ Dependencies:
 * [ChEMBL REST API](https://www.ebi.ac.uk/chembl/ws)
 * [ChEMBL webresource client](https://github.com/chembl/chembl_webresource_client) \(Python client library\).
 * [nextmove-tools](https://github.com/unmtransinfo/nextmove-tools) \(local Java library\)
+* [JensenLab](https://jensenlab.org/) [Tagger](https://bitbucket.org/larsjuhljensen/tagger/).
 
 ### Association semantics:
 * **keywords**, **conditions**, **studies** and **summaries**: reported terms and free text which may be text mined for intended associations.
