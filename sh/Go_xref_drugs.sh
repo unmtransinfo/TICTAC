@@ -12,7 +12,7 @@ ${cwd}/R/leadmine2smifile.R data/aact_drugs_leadmine.tsv \
 	|grep -v '\*' \
 	>data/aact_drugs_smi.smi
 #
-${cwd}/python/pubchem_mols2ids.py --v \
+${cwd}/python/pubchem_mols2ids.py \
 	--ifmt "smiles" \
 	--i data/aact_drugs_smi.smi \
 	--o data/aact_drugs_smi_pubchem_cid.tsv
@@ -31,7 +31,7 @@ printf "SMI2CID hit rate (from PubChem): (%d / %d = %.1f%%)\n" \
 	${n_cid} ${n_smi} $(echo "100 * $n_cid / $n_smi" |bc)
 ###
 # cids2inchi gets both InChI and InChIKey
-${cwd}/python/pubchem_query.py cids2inchi --v \
+${cwd}/python/pubchem_query.py cids2inchi \
 	--i data/aact_drugs_smi_pubchem.cid \
 	--o data/aact_drugs_smi_pubchem_cid2ink.tsv
 #
@@ -44,7 +44,6 @@ ${cwd}/python/pandas_utils.py selectcols \
 n_ink=$(cat data/aact_drugs_smi_pubchem.ink |wc -l)
 printf "InChIKeys (from PubChem): %d\n" ${n_ink}
 ###
-# 3334/3801 found
 ${cwd}/python/chembl_fetchbyid.py inchikey2Mol \
 	--i data/aact_drugs_smi_pubchem.ink \
 	--o data/aact_drugs_ink2chembl.tsv
@@ -59,8 +58,7 @@ n_chembl_mol=$(cat data/aact_drugs_ink2chembl.chemblid |wc -l)
 printf "Mols (from ChEMBL): %d\n" ${n_chembl_mol}
 #
 ###
-#This takes several hours.
-${cwd}/python/chembl_fetchbyid.py cid2Activity -v \
+${cwd}/python/chembl_fetchbyid.py cid2Activity \
 	--i data/aact_drugs_ink2chembl.chemblid \
 	--o data/aact_drugs_chembl_activity.tsv
 #
@@ -76,7 +74,7 @@ ${cwd}/python/pandas_utils.py selectcols \
 n_chembl_tgt=$(cat data/aact_drugs_chembl_target.chemblid |wc -l)
 printf "Targets (from ChEMBL): %d\n" ${n_chembl_tgt}
 #
-${cwd}/python/chembl_fetchbyid.py tid2Targetcomponents -v \
+${cwd}/python/chembl_fetchbyid.py tid2Targetcomponents \
 	--i data/aact_drugs_chembl_target.chemblid \
 	--o data/aact_drugs_chembl_target_component.tsv
 #
@@ -96,7 +94,7 @@ ${cwd}/python/pandas_utils.py selectcols \
 n_chembl_doc=$(cat data/aact_drugs_chembl_document.chemblid |wc -l)
 printf "Documents (from ChEMBL): %d\n" ${n_chembl_doc}
 #
-${cwd}/python/chembl_fetchbyid.py did2Documents -v \
+${cwd}/python/chembl_fetchbyid.py did2Documents \
 	--i data/aact_drugs_chembl_document.chemblid \
 	--o data/aact_drugs_chembl_document.tsv
 #

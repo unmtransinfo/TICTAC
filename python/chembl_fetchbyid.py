@@ -34,7 +34,9 @@ def CID2Activity(cids, args, fout):
   i_start=(args.skip if args.skip else 0)
   i_end = min(args.nmax, len(cids)-i_start) if args.nmax else (len(cids)-i_start)
   writer = csv.writer(fout, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
+  loglev = logging.getLogger().getEffectiveLevel()
   for i in range(i_start, i_end, NCHUNK):
+    logging.getLogger().setLevel(logging.WARN) #Quiet verbose API.
     if args.include_phenotypic:
       acts = new_client.activity.filter(molecule_chembl_id__in=cids[i:i+NCHUNK]).only(act_tags_selected)
     else:
@@ -45,8 +47,8 @@ def CID2Activity(cids, args, fout):
         writer.writerow(tags)
       writer.writerow([(act[tag] if tag in act else '') for tag in tags])
       n_act+=1
-    if args.verbose:
-      logging.info('Progress: CIDs: %d / %d ; activities: %d'%(i-i_start, i_end-i_start, n_act))
+    logging.getLogger().setLevel(loglev)
+    logging.info('Progress: CIDs: %d / %d ; activities: %d'%(i-i_start, i_end-i_start, n_act))
   logging.info('Output activities: %d'%n_act)
 
 #############################################################################
@@ -56,7 +58,9 @@ def TID2Targetcomponents(tids, args, fout):
   tc_tags=['component_id','component_type','component_description','relationship', 'accession']
   ntc=0;
   writer = csv.writer(fout, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
+  loglev = logging.getLogger().getEffectiveLevel()
   for i in range(0, len(tids), NCHUNK):
+    logging.getLogger().setLevel(logging.WARN) #Quiet verbose API.
     targets = new_client.target.filter(target_chembl_id__in=tids[i:i+NCHUNK])
     for t in targets:
       t_vals=[(t[tag] if tag in t else '') for tag in t_tags]
@@ -68,6 +72,7 @@ def TID2Targetcomponents(tids, args, fout):
         tc_vals=[(tc[tag] if tag in tc else '') for tag in tc_tags]
         writer.writerow(t_vals+tc_vals)
         ntc+=1
+  logging.getLogger().setLevel(loglev)
   logging.info('Output target components (PROTEIN): %d'%ntc)
 
 #############################################################################
@@ -77,7 +82,9 @@ def DID2Documents(dids, args, fout):
 	'volume', 'issue', 'title', 'journal_full_title', 'abstract']
   ndoc=0;
   writer = csv.writer(fout, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
+  loglev = logging.getLogger().getEffectiveLevel()
   for i in range(0, len(dids), NCHUNK):
+    logging.getLogger().setLevel(logging.WARN) #Quiet verbose API.
     documents = new_client.document.filter(document_chembl_id__in=dids[i:i+NCHUNK])
     for d in documents:
       d_vals=[(d[tag] if tag in d else '') for tag in d_tags]
@@ -85,6 +92,7 @@ def DID2Documents(dids, args, fout):
         writer.writerow(d_tags)
       writer.writerow(d_vals)
       ndoc+=1
+  logging.getLogger().setLevel(loglev)
   logging.info('Output documents: %d'%ndoc)
 
 #############################################################################
@@ -101,6 +109,8 @@ def InchiKey2Molecule(inkeys, args, fout):
 	'withdrawn_flag', 'withdrawn_reason', 'withdrawn_year']
   n_mol=0;
   writer = csv.writer(fout, delimiter='\t', quoting=csv.QUOTE_MINIMAL)
+  loglev = logging.getLogger().getEffectiveLevel()
+  logging.getLogger().setLevel(logging.WARN) #Quiet verbose API.
   for i in range(0, len(inkeys), NCHUNK):
     mol = new_client.molecule
     mols = mol.get(inkeys[i:i+NCHUNK])
@@ -111,12 +121,11 @@ def InchiKey2Molecule(inkeys, args, fout):
         writer.writerow(['inchikey']+m_tags)
       writer.writerow(m_vals)
       n_mol+=1
+  logging.getLogger().setLevel(loglev)
   logging.info('Output mols: %d'%n_mol)
 
 #############################################################################
 if __name__=='__main__':
-  logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-
   parser = argparse.ArgumentParser(
         description='ChEMBL REST API client: lookup by IDs')
   ops = ['cid2Activity', 'tid2Targetcomponents', 'did2Documents', 'inchikey2Mol']
@@ -129,6 +138,9 @@ if __name__=='__main__':
   parser.add_argument("--include_phenotypic", action="store_true", help="(activity) else pChembl required")
   parser.add_argument("-v","--verbose", default=0, action="count")
   args = parser.parse_args()
+
+  logging.basicConfig(format='%(levelname)s:%(message)s',
+	level=(logging.DEBUG if args.verbose>1 else logging.INFO))
 
   if not (args.ifile or args.id):
     parser.error('--i or --id required.')

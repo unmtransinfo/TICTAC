@@ -148,9 +148,9 @@ def Cid2Sids(base_url,cid,verbose=0):
 ### '' for no safe chars.
 #############################################################################
 def Smi2Ids(base_url, smi, verbose):
-  d=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib.parse.quote(smi, ''), parse_json=True, verbose=verbose)
-  if d and 'IdentifierList' in d:
-    return d['IdentifierList']
+  rval=rest_utils.GetURL(base_url+'/compound/smiles/%s/cids/JSON'%urllib.parse.quote(smi, ''), parse_json=True, verbose=verbose)
+  if rval and 'IdentifierList' in rval:
+    return rval['IdentifierList']
   else:
     return None
 

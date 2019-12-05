@@ -70,8 +70,6 @@ base::date()
 ```{r setup, echo=FALSE, message=FALSE}
 library(readr)
 library(data.table)
-#library(tm)
-#library(stringr)
 library(plotly, quietly=T)
 ```
 
@@ -343,7 +341,7 @@ tdls <- c("Tdark", "Tbio", "Tchem", "Tclin")
 tdl_counts <- tgt[, .(.N), by = "idgTDL"]
 tdl_counts$tdl_color <- ifelse(tdl_counts$idgTDL=="Tdark", "gray", ifelse(tdl_counts$idgTDL=="Tbio", "red", ifelse(tdl_counts$idgTDL=="Tchem", "green", ifelse(tdl_counts$idgTDL=="Tclin", "blue", NA))))
 tdl_counts$idgTDL <- factor(tdl_counts$idgTDL, levels=tdls)
-sprintf("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N)
+message("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N)
 plot_ly() %>%
 	add_trace(type="bar", data=tdl_counts, x=~idgTDL, y=~N, marker=list(color=~tdl_color),
 	          text=~N, textposition="auto") %>%
@@ -478,7 +476,7 @@ mol2tgt <- unique(merge(mol2tgt, tgt2tc[, .(target_chembl_id, uniprot)], by="tar
 sprintf("CID2UNIPROT links: %d ; CIDs: %d ; UNIPROTs: %d", nrow(mol2tgt), uniqueN(mol2tgt$CID), uniqueN(mol2tgt$uniprot))
 ```
 
-### study-drug-disease-target links
+### Disease-Target links (via study, drug)
 
 ```{r}
 sddt_links <- unique(merge(sddt_links, mol2tgt, by.x="cid", by.y="CID", allow.cartesian=T))

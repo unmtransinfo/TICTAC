@@ -87,7 +87,7 @@ def main():
       else:
         cids=pubchem_utils.Smi2Cids(BASE_URL, qry, args.verbose)
     except Exception as e:
-      logging.info('ERROR: REST request failed (%s): %s %s'%(e,qry,name))
+      logging.info('ERROR: REST request failed (%s): %s %s'%(e, qry, name))
       nmol_notfound+=1
       fout.write("%s\tNA\t%s\n"%(qry, name))
       continue
