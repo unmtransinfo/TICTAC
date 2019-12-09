@@ -9,7 +9,7 @@ output:
 
 # Introduction
 
-ClinicalTrials.gov was first released in 2000. As of March 2019, ClinicalTrials.gov includes 300,676 research studies in all 50 states and in 208 countries.   The the CTTI AACT project and database provides a harmonizing schema and convenient access. However, there remain major challenges to knowledge discovery using these data, such as lack of standard terminology.  To address this, for the use case of elucidating drug target hypotheses, we have used state of the art domain specialized text mining with synonym resolution for specific classes of entities: (1) chemicals and (2) diseases. Chemicals are identified and resolved using NextMove Leadmine. Diseases, indications and other phenotypic terms are mined via JensenLab Tagger with Disease Ontology dictionary, and NLM supplied MeSH terms. Protein targets are associated via ChEMBL bioactivities on molecular structure cross-referencing. Another fundamental challenge is to assess confidence of inferences from noisy and disparate data. We propose a scoring system for assessing confidence for target hypotheses inferred from aggregated clinical trials, with emphasis on higher confidence, novel predictions with the potential to illuminate the understudied druggable genome. _(Paragraph excerpted from manuscript draft.)_
+ClinicalTrials.gov was first released in 2000. As of March 2019, ClinicalTrials.gov includes 300,676 research studies in all 50 states and in 208 countries.   The the CTTI AACT project and database provides a harmonizing schema and convenient access. However, there remain major challenges to knowledge discovery using these data, such as lack of standard terminology.  To address this, for the use case of elucidating drug target hypotheses, we have used state of the art domain specialized text mining with synonym resolution for specific classes of entities: (1) chemicals and (2) diseases. Chemicals are identified and resolved using NextMove Leadmine. Diseases, indications and other phenotypic terms are mined via JensenLab Tagger with Disease Ontology dictionary, and NLM supplied MeSH terms. Protein targets are associated via ChEMBL bioactivities on molecular structure cross-referencing. Another fundamental challenge is to assess confidence of inferences from noisy and disparate data. We propose a scoring system for assessing confidence for target hypotheses inferred from aggregated clinical trials, with emphasis on higher confidence, novel predictions with the potential to illuminate the understudied druggable genome. 
 
 * CTTI = Clinical Trials Transformation Initiative
 * AACT = Aggregate Analysis of ClinicalTrials.gov
@@ -28,6 +28,11 @@ efficacy and safety. In due diligence we perform target NER, and to quantify con
 our prior belief, we also perform target NER on arbitrary non-biomedical text, tweets from the Twitter API for
 __\#brexit__ (26 Nov 2019). We find that 8.64 target entities per 1000 chars in the tweets, vs. 6.63 in the clinical trials
 descriptions. While not proof this does support our belief and less direct method via chemical NER.
+
+## To do
+
+* We intend to calculate multivariate &mu; scores to assess and rank disease-target
+associations. So identification of suitable evidence variables are needed.
 
 ## Identifier mappings:
 
@@ -517,12 +522,18 @@ sprintf("DOCUMENT_CHEMBL_IDs:: %d ; PMIDs: %d",
 
 # Aggregating, scoring and ranking ___disease, target___ associations.
 
-Evidence weighted by:
+Evidence variables:
 
-* Study count
-* Study phase (completed better)
-* Study publications (results better)
-* Study date (later better, or at least more novel)
+* nStudy : Study count for association.
+* nStudyNewness : Study count weighted by newness of study (newer better).
+* nStudyPhase : Study count weighted by phase of study (completed better).
+* nPub : Study publications.
+* nPubTypes : Study publications (results better).
+* nDiseaseMention : Disease mention count for disease-target association.
+* nDrugMention : Drug mention count for disease-target association.
+* nDrug : Drug count for disease-target association.
+* nAssay : Assay count for drug-target association.
+* nAssayPchembl : Assay count for drug-target association, weighted by pChembl.
 
 ---
 _Powered by Rmarkdown._
