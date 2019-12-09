@@ -8,8 +8,8 @@ and JensenLab Tagger.
 
 ### About AACT:
 * [AACT-CTTI](https://aact.ctti-clinicaltrials.org/) database from Duke.
-* CTTI = Clinical Trials Transformation Initiative
-* AACT = Aggregate Analysis of ClinicalTrials.gov
+  * CTTI = Clinical Trials Transformation Initiative
+  * AACT = Aggregate Analysis of ClinicalTrials.gov
 * According to website (July 2018), data is refreshed monthly.
 * Identify drugs by intervention ID, since may be multiple drugs per trial (NCT\_ID).
 
@@ -49,14 +49,20 @@ ___Drugs___ may be experimental candidates.
 | **reported\_events** | including adverse events |
 
 ### Overall workflow:
-* `Go_ct_GetData.sh` - Fetch selected data from AACT db.
-* `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
-* `Go_BuildDicts_MeSH.sh` - Build NextMove LeadMine dicts for MeSH.
-* `Go_ct_NER_chem.sh` - LeadMine NER.
-* `Go_ct_NER_disease.sh` - LeadMine NER.
-* `Go_pubmed_NER_chem.sh` - LeadMine NER, selected referenced PMIDs.
-* `leadmine_utils.sh` - Runs LeadMine API custom app on TSVs.
-* `aact_drugtargets.Rmd` - Results described and analyzed.
+
+See top level script `Go_ct_Workflow.sh`.
+
+1. Data:
+  1. `Go_ct_GetData.sh` - Fetch data from AACT db.
+1. LeadMine:
+  1. `Go_ct_NER_leadmine_chem.sh` - LeadMine NER, CT descriptions.
+  1. `Go_pubmed_NER_leadmine_chem.sh` - LeadMine NER, referenced PMIDs.
+1. Tagger:
+  1. `Go_ct_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
+1. Cross-references:
+  1. `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
+1. Results, analysis:
+  1. `aact_drugtargets.Rmd` - Results described and analyzed.
 
 Dependencies:
 * [PubChem REST API](http://pubchem.ncbi.nlm.nih.gov/rest/pug/)
