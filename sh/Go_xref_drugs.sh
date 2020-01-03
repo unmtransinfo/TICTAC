@@ -104,5 +104,7 @@ n_chembl_pmid=$(${cwd}/python/pandas_utils.py selectcols \
 	|sed -e '1d' |wc -l)
 printf "PubMed IDs (from ChEMBL): %d\n" ${n_chembl_pmid}
 #
+${cwd}/python/chembl_query.py list_sources --o data/chembl_sources.tsv
+#
 date
 #

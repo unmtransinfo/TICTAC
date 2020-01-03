@@ -283,7 +283,6 @@ chembl_act <- read_delim("data/aact_drugs_chembl_activity.tsv", "\t", col_types=
   activity_id = col_double(),
   document_year = col_integer(),
   pchembl_value = col_double(),
-  src_id = col_double(),
   standard_value = col_double(),
   target_tax_id = col_integer(),
   text_value = col_logical(),
@@ -303,10 +302,23 @@ plot_ly(x=chembl_act$pchembl_value, type="histogram", nbinsx=20) %>%
 
 ```{r}
 atypes <- c(B = "Binding", F = "Functional", A = "ADMET", T = "Toxicity", P = "Physicochemical", U = "Unclassified")
-atype_counts <- chembl_act[,.(N_molecule = uniqueN(molecule_chembl_id), N_activity = .N), by="assay_type"][order(-N_activity)]
+atype_counts <- chembl_act[, .(N_molecule = uniqueN(molecule_chembl_id), N_activity = .N), by="assay_type"][order(-N_molecule)]
 atype_counts[, assay_type := sprintf("%s:%s", assay_type, atypes[assay_type])]
 knitr::kable(atype_counts, caption="Activity and molecule counts by assay types")
 ```
+
+### Activity and molecule counts by assay source
+```{r}
+chembl_srcs <- read_delim("data/chembl_sources.tsv", "\t", col_types=cols(.default=col_character()))
+setDT(chembl_srcs)
+asrc_counts <- chembl_act[, .(N_molecule = uniqueN(molecule_chembl_id), N_activity = .N), by="src_id"]
+asrc_counts <- merge(chembl_srcs[, .(src_id, src_short_name)], asrc_counts, by="src_id")
+asrc_counts <- asrc_counts[order(-N_molecule)]
+knitr::kable(asrc_counts[, .(Source = src_short_name, N_molecule, N_activity)], caption="Activity and molecule counts by assay sources")
+
+```
+
+
 
 ## ChEMBL targets (via activities)
 
