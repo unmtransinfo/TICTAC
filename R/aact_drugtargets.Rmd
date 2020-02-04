@@ -5,6 +5,8 @@ output:
   html_document:
     number_sections: yes
     toc: yes
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Introduction
@@ -171,7 +173,8 @@ plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], dr
 	add_trace(name="drugs", y = ~N_drugs) %>%
 	layout(title="AACT: Studies and drugs vs. start year", xaxis=list(range=c(1990, 2020), tickangle=-45), yaxis=list(title="N"),
 	       barmode="stack",
-	       margin=list(t=120), font=list(family="Monospace", size=20))
+	       margin=list(t=120), font=list(family="Monospace", size=20),
+	       legend=list(x=0.1, y=1))
 ```
 
 # NextMove Leadmine Chemical NER
@@ -495,6 +498,8 @@ sprintf("CID2UNIPROT links: %d ; CIDs: %d ; UNIPROTs: %d", nrow(mol2tgt), unique
 
 ### Disease-Target links (via study, drug)
 
+### TDL counts
+
 ```{r}
 sddt_links <- unique(merge(sddt_links, mol2tgt, by.x="cid", by.y="CID", allow.cartesian=T))
 sprintf("study-drug-disease-target links: %d", nrow(sddt_links))
@@ -502,15 +507,16 @@ sprintf("studies: %d ; drugs: %d ; diseases: %d ; targets: %d",
 uniqueN(sddt_links$nct_id), uniqueN(sddt_links$cid), uniqueN(sddt_links$doid),
 uniqueN(sddt_links$uniprot))
 sddt_links <- merge(sddt_links, tgt[, .(uniprot, gene_symbol = sym, idgTDL)], by="uniprot")
-sddt_links <- sddt_links[, .(nct_id, drug_name, cid, disease_term, doid, gene_symbol, uniprot, idgTDL)]
-knitr::kable(sddt_links[sample(1:nrow(sddt_links), 12)], caption=sprintf("Sample of
-study-drug-disease-target links (N_total = %d)", nrow(sddt_links)))
+write_delim(sddt_links, "data/sddt_links.tsv", "\t")
+knitr::kable(unique(sddt_links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
 ```
 
-## TDL counts
-
+Sample Tdark for interesting-ness.
 ```{r}
-knitr::kable(unique(sddt_links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
+sddt_links_sample <- sddt_links[idgTDL=="Tdark", .(nct_id, drug_name, cid, disease_term, doid, gene_symbol, uniprot, idgTDL)]
+sddt_links_sample <- sddt_links_sample[sample(1:nrow(sddt_links_sample), 25)]
+knitr::kable(sddt_links_sample, caption=sprintf("Sample of
+study-drug-disease-target links (N_total = %d)", nrow(sddt_links)))
 ```
 
 ## PubMed references from AACT studies.
