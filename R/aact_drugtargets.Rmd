@@ -128,7 +128,7 @@ sprintf("Unique drug names: %d ; unique intervention IDs: %d", uniqueN(drugs$nam
 ```
 
 ## Studies: Interventional drug studies only
-Select only ___Interventional___ studies (`study_type`) associated with drugs (via `NCT_ID`).
+Select only ___Interventional___ studies (`study_type`) associated with drugs (via `NCT_ID`). No __Observational__ this analysis.
 
 ```{r}
 studies <- studies[study_type=="Interventional"]
@@ -145,6 +145,7 @@ sprintf("Interventional drug studies: %d ; unique NCT_IDs: %d", n_studies_inter_
 drugs <- merge(drugs, studies, by="nct_id", all.x=T, all.y=F)
 knitr::kable(merge(studies[, .(N_studies = .N), by="phase"], drugs[, .(N_drugs = .N), by="phase"], by="phase")[order(phase)], caption="Drug studies and drugs, by phase")
 ```
+
 ```{r}
 knitr::kable(merge(studies[, .(N_studies = .N), by="overall_status"], drugs[, .(N_drugs = .N), by="overall_status"], by="overall_status")[order(overall_status)], caption="Drug studies and drugs, by overall_status")
 ```
@@ -186,7 +187,7 @@ Now we can use cheminformatically rigorous counts for drugs as active pharmaceut
 cner <- read_delim("data/aact_drugs_leadmine.tsv",  "\t", escape_double=F, trim_ws=T)
 setDT(cner)
 setnames(cner, old=c("DocName", "ResolvedForm"), new=c("id","smiles"))
-sprintf("Drug unique SMILES resolved by LeadMine: %d ; unique intervention IDs: %d", uniqueN(cner$smiles), uniqueN(cner$id))
+sprintf("Drug unique SMILES resolved by LeadMine: %d ; unique intervention IDs: %d; unique names: %d", uniqueN(cner$smiles), uniqueN(cner$id), uniqueN(cner$OriginalText))
 ```
 ## Chemical NER mentions
 ### Totals by merging of synonyms to resolved structure (locally canonical SMILES)
@@ -197,6 +198,7 @@ cner_totals <- cner_totals[order(smiles, OriginalText)]
 cner_totals <- cner_totals[, .(N_mentions = sum(N_mentions), names=paste0(OriginalText, collapse="; ")), by=c("smiles")]
 cner_totals <- cner_totals[order(-N_mentions)]
 cner_totals[["smi2img"]] <- sprintf("<img src=\"http://pasilla.health.unm.edu/tomcat/cdkdepict/depict/cow/svg?smi=%s&h=50&w=80&zoom=3\">", sapply(cner_totals$smiles, URLencode, reserved=T))
+write_delim(cner_totals, "data/cner_totals.tsv", "\t")
 knitr::kable(cner_totals[1:20, .(smi2img, N_mentions, names)], caption="Top 20 drugs by total mentions")
 ```
 
@@ -205,7 +207,7 @@ knitr::kable(cner_totals[1:20, .(smi2img, N_mentions, names)], caption="Top 20 d
 ```{r}
 drugs <- merge(drugs, cner, by="id")
 drugs[["resolved_structure"]] <- !is.na(drugs$smiles)
-sprintf("Drugs (drug names) with resolved structure: %d / %d (%.1f%%)", sum(drugs$resolved_structure), nrow(drugs), 100*sum(drugs$resolved_structure)/nrow(drugs))
+message(sprintf("Drugs (drug names) with resolved structure: %d / %d (%.1f%%)", sum(drugs$resolved_structure), nrow(drugs), 100*sum(drugs$resolved_structure)/nrow(drugs)))
 ```
 
 ### Chemical NER mentions by intervention ID.
@@ -318,10 +320,7 @@ asrc_counts <- chembl_act[, .(N_molecule = uniqueN(molecule_chembl_id), N_activi
 asrc_counts <- merge(chembl_srcs[, .(src_id, src_short_name)], asrc_counts, by="src_id")
 asrc_counts <- asrc_counts[order(-N_molecule)]
 knitr::kable(asrc_counts[, .(Source = src_short_name, N_molecule, N_activity)], caption="Activity and molecule counts by assay sources")
-
 ```
-
-
 
 ## ChEMBL targets (via activities)
 
@@ -331,41 +330,41 @@ setDT(chembl_tgt)
 setnames(chembl_tgt, old="accession", new="uniprot")
 sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt))
 tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="uniprot", by.y="uniprot")
-sprintf("ChEMBL target proteins mapped to TCRD (human): %d",
-	nrow(tgt[!is.na(tgt$idgTDL),]))
+sprintf("ChEMBL target proteins mapped to TCRD (human): %d", nrow(tgt[!is.na(tgt$idgTDL),]))
 ```
 
 ## ChEMBL targets by organism:
 
 ```{r}
 sprintf("Organisms: %d", uniqueN(tgt$organism))
-org_counts <- tgt[, .(N_targets = .N, Types = paste0(sort(unique(target_type)), collapse="; ")), by = "organism"][order(-N_targets)]
+org_counts <- tgt[, .(N_targets=.N, Types=paste0(sort(unique(target_type)), collapse="; ")), by="organism"][order(-N_targets)]
 knitr::kable(org_counts[1:10], caption="Targets by organism (top 10)")
 ```
 
-## Human single-protein targets only, by IDG family.
+## ChEMBL human single-protein targets only, by IDG family.
 
 ```{r}
 tgt <- tgt[organism=="Homo sapiens"]
 sprintf("Human targets: %d", nrow(tgt))
 tgt <- tgt[target_type=="SINGLE PROTEIN"]
-knitr::kable(tgt[, .(.N), by="idgFamily"][order(-N)])
 sprintf("Human single-protein targets: %d ; unique UniProts: %d", nrow(tgt), uniqueN(tgt$uniprot))
-
+fam_counts <- tgt[, .(.N), by="idgFamily"]
+knitr::kable(fam_counts[order(-N)])
+plot_ly(type="bar", data=fam_counts, x=~idgFamily, y=~N, marker=list(color="maroon"), text=~N, textposition="auto") %>%
+	layout(title="Targets by Family<br>(Human only)",
+	       xaxis=list(title="TDL"), margin=list(t=120), font=list(family="Monospace", size=20))
 ```
 
-## ChEMBL targets by IDG TDL:
+## Targets by IDG TDL:
 
 ```{r}
 tdls <- c("Tdark", "Tbio", "Tchem", "Tclin")
-tdl_counts <- tgt[, .(.N), by = "idgTDL"]
+tdl_counts <- tgt[, .(.N), by="idgTDL"]
 tdl_counts$tdl_color <- ifelse(tdl_counts$idgTDL=="Tdark", "gray", ifelse(tdl_counts$idgTDL=="Tbio", "red", ifelse(tdl_counts$idgTDL=="Tchem", "green", ifelse(tdl_counts$idgTDL=="Tclin", "blue", NA))))
 tdl_counts$idgTDL <- factor(tdl_counts$idgTDL, levels=tdls)
-message("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N)
-plot_ly() %>%
-	add_trace(type="bar", data=tdl_counts, x=~idgTDL, y=~N, marker=list(color=~tdl_color),
-	          text=~N, textposition="auto") %>%
-	layout(title="Targets by IDG Target Development Level (TDL)",
+message(sprintf("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N))
+plot_ly(type="bar", data=tdl_counts, x=~idgTDL, y=~N, marker=list(color=~tdl_color), text=~N, textposition="auto") %>%
+	layout(title="Targets by IDG TDL<br>(Human only)",
 	       xaxis=list(title="TDL"), margin=list(t=120), font=list(family="Monospace", size=20))
 ```
 
