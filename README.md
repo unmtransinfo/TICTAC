@@ -23,7 +23,7 @@ and JensenLab Tagger.
 
 ### Text mining, aka Named Entity Recognition (NER)
 * Chemical NER by [NextMove LeadMine](http://nextmovesoftware.com).
-* Disease and gene NER by [JensenLab](https://jensenlab.org/) [Tagger](https://bitbucket.org/larsjuhljensen/tagger/).
+* Disease NER by [JensenLab](https://jensenlab.org/) [Tagger](https://github.com/larsjuhljensen/tagger/).
 
 ### Purpose:
 * Associate drugs with diseases/phenotypes.

@@ -9,7 +9,7 @@ cwd=$(pwd)
 
 DATADIR="${cwd}/data"
 TAGGER_DIR="/home/app/tagger"
-DICT_DIR="/home/data/jensenlab/data"
+DICT_DIR="/home/data/JensenLab/data"
 
 ###
 # "-26" is DOID disease type.
