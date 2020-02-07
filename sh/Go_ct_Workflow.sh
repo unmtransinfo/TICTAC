@@ -15,6 +15,9 @@ DATE=$(date +'%Y%m%d')
 cwd=$(pwd)
 LOGDIR="${cwd}/data/logs"
 #
+if [ ! -e ${LOGDIR} ]; then
+	mkdir -p ${LOGDIR}
+fi
 ###
 # Extract selected data from AACT via psql queries.
 ${cwd}/sh/Go_ct_GetData.sh \
@@ -61,6 +64,11 @@ ${cwd}/sh/Go_twitter_NER_tagger_target.sh \
 # Query using SMILES from LeadMine.
 ${cwd}/sh/Go_xref_drugs.sh \
 	>& ${LOGDIR}/Go_xref_drugs-${DATE}.log
+#
+###
+# Target metadata from TCRD:
+mysql -h tcrd.kmc.io -D tcrd -u tcrd -c "source tcrd_targets.sql" \
+	>${cwd}/data/tcrd_targets.tsv
 ###
 # Describe datasets; analyze results.
 #Rscript -e "rmarkdown::render('${cwd}/R/aact_drugtargets.Rmd', knit_root_dir='${cwd}', output_dir='${cwd}/data', output_file='aact_drugtargets.html', clean=T)"

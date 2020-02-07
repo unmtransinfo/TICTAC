@@ -19,11 +19,9 @@ DBPW="assword"
 # Use "pubmed" table from TCRD:
 #(2547706 rows in March 2019)
 #Some processing errors due to newlines in abstracts(?).
-${cwd}/sh/runsql_my.sh -h juniper.health.unm.edu -u "$DBUSR" -p "$DBPW" \
-	-n tcrd \
-	-f ${cwd}/sql/tcrd_pubmed.sql -c \
-	|gzip -c \
-	>${DATADIR}/pubmed.tsv.gz
+mysql -h juniper.health.unm.edu -u "$DBUSR" -p$DBPW -D tcrd \
+	-e "source ${cwd}/sql/tcrd_pubmed.sql" \
+	|gzip -c >${DATADIR}/pubmed.tsv.gz
 #
 #############################################################################
 # Chemical NER, with default LeadMine dictionary and resolver. 

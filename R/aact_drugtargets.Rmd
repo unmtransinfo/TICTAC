@@ -264,7 +264,7 @@ sprintf("PubChem CIDs with InChIKeys: %d", nrow(pubchem))
 For Target Development Level (TDL) and other metadata.
 
 ```{r message=FALSE}
-tcrd_tgt <- read_delim("/home/data/TCRD/data/tcrd_targets.tsv", "\t", col_types=cols(.default=col_character()))
+tcrd_tgt <- read_delim("data/tcrd_targets.tsv", "\t", col_types=cols(.default=col_character()))
 setDT(tcrd_tgt)
 setnames(tcrd_tgt, old=c("tdl", "fam"), new=c("idgTDL", "idgFamily"))
 ```
@@ -374,18 +374,12 @@ On descriptions from detailed_descriptions table.
 
 * `serialno` corresponds with DOID.
 * `id` is AACT primary key.
-* Tagger results TSVs lack headings.
-
-Likely false positives, manually removed:
-
-* "CAN" = "Crouzon syndrome-acanthosis nigricans syndrome" (DOID:0111161)
-* "FACE" = "Fanconi anemia complementation group E" (DOID:0111084)
-* Also root term "DISEASE" is uninteresting.
+Tagger results TSVs lack headings.
 
 ```{r message=FALSE, echo=FALSE}
 dner <- read_delim("data/aact_descriptions_tagger_disease_matches.tsv", "\t", 
                    col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
-dent <- read_delim("/home/data/jensenlab/data/diseases_entities.tsv", "\t", col_names=c("serialnm", "doid"), col_types="c-c")
+dent <- read_delim("/home/data/JensenLab/data/diseases_entities.tsv", "\t", col_names=c("serialnm", "doid"), col_types="c-c")
 setDT(dner)
 setDT(dent)
 dner <- merge(dner, dent, by="serialnm", all.x=T, all.y=F)

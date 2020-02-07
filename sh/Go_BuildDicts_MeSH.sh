@@ -19,6 +19,10 @@ MESHYEAR="2020"
 MESHDIR="/home/data/MeSH/${MESHYEAR}"
 DICTDIR="${DATADIR}/dict/mesh"
 #
+if [ ! -e ${DICTDIR} ]; then
+	mkdir -p ${DICTDIR}
+fi
+#
 ${cwd}/python/mesh_xml_utils.py desc2csv --branch "C" \
         --i $MESHDIR/desc${MESHYEAR}.xml.gz \
         --o $DATADIR/mesh_disease.tsv

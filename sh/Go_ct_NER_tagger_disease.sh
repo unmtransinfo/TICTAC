@@ -35,6 +35,7 @@ cat ${DATADIR}/aact_descriptions.tsv \
 	--threads=4 \
 	--entities=$DICT_DIR/diseases_entities.tsv \
 	--names=$DICT_DIR/diseases_names.tsv \
+	--stopwords=$DICT_DIR/diseases_global.tsv \
 	--types=$DATADIR/disease_types.tsv \
 	--out-matches=$DATADIR/aact_descriptions_tagger_disease_matches.tsv
 #
