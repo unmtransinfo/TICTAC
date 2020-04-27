@@ -1,10 +1,15 @@
-# Clinicaltrials.gov mining for drug target hypotheses
+# Clinical trials mining for drug target hypotheses
 
-Mining ClinicalTrials.gov for target hypotheses, with strong
+Mining ClinicalTrials.gov via AACT-CTTI-db for target hypotheses, with strong
 cheminformatics and medical terms text mining, powered by NextMove LeadMine
 and JensenLab Tagger.
 
----
+### Dependencies
+
+* [AACT-CTTI-db](https://aact.ctti-clinicaltrials.org/)
+* [NextMove LeadMine](http://nextmovesoftware.com)
+* [JensenLab Tagger](https://github.com/larsjuhljensen/tagger/)
+* [BioClients](https://github.com/jeremyjyang/BioClients)
 
 ### About AACT:
 * [AACT-CTTI](https://aact.ctti-clinicaltrials.org/) database from Duke.
