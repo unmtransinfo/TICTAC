@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 printf "Executing: %s\n" "$(basename $0)"
 #
@@ -23,11 +23,13 @@ if [ ! -e ${DICTDIR} ]; then
 	mkdir -p ${DICTDIR}
 fi
 #
-${cwd}/python/mesh_xml_utils.py desc2csv --branch "C" \
+#${cwd}/python/mesh_xml_utils.py desc2csv --branch "C" \
+python3 -m BioClients.mesh.Client desc2csv --branch "C" \
         --i $MESHDIR/desc${MESHYEAR}.xml.gz \
         --o $DATADIR/mesh_disease.tsv
 #
-${cwd}/python/mesh_xml_utils.py supp2csv --branch "C" \
+#${cwd}/python/mesh_xml_utils.py supp2csv --branch "C" \
+python3 -m BioClients.mesh.Client supp2csv --branch "C" \
         --i $MESHDIR/supp${MESHYEAR}.xml.gz \
         --o $DATADIR/mesh_supp_disease.tsv
 #
