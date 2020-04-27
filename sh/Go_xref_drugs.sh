@@ -18,8 +18,9 @@ python3 -m BioClients.pubchem.Client get_smi2cid \
 	--i data/aact_drugs_smi.smi \
 	--o data/aact_drugs_smi_pubchem_cid.tsv
 #
+#CID\tSMILES\tName
 cat data/aact_drugs_smi_pubchem_cid.tsv \
-	|awk -F '\t' '{print $2}' \
+	|awk -F '\t' '{print $1}' \
 	|egrep -v '(^$|^0$|^NA$)' \
 	|sort -nu \
 	>data/aact_drugs_smi_pubchem.cid
@@ -75,8 +76,7 @@ ${cwd}/python/pandas_utils.py selectcols \
 n_chembl_tgt=$(cat data/aact_drugs_chembl_target.chemblid |wc -l)
 printf "Targets (from ChEMBL): %d\n" ${n_chembl_tgt}
 #
-#${cwd}/python/chembl_fetchbyid.py tid2Targetcomponents \
-python3 -m BioClients.chembl.Client get_target \
+python3 -m BioClients.chembl.Client get_target_components \
 	--i data/aact_drugs_chembl_target.chemblid \
 	--o data/aact_drugs_chembl_target_component.tsv
 #
@@ -96,8 +96,7 @@ ${cwd}/python/pandas_utils.py selectcols \
 n_chembl_doc=$(cat data/aact_drugs_chembl_document.chemblid |wc -l)
 printf "Documents (from ChEMBL): %d\n" ${n_chembl_doc}
 #
-#${cwd}/python/chembl_fetchbyid.py did2Documents \
-python3 -m BioClients.chembl.Client get_doc \
+python3 -m BioClients.chembl.Client get_document \
 	--i data/aact_drugs_chembl_document.chemblid \
 	--o data/aact_drugs_chembl_document.tsv
 #
@@ -107,7 +106,8 @@ n_chembl_pmid=$(${cwd}/python/pandas_utils.py selectcols \
 	|sed -e '1d' |wc -l)
 printf "PubMed IDs (from ChEMBL): %d\n" ${n_chembl_pmid}
 #
-python3 -m BioClients.pubchem.Client list_sources --o data/chembl_sources.tsv
+python3 -m BioClients.pubchem.Client list_sources_assay \
+	--o data/chembl_sources.tsv
 #
 date
 #
