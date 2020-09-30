@@ -16,7 +16,7 @@ and JensenLab Tagger.
   * CTTI = Clinical Trials Transformation Initiative
   * AACT = Aggregate Analysis of ClinicalTrials.gov
 * According to website (July 2018), data is refreshed monthly.
-* Identify drugs by intervention ID, since may be multiple drugs per trial (NCT\_ID).
+* Identify drugs by intervention ID, since may be multiple drugs per trial \(NCT\_ID\).
 
 ### References:
 * <http://clinicaltrials.gov>
