@@ -1,4 +1,4 @@
-# Clinical trials mining for drug target hypotheses
+# `TICTACh` - Target Illumination Clinical Trials Analytics with Cheminformatics
 
 Mining ClinicalTrials.gov via AACT-CTTI-db for target hypotheses, with strong
 cheminformatics and medical terms text mining, powered by NextMove LeadMine
@@ -67,7 +67,7 @@ See top level script `Go_ct_Workflow.sh`.
 1. Cross-references:
   1. `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
 1. Results, analysis:
-  1. `aact_drugtargets.Rmd` - Results described and analyzed.
+  1. `tictach.Rmd` - Results described and analyzed.
 
 Dependencies:
 * [PubChem REST API](http://pubchem.ncbi.nlm.nih.gov/rest/pug/)

@@ -12,11 +12,12 @@ DATADIR="/home/data/TCRD/data"
 #
 date
 #
-DBUSR="$USER"
-DBPW="assword"
-#
 #############################################################################
 # Use "pubmed" table from TCRD:
+# Define DBUSR, DBPW:
+. $HOME/.tcrd.sh
+printf "DBUSR: \"%s\"; DBPW: \"%s\"\n" "${DBUSR}" "${DBPW}"
+#
 #(2547706 rows in March 2019)
 #Some processing errors due to newlines in abstracts(?).
 mysql -h juniper.health.unm.edu -u "$DBUSR" -p$DBPW -D tcrd \
