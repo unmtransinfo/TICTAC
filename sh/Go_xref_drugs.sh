@@ -22,6 +22,7 @@ python3 -m BioClients.pubchem.Client get_smi2cid \
 #CID\tSMILES\tName
 cat $DATADIR/aact_drugs_smi_pubchem_cid.tsv \
 	|awk -F '\t' '{print $1}' \
+	|sed '1d' \
 	|egrep -v '(^$|^0$|^NA$)' \
 	|sort -nu \
 	>$DATADIR/aact_drugs_smi_pubchem.cid
@@ -34,13 +35,13 @@ printf "SMI2CID hit rate (from PubChem): (%d / %d = %.1f%%)\n" \
 	${n_cid} ${n_smi} $(echo "100 * $n_cid / $n_smi" |bc)
 ###
 # Gets both InChI and InChIKey
+#TTP Error 400: PUGREST.BadRequest (URL=https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/property/InChIKey,InChI/CSV)
 python3 -m BioClients.pubchem.Client get_cid2inchi \
 	--i $DATADIR/aact_drugs_smi_pubchem.cid \
 	--o $DATADIR/aact_drugs_smi_pubchem_cid2ink.tsv
 #
-${cwd}/python/pandas_utils.py selectcols \
+python3 -m BioClients.util.pandas.Utils selectcols --coltags "InChIKey" \
 	--i $DATADIR/aact_drugs_smi_pubchem_cid2ink.tsv \
-	--coltags "InChIKey" \
 	|sed -e '1d' |sed -e 's/"//g' \
 	>$DATADIR/aact_drugs_smi_pubchem.ink
 #
@@ -51,9 +52,8 @@ python3 -m BioClients.chembl.Client get_mol_by_inchikey \
 	--i $DATADIR/aact_drugs_smi_pubchem.ink \
 	--o $DATADIR/aact_drugs_ink2chembl.tsv
 #
-${cwd}/python/pandas_utils.py selectcols \
+python3 -m BioClients.util.pandas.Utils selectcols --coltags "molecule_chembl_id" \
 	--i $DATADIR/aact_drugs_ink2chembl.tsv \
-	--coltags "molecule_chembl_id" \
 	|sed -e '1d' |sort -u \
 	>$DATADIR/aact_drugs_ink2chembl.chemblid
 #
@@ -68,9 +68,8 @@ python3 -m BioClients.chembl.Client get_activity_by_mol \
 n_chembl_act=$(cat $DATADIR/aact_drugs_chembl_activity.tsv |sed -e '1d' |wc -l)
 printf "Activities (from ChEMBL): %d\n" ${n_chembl_act}
 #
-${cwd}/python/pandas_utils.py selectcols \
+python3 -m BioClients.util.pandas.Utils selectcols --coltags "target_chembl_id" \
 	--i $DATADIR/aact_drugs_chembl_activity.tsv \
-	--coltags "target_chembl_id" \
 	|sed -e '1d' |sort -u \
 	>$DATADIR/aact_drugs_chembl_target.chemblid
 #
@@ -81,16 +80,14 @@ python3 -m BioClients.chembl.Client get_target_components \
 	--i $DATADIR/aact_drugs_chembl_target.chemblid \
 	--o $DATADIR/aact_drugs_chembl_target_component.tsv
 #
-n_chembl_tgtc=$(${cwd}/python/pandas_utils.py selectcols \
+n_chembl_tgtc=$(python3 -m BioClients.util.pandas.Utils selectcols --coltags "component_id" \
 	--i $DATADIR/aact_drugs_chembl_target_component.tsv \
-	--coltags "component_id" \
 	|sed -e '1d' |wc -l)
 printf "Target components (from ChEMBL): %d\n" ${n_chembl_tgtc}
 ###
 # 
-${cwd}/python/pandas_utils.py selectcols \
+python3 -m BioClients.util.pandas.Utils selectcols --coltags "document_chembl_id" \
 	--i $DATADIR/aact_drugs_chembl_activity.tsv \
-	--coltags "document_chembl_id" \
 	|sed -e '1d' |sort -u \
 	>$DATADIR/aact_drugs_chembl_document.chemblid
 #
@@ -101,9 +98,8 @@ python3 -m BioClients.chembl.Client get_document \
 	--i $DATADIR/aact_drugs_chembl_document.chemblid \
 	--o $DATADIR/aact_drugs_chembl_document.tsv
 #
-n_chembl_pmid=$(${cwd}/python/pandas_utils.py selectcols \
+n_chembl_pmid=$(python3 -m BioClients.util.pandas.Utils selectcols --coltags "pubmed_id" \
 	--i $DATADIR/aact_drugs_chembl_document.tsv \
-	--coltags "pubmed_id" \
 	|sed -e '1d' |wc -l)
 printf "PubMed IDs (from ChEMBL): %d\n" ${n_chembl_pmid}
 #
