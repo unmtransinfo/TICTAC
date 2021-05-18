@@ -8,8 +8,8 @@ printf "Executing: %s\n" "$(basename $0)"
 cwd=$(pwd)
 
 DATADIR="${cwd}/data"
-TAGGER_DIR="/home/app/tagger"
-DICT_DIR="/home/data/JensenLab/data"
+TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
+DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 
 ###
 # "9606" is taxonomy human type.

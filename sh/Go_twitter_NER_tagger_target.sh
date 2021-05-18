@@ -7,7 +7,7 @@
 ### See http://download.jensenlab.org/ for dictionaries, e.g.
 ### http://download.jensenlab.org/human_dictionary.tar.gz
 
-printf "Executing: %s\n" "$(basename $0)"
+printf "Executing: $(basename $0)\n"
 
 cwd=$(pwd)
 
@@ -15,7 +15,7 @@ DATADIR="${cwd}/data"
 
 ###
 #
-DATE=`date +'%Y%m%d'`
+DATE="$(date +'%Y%m%d')"
 tweetfile="$DATADIR/twitter_brexit_${DATE}.tsv"
 ${cwd}/python/twitter_utils.py \
 	--hashtag "brexit" \
@@ -23,8 +23,8 @@ ${cwd}/python/twitter_utils.py \
 	--o $tweetfile
 #
 ###
-TAGGER_DIR="/home/app/tagger"
-DICT_DIR="/home/data/jensenlab/data"
+TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
+DICT_DIR="$(cd $HOME/../data/jensenlab/data; pwd)"
 
 ###
 # "9606" is taxonomy human type.

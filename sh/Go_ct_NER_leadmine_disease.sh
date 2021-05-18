@@ -5,9 +5,8 @@ printf "Executing: %s\n" "$(basename $0)"
 #
 cwd=$(pwd)
 #
-NM_ROOT="/home/app/nextmove"
-#LEADMINE_JAR="${NM_ROOT}/leadmine-3.12/LeadMine/leadmine-3.12.jar"
-LEADMINE_JAR="${NM_ROOT}/leadmine-3.13/bin/leadmine.jar"
+NM_ROOT="$(cd $HOME/../app/nextmove; pwd)"
+LIBDIR="$(cd $HOME/../app/lib; pwd)"
 #
 DATADIR="$cwd/data"
 #
@@ -60,10 +59,9 @@ echo "Disease/phenotype NER (descriptions)..."
 for f in $(ls $CFGDIR/${PREFIX}_*.cfg) ; do
 	#
 	dictname=$(basename $f |perl -pe 's/^(.*)\.cfg$/$1/')
-	printf "Leadmine: %s (%s)\n" $(basename $f) $dictname
+	printf "Leadmine: $(basename $f) (${dictname})\n"
 	#
-	#${cwd}/sh/leadmine_utils.sh \
-	java -jar /home/app/lib/unm_biocomp_nextmove-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
+	java -jar $LIBDIR/unm_biocomp_nextmove-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
 		-config $f \
 		-i ${DATADIR}/aact_descriptions.tsv \
 		-textcol 3 -unquote -idcol 1 \

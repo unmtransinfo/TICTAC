@@ -28,7 +28,12 @@
 #
 set -e
 #
-printf "Executing: %s\n" "$(basename $0)"
+function MessageBreak {
+  printf "============================================\n"
+  printf "=== [%s] %s\n" "$(date +'%Y-%m-%d:%H:%M:%S')" "$1"
+}
+#
+MessageBreak "Starting $(basename $0)"
 #
 DBHOST="aact-db.ctti-clinicaltrials.org"
 DBNAME="aact"
@@ -94,4 +99,8 @@ psql -F $'\t' $ARGS -f sql/summary_list.sql >>$SUMMARYFILE
 DESCRIPTIONFILE=$DATADIR/aact_descriptions.tsv
 printf "id\tnct_id\tdescription\n" >$DESCRIPTIONFILE
 psql -F $'\t' $ARGS -f sql/description_list.sql >>$DESCRIPTIONFILE
+#
+printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
+#
+MessageBreak "Done: $(basename $0)"
 #

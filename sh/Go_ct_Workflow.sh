@@ -5,10 +5,14 @@
 #   * https://github.com/unmtransinfo/nextmove-tools (LeadMine API client)
 ###
 #
-printf "Executing: %s\n" "$(basename $0)"
-#
 set -e
-set -x
+#
+function MessageBreak {
+  printf "============================================\n"
+  printf "=== [%s] %s\n" "$(date +'%Y-%m-%d:%H:%M:%S')" "$1"
+}
+#
+MessageBreak "Starting: $(basename $0)"
 #
 DATE=$(date +'%Y%m%d')
 #
@@ -67,7 +71,8 @@ ${cwd}/sh/Go_xref_drugs.sh \
 #
 ###
 # Target metadata from TCRD:
-mysql -h tcrd.kmc.io -D tcrd -u tcrd -c "source tcrd_targets.sql" \
+#mysql -h tcrd.kmc.io -D tcrd -u tcrd -c "source tcrd_targets.sql" \
+python3 -m BioClients.idg.tcrd.Client listTargets \
 	>${cwd}/data/tcrd_targets.tsv
 ###
 # Describe datasets; analyze results.
