@@ -2,6 +2,7 @@ data
 .Rproj
 .Rproj.user
 .Rhistory
-.RData
-.Ruserdata
+*.RData
+*.Rproj
+*.Ruserdata
 *.pyc

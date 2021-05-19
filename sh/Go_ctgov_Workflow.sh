@@ -24,8 +24,8 @@ if [ ! -e ${LOGDIR} ]; then
 fi
 ###
 # Extract selected data from AACT via psql queries.
-${cwd}/sh/Go_ct_GetData.sh \
-	>& ${LOGDIR}/Go_ct_GetData-${DATE}.log
+${cwd}/sh/Go_ctgov_GetData.sh \
+	>& ${LOGDIR}/Go_ctgov_GetData-${DATE}.log
 #
 ###
 # From MeSH disease terms, build NextMove dictionaries.
@@ -43,22 +43,22 @@ ${cwd}/sh/Go_pubmed_NER_leadmine_chem.sh \
 # NextMove Leadmine:
 # (1) Chemical NER on AACT drug intervention names.
 # (2) Disease/phenotype NER on AACT descriptions, using custom dictionaries.
-${cwd}/sh/Go_ct_NER_leadmine_chem.sh \
-	>& ${LOGDIR}/Go_ct_NER_leadmine_chem-${DATE}.log
-${cwd}/sh/Go_ct_NER_leadmine_disease.sh \
-	>& ${LOGDIR}/Go_ct_NER_leadmine_disease-${DATE}.log
+${cwd}/sh/Go_ctgov_NER_leadmine_chem.sh \
+	>& ${LOGDIR}/Go_ctgov_NER_leadmine_chem-${DATE}.log
+${cwd}/sh/Go_ctgov_NER_leadmine_disease.sh \
+	>& ${LOGDIR}/Go_ctgov_NER_leadmine_disease-${DATE}.log
 #
 ###
 # JensenLab Tagger:
 # Disease/phenotype NER on AACT descriptions, using JensenLab dictionary.
-${cwd}/sh/Go_ct_NER_tagger_disease.sh
-	>& ${LOGDIR}/Go_ct_NER_tagger_disease-${DATE}.log
+${cwd}/sh/Go_ctgov_NER_tagger_disease.sh
+	>& ${LOGDIR}/Go_ctgov_NER_tagger_disease-${DATE}.log
 #
 ###
 # Target NER on AACT descriptions, using JensenLab dictionary.
 # Minimal expectation, but need to show lack of NER mentions.
-${cwd}/sh/Go_ct_NER_tagger_target.sh \
-	>& ${LOGDIR}/Go_ct_NER_tagger_target-${DATE}.log
+${cwd}/sh/Go_ctgov_NER_tagger_target.sh \
+	>& ${LOGDIR}/Go_ctgov_NER_tagger_target-${DATE}.log
 # Twitter is our arbitrary control:
 ${cwd}/sh/Go_twitter_NER_tagger_target.sh \
 	>& ${LOGDIR}/Go_twitter_NER_tagger_target-${DATE}.log

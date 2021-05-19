@@ -55,15 +55,15 @@ ___Drugs___ may be experimental candidates.
 
 ### Overall workflow:
 
-See top level script `Go_ct_Workflow.sh`.
+See top level script `Go_ctgov_Workflow.sh`.
 
 1. Data:
-  1. `Go_ct_GetData.sh` - Fetch data from AACT db.
+  1. `Go_ctgov_GetData.sh` - Fetch data from AACT db.
 1. LeadMine:
-  1. `Go_ct_NER_leadmine_chem.sh` - LeadMine NER, CT descriptions.
+  1. `Go_ctgov_NER_leadmine_chem.sh` - LeadMine NER, CT descriptions.
   1. `Go_pubmed_NER_leadmine_chem.sh` - LeadMine NER, referenced PMIDs.
 1. Tagger:
-  1. `Go_ct_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
+  1. `Go_ctgov_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
 1. Cross-references:
   1. `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
 1. Results, analysis:
