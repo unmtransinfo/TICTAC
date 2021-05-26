@@ -82,23 +82,19 @@ psql $ARGS -c "COPY (SELECT id, nct_id, reference_type, pmid, citation FROM stud
 	>$DATADIR/aact_study_refs.tsv
 #
 ###
-#Special handling required to clean newlines and tabs.
+#Special handling required to clean newlines, CRs, and tabs.
 ###
 ARGS="-Atq -h $DBHOST -d $DBNAME"
 #Brief Summaries:
 #(table: brief_summaries)
 #id = "AACT assigned primary key"
-SUMMARYFILE=$DATADIR/aact_summaries.tsv
-printf "id\tnct_id\tdescription\n" >$SUMMARYFILE
-psql -F $'\t' $ARGS -f sql/summary_list.sql >>$SUMMARYFILE
+psql -A -F $'\t' $ARGS -f sql/summary_list.sql -o $DATADIR/aact_summaries.tsv
 #
 ###
 #Descriptions:
 #(table: detailed_descriptions)
 #id = "AACT assigned primary key"
-DESCRIPTIONFILE=$DATADIR/aact_descriptions.tsv
-printf "id\tnct_id\tdescription\n" >$DESCRIPTIONFILE
-psql -F $'\t' $ARGS -f sql/description_list.sql >>$DESCRIPTIONFILE
+psql -A -F $'\t' $ARGS -f sql/description_list.sql -o $DATADIR/aact_descriptions.tsv
 #
 printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
 #

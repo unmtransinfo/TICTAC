@@ -19,8 +19,7 @@ python3 -m BioClients.pubchem.Client get_smi2cid \
 #
 #CID\tSMILES\tName
 cat $DATADIR/aact_drugs_smi_pubchem_cid.tsv \
-	|awk -F '\t' '{print $1}' \
-	|sed '1d' \
+	|sed '1d' |awk -F '\t' '{print $1}' \
 	|egrep -v '(^$|^0$|^NA$)' \
 	|sort -nu \
 	>$DATADIR/aact_drugs_smi_pubchem.cid
@@ -35,7 +34,7 @@ printf "CIDs (from PubChem): ${n_cid}\n"
 printf "SMI2CID hit rate (from PubChem): (${n_cid} / ${n_smi} = %.1f%%)\n" $(echo "100 * $n_cid / $n_smi" |bc)
 ###
 # Gets both InChI and InChIKey
-#TTP Error 400: PUGREST.BadRequest (URL=https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/property/InChIKey,InChI/CSV)
+#HTTP Error 400: PUGREST.BadRequest (URL=https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/property/InChIKey,InChI/CSV)
 python3 -m BioClients.pubchem.Client get_cid2inchi \
 	--i $DATADIR/aact_drugs_smi_pubchem.cid \
 	--o $DATADIR/aact_drugs_smi_pubchem_cid2ink.tsv
