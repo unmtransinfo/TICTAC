@@ -10,11 +10,11 @@
 # Requests / 15-min window (user auth): 180
 # Requests / 15-min window (app auth): 450
 ###
-import sys,os,json,logging,argparse,time,tqdm
+import sys,os,re,json,logging,argparse,time,tqdm
 import pandas as pd
 import numpy
 import fsspec
-from TwitterAPI import TwitterAPI,TwitterOAuth
+from TwitterAPI import TwitterAPI,TwitterOAuth,TwitterPager,TwitterRequestError,TwitterConnectionError
 
 ### Twitter API Credentials
 # Credentials file format:
@@ -25,44 +25,42 @@ from TwitterAPI import TwitterAPI,TwitterOAuth
 ###
 
 ###
-def SearchTwitter(hashtag, lang, result_type, api, n, fout):
-  count_perpage=100; n_out=0; n_req=0; i=0; tq=None;
-  while n_out < n:
-    t0 = time.time()
-    if tq is None: tq = tqdm.tqdm(total=n, unit="tweets")
-    count = min(count_perpage, n - n_out)
-    #tweets  = [t for t in api.request("search/tweets", {'q':('#'+hashtag), 'lang':lang, 'result_type':result_type, 'count':count})]
-    try:
-      response  = api.request("tweets/search/recent", {'query':hashtag, 'lang':lang, 'result_type':result_type, 'count':count})
-    except Exception as e:
-      logging.debug(f"status_code={response.status_code}")
-      logging.error(e)
-      break
-    tweets  = [tweet for tweet in response]
-    logging.debug(tweets)
-    n_req += 1
-    logging.debug(json.dumps(tweets, indent=4))
-    df = pd.read_json(json.dumps(tweets))
-    logging.debug(f"Response columns: {df.columns!r}")
-    logging.debug(f"User fields: {df.user[1].keys()!r}")
-    logging.debug(f"Mean tweet length: {numpy.mean(df.text.str.len()):.2f}")
-    df_out = pd.DataFrame({'i':list(range(i+1, i+df.shape[0]+1)), 'id':df.id, 'created_at':df.created_at, 'lang':df.lang,
-	'screen_name':[x['screen_name'] for x in df.user],
-	'text':df.text.str.replace('[\n\r\t]', ' ')})
-    df_out.to_csv(fout, '\t', header=bool(n_out==0), index=False)
-    n_out += df.shape[0]
-    tq.update(n_out)
-    i += df.shape[0]
-    while time.time()-t0 < 6: #speed limit 10 requests/min
-      time.sleep(1)
+def SearchTwitter(query, lang, result_type, api, n, fout):
+  n_out=0; tq=None; df=None;
+  try:
+    pager = TwitterPager(api, 'tweets/search/recent', {'query':query})
+    for tweet in pager.get_iterator(new_tweets=False):
+      t0 = time.time()
+      if tq is None: tq = tqdm.tqdm(total=n, unit="tweets")
+      logging.debug(tweet)
+      text = re.sub(r'[\n\r\t ]+', ' ', tweet["text"])
+      df_this = pd.DataFrame({"id":[tweet["id"]], "text":[text]})
+      if fout is None: df = pd.concat([df, df_this])
+      else: df_this.to_csv(fout, '\t', header=bool(n_out==0), index=False)
+      n_out += df_this.shape[0]
+      tq.update(df_this.shape[0])
+      if n_out>=n: break
+  except TwitterRequestError as e:
+    print(e.status_code)
+    for msg in iter(e):
+      print(msg)
+
+  except TwitterConnectionError as e:
+    print(e)
+
+  except Exception as e:
+    print(e)
+
   tq.close()
   logging.info(f"Output tweets: {n_out}")
+  if fout is None:
+    return df
 
 #############################################################################
 if __name__=="__main__":
   RESULT_TYPES = ['mixed', 'recent', 'popular']
   parser = argparse.ArgumentParser(description="Twitter API client: query for tweets (from previous 7 days)")
-  parser.add_argument("--hashtag", required=True, help="hashtag")
+  parser.add_argument("--query", required=True, help="query")
   parser.add_argument("--o", dest="ofile", help="output (TSV)")
   parser.add_argument("--lang", default="en", help="language")
   parser.add_argument("--result_type", choices=RESULT_TYPES, default="mixed")
@@ -77,8 +75,9 @@ if __name__=="__main__":
 
   ###
   toa = TwitterOAuth.read_file(os.environ['HOME']+'/.twitterapi_credentials')
+  logging.debug(f"consumer_key={toa.consumer_key}; consumer_secret={toa.consumer_secret}; access_token_key={toa.access_token_key}; access_token_secret={toa.access_token_secret}")
   tapi = TwitterAPI(toa.consumer_key, toa.consumer_secret, toa.access_token_key, toa.access_token_secret, api_version="2")
 
-  SearchTwitter(args.hashtag, args.lang, args.result_type, tapi, args.n, fout)
+  SearchTwitter(args.query, args.lang, args.result_type, tapi, args.n, fout)
 
   logging.info(f"""Elapsed time: {time.strftime('%Hh:%Mm:%Ss', time.gmtime(time.time()-t0))}""")

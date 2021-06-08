@@ -24,11 +24,7 @@ ${cwd}/python/twitter_utils.py \
 #
 ###
 TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
-DICT_DIR="$(cd $HOME/../data/jensenlab/data; pwd)"
-
-###
-# "9606" is taxonomy human type.
-echo "9606" >$DATADIR/human_types.tsv
+DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 #
 ###
 # Tagger (document.h) document TSV format requirements.
@@ -43,17 +39,19 @@ echo "9606" >$DATADIR/human_types.tsv
 # Fields: docid, paragraph, sentence, ch_first, ch_last, term, type, serialno.
 # (serialno from the names file, which resolves synonyms.)
 ###
+# "9606" is taxonomy human type.
+echo "9606" >$DATADIR/human_types.tsv
+###
+#
 taggerfile="$DATADIR/twitter_brexit_tagger_target_matches.tsv"
-cat ${tweetfile} \
-	|sed -e '1d' \
+cat ${tweetfile} |sed -e '1d' \
 	|sed -e 's/^/:/' \
-	|awk -F '\t' '{print $1 "\t\t\t\t" $6}' \
-	| ${TAGGER_DIR}/tagcorpus \
-	--threads=4 \
+	|awk -F '\t' '{print $1 "\t\t\t\t" $2}' \
+	| ${TAGGER_DIR}/tagcorpus --threads=4 \
 	--entities=$DICT_DIR/human_entities.tsv \
 	--names=$DICT_DIR/human_names.tsv \
+	--stopwords=$DICT_DIR/tagger_global.tsv \
 	--types=$DATADIR/human_types.tsv \
-	--stopwords=$DATADIR/tagger_global.tsv \
 	--out-matches=$taggerfile
 #
 # Compute entities per 1000 chars rate.
