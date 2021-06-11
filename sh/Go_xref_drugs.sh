@@ -58,6 +58,7 @@ python3 -m BioClients.util.pandas.Utils selectcols --coltags "molecule_chembl_id
 printf "Mols (from ChEMBL): $(cat $DATADIR/aact_drugs_ink2chembl.chemblid |wc -l)\n"
 #
 ###
+# ~12hr for 3711 mols, 2021-06-09
 python3 -m BioClients.chembl.Client get_activity_by_mol \
 	--i $DATADIR/aact_drugs_ink2chembl.chemblid \
 	--o $DATADIR/aact_drugs_chembl_activity.tsv

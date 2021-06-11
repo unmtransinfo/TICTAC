@@ -72,8 +72,7 @@ ${cwd}/sh/Go_xref_drugs.sh \
 ###
 # Target metadata from TCRD:
 #mysql -h tcrd.kmc.io -D tcrd -u tcrd -c "source tcrd_targets.sql" \
-python3 -m BioClients.idg.tcrd.Client listTargets \
-	>${cwd}/data/tcrd_targets.tsv
+python3 -m BioClients.idg.tcrd.Client listTargets --o ${cwd}/data/tcrd_targets.tsv
 ###
 # Describe datasets; analyze results.
 #Rscript -e "rmarkdown::render('${cwd}/R/aact_drugtargets.Rmd', knit_root_dir='${cwd}', output_dir='${cwd}/data', output_file='aact_drugtargets.html', clean=T)"

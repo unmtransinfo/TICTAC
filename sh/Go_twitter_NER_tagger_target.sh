@@ -14,7 +14,7 @@ cwd=$(pwd)
 DATADIR="${cwd}/data"
 
 ###
-#
+# ~9hr, 2021-06-08
 DATE="$(date +'%Y%m%d')"
 tweetfile="$DATADIR/twitter_brexit_${DATE}.tsv"
 ${cwd}/python/twitter_utils.py \
@@ -59,4 +59,5 @@ n_chr=$(cat ${tweetfile} |sed -e '1d' |awk -F '\t' '{print $6}' |wc -m)
 n_ent=$(cat $taggerfile |wc -l)
 eptc=$(echo "1000 * $n_ent / $n_chr" |bc)
 printf "Entities per 1000 chars: %.2f\n" "${eptc}"
-# 8.63
+# 8.63 (2019-12-03)
+# 49.50 (2021-06-08)

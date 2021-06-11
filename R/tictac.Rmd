@@ -1,5 +1,5 @@
 ---
-title: 'TICTACh: Target Illumination Clinical Trials Analytics with Cheminformatics'
+title: 'TICTAC: Target illumination clinical trials analytics with cheminformatics'
 author: "Jeremy Yang"
 output:
   html_document:
@@ -199,7 +199,7 @@ cner_totals <- cner[!is.na(smiles), .(N_mentions = .N), by=c("smiles", "Original
 cner_totals <- cner_totals[order(smiles, OriginalText)]
 cner_totals <- cner_totals[, .(N_mentions = sum(N_mentions), names=paste0(OriginalText, collapse="; ")), by=c("smiles")]
 cner_totals <- cner_totals[order(-N_mentions)]
-cner_totals[["smi2img"]] <- sprintf("<img src=\"http://pasilla.health.unm.edu/tomcat/cdkdepict/depict/cow/svg?smi=%s&h=50&w=80&zoom=3\">", sapply(cner_totals$smiles, URLencode, reserved=T))
+cner_totals[["smi2img"]] <- sprintf("<img src=\"https://datascience.unm.edu/tomcat/cdkdepict/depict/cow/svg?smi=%s&h=50&w=80&zoom=3\">", sapply(cner_totals$smiles, URLencode, reserved=T))
 write_delim(cner_totals, "data/cner_totals.tsv", "\t")
 knitr::kable(cner_totals[1:20, .(smi2img, N_mentions, names)], caption="Top 20 drugs by total mentions")
 ```
@@ -265,7 +265,7 @@ For Target Development Level (TDL) and other metadata.
 ```{r message=FALSE}
 tcrd_tgt <- read_delim("data/tcrd_targets.tsv", "\t", col_types=cols(.default=col_character()))
 setDT(tcrd_tgt)
-setnames(tcrd_tgt, old=c("tdl", "fam"), new=c("idgTDL", "idgFamily"))
+setnames(tcrd_tgt, old=c("TDL", "tcrdTargetFamily"), new=c("idgTDL", "idgFamily"))
 ```
 
 # ChEMBL:
