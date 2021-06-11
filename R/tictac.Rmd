@@ -328,7 +328,7 @@ chembl_tgt <- read_delim("data/aact_drugs_chembl_target_component.tsv", "\t")
 setDT(chembl_tgt)
 setnames(chembl_tgt, old="accession", new="uniprot")
 sprintf("ChEMBL target proteins: %d", nrow(chembl_tgt))
-tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="uniprot", by.y="uniprot")
+tgt <- merge(chembl_tgt, tcrd_tgt, all.x=T, all.y=F, by.x="uniprot", by.y="uniprotId")
 sprintf("ChEMBL target proteins mapped to TCRD (human): %d", nrow(tgt[!is.na(tgt$idgTDL),]))
 ```
 
@@ -361,8 +361,10 @@ tdls <- c("Tdark", "Tbio", "Tchem", "Tclin")
 tdl_counts <- tgt[, .(.N), by="idgTDL"]
 tdl_counts$tdl_color <- ifelse(tdl_counts$idgTDL=="Tdark", "gray", ifelse(tdl_counts$idgTDL=="Tbio", "red", ifelse(tdl_counts$idgTDL=="Tchem", "green", ifelse(tdl_counts$idgTDL=="Tclin", "blue", NA))))
 tdl_counts$idgTDL <- factor(tdl_counts$idgTDL, levels=tdls)
+tdl_counts$tdl_color <- factor(tdl_counts$tdl_color, levels=c("gray", "red", "green", "blue"))
+tdl_counts <- tdl_counts[order(idgTDL)]
 message(sprintf("%8s: %6d", tdl_counts$idgTDL, tdl_counts$N))
-plot_ly(type="bar", data=tdl_counts, x=~idgTDL, y=~N, marker=list(color=~tdl_color), text=~N, textposition="auto") %>%
+plot_ly(type="bar", x=tdl_counts$idgTDL, y=tdl_counts$N, marker=list(color=tdl_counts$tdl_color), text=tdl_counts$N, textposition="auto") %>%
 	layout(title="Targets by IDG TDL<br>(Human only)",
 	       xaxis=list(title="TDL"), margin=list(t=120), font=list(family="Monospace", size=20))
 ```
