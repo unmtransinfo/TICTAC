@@ -31,7 +31,7 @@ generally written to communicate molecular mechanisms to research scientists, bu
 efficacy and safety. In due diligence we perform target NER, and to quantify concordance or refutation with
 our prior belief, we also perform target NER on arbitrary non-biomedical text, tweets from the Twitter API for
 __\#brexit__ (26 Nov 2019). We find that 8.64 target entities per 1000 chars in the tweets, vs. 6.63 in the clinical trials
-descriptions. While not proof this does support our belief and less direct method via chemical NER.
+descriptions. While not proof this does support our belief and less direct method via chemical NER. 
 
 ## To do
 
@@ -87,7 +87,11 @@ truncate.ellipsis <- function(txt, maxlen) {
   return (ifelse(nchar(txt)<maxlen, txt, sprintf("%s...", substr(txt, 1, maxlen-3))));
 }
 ```
-
+# AACT Db Timestamp
+```{r}
+dbts <- as.Date(read.table("data/aact_timestamp.txt")[[1]], "%Y-%m-%d")
+sprintf("AACT database timestamp: %s", dbts)
+```
 # Input studies and drugs
 ## Studies
 Read file of all studies in AACT.
@@ -500,8 +504,8 @@ sprintf("study-drug-disease-target links: %d", nrow(sddt_links))
 sprintf("studies: %d ; drugs: %d ; diseases: %d ; targets: %d",
 uniqueN(sddt_links$nct_id), uniqueN(sddt_links$CID), uniqueN(sddt_links$doid),
 uniqueN(sddt_links$uniprot))
-sddt_links <- merge(sddt_links, tgt[, .(uniprot, gene_symbol = sym, idgTDL)], by="uniprot")
-write_delim(sddt_links, "data/sddt_links.tsv", "\t")
+sddt_links <- merge(sddt_links, tgt[, .(uniprot, gene_symbol = tcrdGeneSymbol, idgTDL)], by="uniprot")
+#write_delim(sddt_links, "data/sddt_links.tsv", "\t")
 knitr::kable(unique(sddt_links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
 ```
 
