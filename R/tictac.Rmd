@@ -153,7 +153,7 @@ knitr::kable(merge(studies[, .(N_studies = .N), by="phase"], drugs[, .(N_drugs =
 ```
 
 ```{r}
-knitr::kable(merge(studies[, .(N_studies = .N), by="overall_status"], drugs[, .(N_drugs = .N), by="overall_status"], by="overall_status")[order(overall_status)], caption="Drug studies and drugs, by overall_status")
+knitr::kable(merge(studies[, .(N_studies = .N), by="overall_status"], drugs[, .(N_drugs = .N), by="overall_status"], by="overall_status")[order(-N_studies)], caption="Drug studies and drugs, by overall_status")
 ```
 
 ## Drug studies by Phase and Status
@@ -176,9 +176,11 @@ plot_ly() %>%
 ## Drug studies and drugs by start_year
 
 ```{r message=FALSE}
+yi <- 1990
+yf <- 2021
 plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], drugs[, .(N_drugs = .N), by="start_year"], by="start_year"), x = ~start_year, name="studies", y = ~N_studies) %>%
 	add_trace(name="drugs", y = ~N_drugs) %>%
-	layout(title="AACT: Studies and drugs vs. start year", xaxis=list(range=c(1990, 2020), tickangle=-45), yaxis=list(title="N"),
+	layout(title=sprintf("AACT: Studies and drugs %d-%d", yi, yf), xaxis=list(range=c(yi, yf), tickangle=-45), yaxis=list(title="N"),
 	       barmode="stack",
 	       margin=list(t=120), font=list(family="Monospace", size=20),
 	       legend=list(x=0.1, y=1))

@@ -11,6 +11,9 @@ DATADIR="${cwd}/data"
 TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 
+#TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
+TAGGER_EXE="$(cd $HOME/../app/bin; pwd)/tagcorpus"
+
 ###
 # "-26" is DOID disease type.
 echo "-26" >$DATADIR/disease_types.tsv
@@ -31,7 +34,7 @@ echo "-26" >$DATADIR/disease_types.tsv
 cat ${DATADIR}/aact_descriptions.tsv \
 	|sed -e 's/^/:/' \
 	|awk -F '\t' '{print $1 "\t" $2 "\t\t\t" $3}' \
-	| ${TAGGER_DIR}/tagcorpus \
+	| ${TAGGER_EXE} \
 	--threads=4 \
 	--entities=$DICT_DIR/diseases_entities.tsv \
 	--names=$DICT_DIR/diseases_names.tsv \

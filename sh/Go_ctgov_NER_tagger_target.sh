@@ -11,6 +11,9 @@ DATADIR="${cwd}/data"
 TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 
+#TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
+TAGGER_EXE="$(cd $HOME/../app/bin; pwd)/tagcorpus"
+
 ###
 # "9606" is taxonomy human type.
 echo "9606" >$DATADIR/human_types.tsv
@@ -33,7 +36,7 @@ taggerfile="$DATADIR/aact_descriptions_tagger_target_matches.tsv"
 cat ${descfile} \
 	|sed -e 's/^/:/' \
 	|awk -F '\t' '{print $1 "\t" $2 "\t\t\t" $3}' \
-	| ${TAGGER_DIR}/tagcorpus \
+	| ${TAGGER_EXE} \
 	--threads=4 \
 	--entities=$DICT_DIR/human_entities.tsv \
 	--names=$DICT_DIR/human_names.tsv \

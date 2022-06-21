@@ -88,13 +88,13 @@ ARGS="-Atq -h $DBHOST -d $DBNAME"
 #Brief Summaries:
 #(table: brief_summaries)
 #id = "AACT assigned primary key"
-psql -A -F $'\t' $ARGS -f sql/summary_list.sql -o $DATADIR/aact_summaries.tsv
+psql -A -F $'\t' $ARGS -f ${cwd}/sql/summary_list.sql -o $DATADIR/aact_summaries.tsv
 #
 ###
 #Descriptions:
 #(table: detailed_descriptions)
 #id = "AACT assigned primary key"
-psql -A -F $'\t' $ARGS -f sql/description_list.sql -o $DATADIR/aact_descriptions.tsv
+psql -A -F $'\t' $ARGS -f ${cwd}/sql/description_list.sql -o $DATADIR/aact_descriptions.tsv
 #
 printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
 #

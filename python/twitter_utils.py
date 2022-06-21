@@ -41,15 +41,15 @@ def SearchTwitter(query, lang, result_type, api, n, fout):
       tq.update(df_this.shape[0])
       if n_out>=n: break
   except TwitterRequestError as e:
-    print(e.status_code)
+    logging.error(e.status_code)
     for msg in iter(e):
-      print(msg)
+      logging.error(msg)
 
   except TwitterConnectionError as e:
-    print(e)
+    logging.error(e)
 
   except Exception as e:
-    print(e)
+    logging.error(e)
 
   tq.close()
   logging.info(f"Output tweets: {n_out}")

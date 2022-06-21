@@ -14,13 +14,8 @@ cwd=$(pwd)
 DATADIR="${cwd}/data"
 
 ###
-# ~9hr, 2021-06-08
 DATE="$(date +'%Y%m%d')"
 tweetfile="$DATADIR/twitter_brexit_${DATE}.tsv"
-${cwd}/python/twitter_utils.py \
-	--hashtag "brexit" \
-	--n 100000 \
-	--o $tweetfile
 #
 ###
 TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
