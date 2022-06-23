@@ -3,6 +3,8 @@
 ### See http://download.jensenlab.org/ for dictionaries, e.g.
 ### http://download.jensenlab.org/human_dictionary.tar.gz
 
+T0=$(date +%s)
+
 printf "Executing: %s\n" "$(basename $0)"
 
 cwd=$(pwd)
@@ -50,3 +52,6 @@ n_ent=$(cat $taggerfile |wc -l)
 eptc=$(echo "1000 * $n_ent / $n_chr" |bc)
 printf "Entities per 1000 chars: %.2f\n" "${eptc}"
 # 6.64
+#
+printf "Elapsed time: %ds\n" "$[$(date +%s) - ${T0}]"
+#

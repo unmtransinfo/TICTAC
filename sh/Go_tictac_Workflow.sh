@@ -12,6 +12,8 @@ function MessageBreak {
   printf "=== [%s] %s\n" "$(date +'%Y-%m-%d:%H:%M:%S')" "$1"
 }
 #
+T0=$(date +%s)
+#
 MessageBreak "Starting: $(basename $0)"
 #
 DATE=$(date +'%Y%m%d')
@@ -36,6 +38,8 @@ ${cwd}/sh/Go_BuildDicts_MeSH.sh \
 # Chemical NER on PubMed abstracts, with default LeadMine dictionary and resolver.
 # We use the "pubmed" table from TCRD, which includes references with targets or
 # diseases according to JensenLab.
+${cwd}/sh/Go_pubmed_GetData.sh \
+	>& ${LOGDIR}/Go_pubmed_GetData-${DATE}.log
 ${cwd}/sh/Go_pubmed_NER_leadmine_chem.sh \
 	>& ${LOGDIR}/Go_pubmed_NER_leadmine_chem-${DATE}.log
 #
@@ -60,14 +64,18 @@ ${cwd}/sh/Go_ctgov_NER_tagger_disease.sh
 ${cwd}/sh/Go_ctgov_NER_tagger_target.sh \
 	>& ${LOGDIR}/Go_ctgov_NER_tagger_target-${DATE}.log
 # Twitter is our arbitrary control:
+${cwd}/sh/Go_twitter_GetData.sh \
+	>& ${LOGDIR}/Go_twitter_GetData-${DATE}.log
 ${cwd}/sh/Go_twitter_NER_tagger_target.sh \
 	>& ${LOGDIR}/Go_twitter_NER_tagger_target-${DATE}.log
 #
 ###
 # Uses (1) PubChem API and (2) ChEMBL API.
-# Query using SMILES from LeadMine.
-${cwd}/sh/Go_xref_drugs.sh \
-	>& ${LOGDIR}/Go_xref_drugs-${DATE}.log
+# Query using SMILES from LeadMine. InChIkeys from PubChem used for ChEMBL.
+${cwd}/sh/Go_pubchem_GetXrefs.sh \
+	>& ${LOGDIR}/Go_pubchem_GetXrefs-${DATE}.log
+${cwd}/sh/Go_chembl_GetXrefs.sh \
+	>& ${LOGDIR}/Go_chembl_GetXrefs-${DATE}.log
 #
 ###
 # Target metadata from TCRD:
@@ -77,4 +85,6 @@ python3 -m BioClients.idg.tcrd.Client listTargets --o ${cwd}/data/tcrd_targets.t
 # Describe datasets; analyze results.
 #Rscript -e "rmarkdown::render('${cwd}/R/aact_drugtargets.Rmd', knit_root_dir='${cwd}', output_dir='${cwd}/data', output_file='aact_drugtargets.html', clean=T)"
 #
+#
+printf "Elapsed time: %ds\n" "$[$(date +%s) - ${T0}]"
 #

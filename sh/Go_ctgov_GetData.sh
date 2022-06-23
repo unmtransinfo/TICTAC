@@ -33,6 +33,8 @@ function MessageBreak {
   printf "=== [%s] %s\n" "$(date +'%Y-%m-%d:%H:%M:%S')" "$1"
 }
 #
+T0=$(date +%s)
+#
 MessageBreak "Starting $(basename $0)"
 #
 DBHOST="aact-db.ctti-clinicaltrials.org"
@@ -100,3 +102,6 @@ printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
 #
 MessageBreak "Done: $(basename $0)"
 #
+printf "Elapsed time: %ds\n" "$[$(date +%s) - ${T0}]"
+#
+

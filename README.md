@@ -76,7 +76,8 @@ See top level script `Go_ctgov_Workflow.sh`.
 1. Tagger:
   1. `Go_ctgov_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
 1. Cross-references:
-  1. `Go_xref_drugs.sh` - PubChem and ChEMBL IDs via APIs.
+  1. `Go_pubchem_GetXrefs.sh` - PubChem IDs via APIs.
+  1. `Go_chembl_GetXrefs.sh` - ChEMBL IDs via APIs.
 1. Results, analysis:
   1. `tictac.Rmd` - Results described and analyzed.
 

@@ -5,13 +5,13 @@ printf "Executing: %s\n" "$(basename $0)"
 #
 cwd=$(pwd)
 #
+###
 function read_password()
 {
   prompt=$1
   while IFS= read -p "$prompt" -r -s -n 1 char
   do
-    if [[ $char == $'\0' ]]
-    then
+    if [[ $char == $'\0' ]]; then
          break
     fi
     prompt='*'

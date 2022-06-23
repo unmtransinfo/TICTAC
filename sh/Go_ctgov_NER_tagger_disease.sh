@@ -3,6 +3,8 @@
 ### See http://download.jensenlab.org/ for dictionaries, e.g.
 ### http://download.jensenlab.org/human_dictionary.tar.gz
 
+T0=$(date +%s)
+
 printf "Executing: %s\n" "$(basename $0)"
 
 cwd=$(pwd)
@@ -41,4 +43,6 @@ cat ${DATADIR}/aact_descriptions.tsv \
 	--stopwords=$DICT_DIR/diseases_global.tsv \
 	--types=$DATADIR/disease_types.tsv \
 	--out-matches=$DATADIR/aact_descriptions_tagger_disease_matches.tsv
+#
+printf "Elapsed time: %ds\n" "$[$(date +%s) - ${T0}]"
 #

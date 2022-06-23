@@ -4,6 +4,8 @@
 ### belief that clinical trials text is not suited to target NER.
 ###
 
+T0=$(date +%s)
+
 printf "Executing: $(basename $0)\n"
 
 cwd=$(pwd)
@@ -19,3 +21,4 @@ ${cwd}/python/twitter_utils.py \
 	--n 100000 \
 	--o $tweetfile
 #
+printf "Elapsed time: %ds\n" "$[$(date +%s) - ${T0}]"
