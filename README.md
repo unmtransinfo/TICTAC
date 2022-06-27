@@ -65,16 +65,17 @@ ___Drugs___ may be experimental candidates.
 
 ### Overall workflow:
 
-See top level script `Go_ctgov_Workflow.sh`.
+See top level script `Go_tictac_Workflow.sh`.
 
 1. Data:
-  1. `Go_ctgov_GetData.sh` - Fetch data from AACT db.
+  1. `Go_aact_GetData.sh` - Fetch data from AACT db.
   1. `Go_pubmed_GetData.sh` - Fetch PubMed data from IDG TCRD.
+  1. `Go_jensenlab_GetData.sh` - Fetch dictionary data from JensenLab.
 1. LeadMine:
-  1. `Go_ctgov_NER_leadmine_chem.sh` - LeadMine NER, CT descriptions.
+  1. `Go_aact_NER_leadmine_chem.sh` - LeadMine NER, CT descriptions.
   1. `Go_pubmed_NER_leadmine_chem.sh` - LeadMine NER, referenced PMIDs.
 1. Tagger:
-  1. `Go_ctgov_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
+  1. `Go_aact_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
 1. Cross-references:
   1. `Go_pubchem_GetXrefs.sh` - PubChem IDs via APIs.
   1. `Go_chembl_GetXrefs.sh` - ChEMBL IDs via APIs.

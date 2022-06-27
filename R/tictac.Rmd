@@ -390,7 +390,7 @@ dent <- read_delim("/home/data/JensenLab/data/diseases_entities.tsv", "\t", col_
 setDT(dner)
 setDT(dent)
 dner <- merge(dner, dent, by="serialnm", all.x=T, all.y=F)
-descs <- read_delim("data/aact_descriptions.tsv", "\t", col_types=cols(.default=col_character()), escape_double=F, trim_ws=T)
+descs <- read_delim("data/aact_descriptions.tsv", "\t", col_types=cols(.default=col_character()), col_names=c("id", "nct_id", "description"), escape_double=F, trim_ws=T)
 dner <- merge(dner, descs, by="id", all.x=T, all.y=F)
 dner[, id:=NULL]
 dner[, serialnm:=NULL]

@@ -1,7 +1,7 @@
 #!/bin/bash
 #############################################################################
-### CTTI = Clinical Trials Transformation Initiative
 ### AACT = Aggregate Analysis of ClinicalTrials.gov
+### CTTI = Clinical Trials Transformation Initiative
 ### See https://aact.ctti-clinicaltrials.org/.
 ### According to website (July 2018), data is refreshed monthly.
 #############################################################################
@@ -90,12 +90,14 @@ ARGS="-Atq -h $DBHOST -d $DBNAME"
 #Brief Summaries:
 #(table: brief_summaries)
 #id = "AACT assigned primary key"
+#No header line; columns: id, nct_id, summary.
 psql -A -F $'\t' $ARGS -f ${cwd}/sql/summary_list.sql -o $DATADIR/aact_summaries.tsv
 #
 ###
 #Descriptions:
 #(table: detailed_descriptions)
 #id = "AACT assigned primary key"
+#No header line; columns: id, nct_id, description.
 psql -A -F $'\t' $ARGS -f ${cwd}/sql/description_list.sql -o $DATADIR/aact_descriptions.tsv
 #
 printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
