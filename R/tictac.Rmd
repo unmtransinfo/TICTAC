@@ -17,12 +17,12 @@ ClinicalTrials.gov was first released in 2000. As of March 2019, ClinicalTrials.
 
 * CTTI = Clinical Trials Transformation Initiative
 * AACT = Aggregate Analysis of ClinicalTrials.gov
-* According to website (March 2019), data is refreshed monthly.
+* According to website (2022), data is refreshed daily.
 * <https://aact.ctti-clinicaltrials.org/>
 * <https://github.com/ctti-clinicaltrials/aact>
 * <https:/www.nextmovesoftware.com>
 * <https://bitbucket.org/larsjuhljensen/tagger>
-* <http://download.jensenlab.org/>
+* <https://download.jensenlab.org/>
 
 ## Issues
 
@@ -55,9 +55,9 @@ associations. So identification of suitable evidence variables are needed.
 
 ## Input files:
 
-* (CTTI AACT) `aact_studies.tsv`
-* (CTTI AACT) `aact_drugs.tsv`
-* (CTTI AACT) `aact_descriptions.tsv`
+* (AACT) `aact_studies.tsv`
+* (AACT) `aact_drugs.tsv`
+* (AACT) `aact_descriptions.tsv`
 * (NextMove LeadMine) `aact_drugs_leadmine.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid.tsv`
 * (PubChem) `aact_drugs_smi_pubchem_cid2ink.tsv`
@@ -92,6 +92,7 @@ truncate.ellipsis <- function(txt, maxlen) {
 dbts <- as.Date(read.table("data/aact_timestamp.txt")[[1]], "%Y-%m-%d")
 sprintf("AACT database timestamp: %s", dbts)
 ```
+
 # Input studies and drugs
 ## Studies
 Read file of all studies in AACT.
@@ -117,7 +118,6 @@ sprintf("references: %d; NCT_IDs: %d; PMIDs: %d; results_references: %d", nrow(r
         nrow(refs[reference_type=="results_reference"]))
 refs <- refs[, .(N_refs = .N, N_results_refs = sum(reference_type=="results_reference"), pmids=paste0(pmid, collapse="; "), citations=paste0(citation, collapse="\t")), by="nct_id"]
 ```
-
 
 ## Drugs 
 Read file of all drugs in AACT.

@@ -1,4 +1,6 @@
 data
+R/rsconnect
+R/*.html
 .Rproj
 .Rproj.user
 .Rhistory
