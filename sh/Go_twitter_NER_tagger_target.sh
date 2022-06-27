@@ -21,6 +21,9 @@ tweetfile="$DATADIR/twitter_brexit_${DATE}.tsv"
 TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 #
+#TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
+TAGGER_EXE="$(cd $HOME/../app/bin; pwd)/tagcorpus"
+#
 ###
 # Tagger (document.h) document TSV format requirements.
 # Documents one per line.
@@ -42,7 +45,8 @@ taggerfile="$DATADIR/twitter_brexit_tagger_target_matches.tsv"
 cat ${tweetfile} |sed -e '1d' \
 	|sed -e 's/^/:/' \
 	|awk -F '\t' '{print $1 "\t\t\t\t" $2}' \
-	| ${TAGGER_DIR}/tagcorpus --threads=4 \
+	|${TAGGER_EXE} \
+	--threads=4 \
 	--entities=$DICT_DIR/human_entities.tsv \
 	--names=$DICT_DIR/human_names.tsv \
 	--stopwords=$DICT_DIR/tagger_global.tsv \
@@ -52,7 +56,8 @@ cat ${tweetfile} |sed -e '1d' \
 # Compute entities per 1000 chars rate.
 n_chr=$(cat ${tweetfile} |sed -e '1d' |awk -F '\t' '{print $6}' |wc -m)
 n_ent=$(cat $taggerfile |wc -l)
-eptc=$(echo "1000 * $n_ent / $n_chr" |bc)
+eptc=$(echo "scale=2; 1000 * $n_ent / $n_chr" |bc)
 printf "Entities per 1000 chars: %.2f\n" "${eptc}"
 # 8.63 (2019-12-03)
 # 49.50 (2021-06-08)
+# 6.90 (2022-06-21)
