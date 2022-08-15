@@ -386,7 +386,7 @@ Tagger results TSVs lack headings.
 ```{r message=FALSE, echo=FALSE}
 dner <- read_delim("data/aact_descriptions_tagger_disease_matches.tsv", "\t", 
                    col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
-dent <- read_delim("/home/data/JensenLab/data/diseases_entities.tsv", "\t", col_names=c("serialnm", "doid"), col_types="c-c")
+dent <- read_delim(paste0(Sys.getenv("HOME"), "/../data/JensenLab/data/diseases_entities.tsv"), "\t", col_names=c("serialnm", "doid"), col_types="c-c")
 setDT(dner)
 setDT(dent)
 dner <- merge(dner, dent, by="serialnm", all.x=T, all.y=F)

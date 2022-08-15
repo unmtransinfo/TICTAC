@@ -6,11 +6,12 @@ and JensenLab Tagger.
 
 ### Dependencies
 
+* [ClinicalTrials.gov](https://ClinicalTrials.gov)
 * [AACT-CTTI-db](https://aact.ctti-clinicaltrials.org/)
 * [NextMove LeadMine](https://nextmovesoftware.com)
 * [JensenLab](https://jensenlab.org/) [Tagger](https://bitbucket.org/larsjuhljensen/tagger/).
 * [BioClients](https://github.com/jeremyjyang/BioClients)
-* [IDG TCRD REST API](http://juniper.health.unm.edu/tcrd/)
+* [IDG Pharos/TCRD](https://pharos.nih.gov/)
 * [PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/rest/pug/)
 * [ChEMBL REST API](https://www.ebi.ac.uk/chembl/ws)
 * [ChEMBL webresource client](https://github.com/chembl/chembl_webresource_client) \(Python client library\).
@@ -19,7 +20,7 @@ and JensenLab Tagger.
 ### About AACT:
 
 * [AACT-CTTI](https://aact.ctti-clinicaltrials.org/) database from Duke.
-  * CTTI = Clinical Trials Transformation Initiative
+  * CTTI = [Clinical Trials Transformation Initiative](https://ctti-clinicaltrials.org/)
   * AACT = Aggregate Analysis of ClinicalTrials.gov
 * According to website (accessed June 2022), data is refreshed daily.
 * AACT structure changed in November 2021, reflecting newer ClinicalTrials.gov API.
@@ -27,11 +28,10 @@ and JensenLab Tagger.
 
 ### References:
 
-* <https://clinicaltrials.gov>
-* <https://aact.ctti-clinicaltrials.org/>
 * [AACT Data Dictionary](https://aact.ctti-clinicaltrials.org/data_dictionary), which references <https://prsinfo.clinicaltrials.gov/definitions.html> and <https://prsinfo.clinicaltrials.gov/results_definitions.html>.
-* [The Database for Aggregate Analysis of ClinicalTrials.gov (AACT) and Subsequent Regrouping by Clinical Specialty](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033677), Tasneem et al., March 16, * 2012https://doi.org/10.1371/journal.pone.0033677.
-* [How to avoid common problems when using ClinicalTrials.gov in research: 10 issues to consider](https://www.bmj.com/content/361/bmj.k1452), Tse et al., BMJ 2018; 361 doi: https://doi.org/10.1136/bmj.k1452 (Published 25 May 2018.
+* [The Database for Aggregate Analysis of ClinicalTrials.gov (AACT) and Subsequent Regrouping by Clinical Specialty](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0033677), Tasneem et al., <https://doi.org/10.1371/journal.pone.0033677> (2012).
+* [The Clinical Trials Transformation Initiative. One Decade of Impact. One Vision Ahead](https://journals.sagepub.com/toc/ctja/15/1_suppl), Clinical Trials (2018).
+* [How to avoid common problems when using ClinicalTrials.gov in research: 10 issues to consider](https://www.bmj.com/content/361/bmj.k1452), Tse et al., BMJ 2018; 361, <https://doi.org/10.1136/bmj.k1452> (2018).
 * See also: <https://www.ctti-clinicaltrials.org/briefing-room/publications>
 
 ### Text mining, aka Named Entity Recognition (NER)
