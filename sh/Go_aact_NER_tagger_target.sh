@@ -10,11 +10,10 @@ printf "Executing: %s\n" "$(basename $0)"
 cwd=$(pwd)
 
 DATADIR="${cwd}/data"
-TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
+TAGGER_DIR="$(cd $HOME/../app/tagger_precompiled; pwd)"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 
-#TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
-TAGGER_EXE="$(cd $HOME/../app/bin; pwd)/tagcorpus"
+TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
 
 ###
 # "9606" is taxonomy human type.

@@ -3,6 +3,10 @@
 ### See http://download.jensenlab.org/ for dictionaries, e.g.
 ### http://download.jensenlab.org/human_dictionary.tar.gz
 
+### Issue: Tagger compiles fine on CentOS 7, but not
+### Ubuntu 20.04 or 22.04. So we copy pre-compiled executable
+### and necessary libraries from CentOS to Ubuntu server.
+
 T0=$(date +%s)
 
 printf "Executing: %s\n" "$(basename $0)"
@@ -10,11 +14,10 @@ printf "Executing: %s\n" "$(basename $0)"
 cwd=$(pwd)
 
 DATADIR="${cwd}/data"
-TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
+TAGGER_DIR="$(cd $HOME/../app/tagger_precompiled; pwd)"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 
-#TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
-TAGGER_EXE="$(cd $HOME/../app/bin; pwd)/tagcorpus"
+TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
 
 ###
 # "-26" is DOID disease type.
