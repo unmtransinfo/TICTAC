@@ -22,16 +22,16 @@ function read_password()
 #
 TCRDDATADIR="$(cd $HOME/../data/TCRD/data; pwd)"
 #
-DBHOST="tcrd.kmc.io"
-DBPORT="3306"
-DBNAME="tcrd6124"
-DBUSR="tcrd"
+#DBHOST="tcrd.kmc.io"
+#DBPORT="3306"
+#DBNAME="tcrd6124"
+#DBUSR="tcrd"
 #DBPW=""
 #
-#DBHOST="tcrd.newdrugtargets.org"
-#DBPORT="3306"
-#DBNAME="tcrd"
-#DBUSR="tcrd_read_only"
+DBHOST="tcrd.newdrugtargets.org"
+DBPORT="3306"
+DBNAME="tcrd"
+DBUSR="tcrd_read_only"
 #DBPW=""
 #
 unset DBPW
