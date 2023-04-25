@@ -28,6 +28,9 @@
 #
 set -e
 #
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+#
 function MessageBreak {
   printf "============================================\n"
   printf "=== [%s] %s\n" "$(date +'%Y-%m-%d:%H:%M:%S')" "$1"
@@ -42,6 +45,8 @@ DBNAME="aact"
 #
 cwd=$(pwd)
 DATADIR="${cwd}/data"
+#
+printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
 #
 ARGS="-h $DBHOST -d $DBNAME"
 ###
@@ -99,8 +104,6 @@ psql -A -F $'\t' $ARGS -f ${cwd}/sql/summary_list.sql -o $DATADIR/aact_summaries
 #id = "AACT assigned primary key"
 #No header line; columns: id, nct_id, description.
 psql -A -F $'\t' $ARGS -f ${cwd}/sql/description_list.sql -o $DATADIR/aact_descriptions.tsv
-#
-printf "$(date +'%Y-%m-%d:%H:%M:%S')\n" >$DATADIR/aact_timestamp.txt
 #
 MessageBreak "Done: $(basename $0)"
 #
