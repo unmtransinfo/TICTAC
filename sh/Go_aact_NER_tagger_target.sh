@@ -11,6 +11,7 @@ cwd=$(pwd)
 
 DATADIR="${cwd}/data"
 TAGGER_DIR="$(cd $HOME/../app/tagger_precompiled; pwd)"
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TAGGER_DIR"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 
 TAGGER_EXE="${TAGGER_DIR}/tagcorpus"
@@ -38,7 +39,7 @@ cat ${descfile} \
 	|sed -e 's/^/:/' \
 	|awk -F '\t' '{print $1 "\t" $2 "\t\t\t" $3}' \
 	| ${TAGGER_EXE} \
-	--threads=4 \
+	--threads=16 \
 	--entities=$DICT_DIR/human_entities.tsv \
 	--names=$DICT_DIR/human_names.tsv \
 	--types=$DATADIR/human_types.tsv \

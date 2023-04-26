@@ -39,7 +39,11 @@ ARGS="-h $DBHOST -D $DBNAME -u $DBUSR -p${DBPW}"
 #############################################################################
 # TCRD "pubmed" table:
 #(3879431 rows in May 2021)
-mysql $ARGS -e "SELECT DISTINCT pubmed_id FROM protein2pubmed ORDER BY pubmed_id" \
-	>${TCRDDATADIR}/tcrd_pubmed_ids.txt
+mysql $ARGS -e "SELECT DISTINCT pubmed_id FROM protein2pubmed ORDER BY pubmed_id" >${TCRDDATADIR}/tcrd_pubmed_ids.txt
 #
+###
+# Very slow. Maybe switch to FTP access.
+python3 -m BioClients.pubmed.Client get_record \
+	--i ${TCRDDATADIR}/tcrd_pubmed_ids.txt \
+	--o ${TCRDDATADIR}/tcrd_pubmed_records.tsv 
 #

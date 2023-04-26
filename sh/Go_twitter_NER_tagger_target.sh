@@ -19,6 +19,7 @@ tweetfile="$DATADIR/twitter_brexit_${DATE}.tsv"
 #
 ###
 TAGGER_DIR="$(cd $HOME/../app/tagger; pwd)"
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$TAGGER_DIR"
 DICT_DIR="$(cd $HOME/../data/JensenLab/data; pwd)"
 #
 #TAGGER_EXE="${TAGGER_DIR}/tagcorpus"

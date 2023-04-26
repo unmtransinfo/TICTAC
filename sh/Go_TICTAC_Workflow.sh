@@ -35,15 +35,6 @@ ${cwd}/sh/Go_BuildDicts_MeSH.sh \
 	>& ${LOGDIR}/Go_BuildDicts_MeSH-${DATE}.log
 #
 ###
-# Chemical NER on PubMed abstracts, with default LeadMine dictionary and resolver.
-# We use the "pubmed" table from TCRD, which includes references with targets or
-# diseases according to JensenLab.
-${cwd}/sh/Go_pubmed_GetData.sh \
-	>& ${LOGDIR}/Go_pubmed_GetData-${DATE}.log
-${cwd}/sh/Go_pubmed_NER_leadmine_chem.sh \
-	>& ${LOGDIR}/Go_pubmed_NER_leadmine_chem-${DATE}.log
-#
-###
 # NextMove Leadmine:
 # (1) Chemical NER on AACT drug intervention names.
 # (2) Disease/phenotype NER on AACT descriptions, using custom dictionaries.
@@ -76,6 +67,14 @@ ${cwd}/sh/Go_pubchem_GetXrefs.sh \
 	>& ${LOGDIR}/Go_pubchem_GetXrefs-${DATE}.log
 ${cwd}/sh/Go_chembl_GetXrefs.sh \
 	>& ${LOGDIR}/Go_chembl_GetXrefs-${DATE}.log
+#
+###
+# Chemical NER on PubMed abstracts, with default LeadMine dictionary and resolver.
+# PMIDs from ChEMBL activities.
+${cwd}/sh/Go_pubmed-chembl_GetData.sh \
+	>& ${LOGDIR}/Go_pubmed-chembl_GetData-${DATE}.log
+${cwd}/sh/Go_pubmed-chembl_NER_leadmine_chem.sh \
+	>& ${LOGDIR}/Go_pubmed-chembl_NER_leadmine_chem-${DATE}.log
 #
 ###
 # Target metadata from TCRD:
