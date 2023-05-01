@@ -376,49 +376,97 @@ plot_ly(type="bar", x=tdl_counts$idgTDL, y=tdl_counts$N, marker=list(color=tdl_c
 ```
 
 # JensenLab Tagger Diseases NER
+
 With JensenLab DOID entities dictionary.
-On descriptions from detailed_descriptions table.
+
+## AACT: NER on descriptions from detailed_descriptions table.
 
 * `serialno` corresponds with DOID.
 * `id` is AACT primary key.
 Tagger results TSVs lack headings.
 
 ```{r message=FALSE, echo=FALSE}
-dner <- read_delim("data/aact_descriptions_tagger_disease_matches.tsv", "\t", 
-                   col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
+dner_aact <- read_delim("data/aact_descriptions_tagger_disease_matches.tsv", "\t", col_names = c("id", "term", "serialnm" ), col_types="c----c-c")
 dent <- read_delim(paste0(Sys.getenv("HOME"), "/../data/JensenLab/data/diseases_entities.tsv"), "\t", col_names=c("serialnm", "doid"), col_types="c-c")
-setDT(dner)
+setDT(dner_aact)
 setDT(dent)
-dner <- merge(dner, dent, by="serialnm", all.x=T, all.y=F)
+dner_aact <- merge(dner_aact, dent, by="serialnm", all.x=T, all.y=F)
 descs <- read_delim("data/aact_descriptions.tsv", "\t", col_types=cols(.default=col_character()), col_names=c("id", "nct_id", "description"), escape_double=F, trim_ws=T)
-dner <- merge(dner, descs, by="id", all.x=T, all.y=F)
-dner[, id:=NULL]
-dner[, serialnm:=NULL]
-dner <- dner[grepl("^DOID:", doid)] #Why not? "AmyCo:8" etc.? TBE.
+dner_aact <- merge(dner_aact, descs, by="id", all.x=T, all.y=F)
+dner_aact[, id:=NULL]
+dner_aact[, serialnm:=NULL]
+dner_aact <- dner_aact[grepl("^DOID:", doid)] #Why not? "AmyCo:8" etc.? TBE.
 dbad <- c("disease", "can", "face")
-dner <- dner[!(tolower(term) %in% dbad)]
-sprintf("Total disease mentions: %d (in %d studies)", nrow(dner), uniqueN(studies$nct_id))
+dner_aact <- dner_aact[!(tolower(term) %in% dbad)]
+sprintf("Total disease mentions: %d (in %d studies)", nrow(dner_aact), uniqueN(studies$nct_id))
 ```
 
-## Disease mention totals by merging to resolved Disease Ontology term (DOID).
+### Disease mention totals by merging to resolved Disease Ontology term (DOID).
 
 ```{r}
-dner_totals <- dner[, .(N_mentions = .N), by=c("doid", "term")]
-dner_totals <- dner_totals[order(as.integer(sub("DOID:", "", doid)), term)]
-dner_totals <- dner_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse="; ")), by=c("doid")]
-dner_totals <- dner_totals[order(-N_mentions)]
-dner_totals$terms <- truncate.ellipsis(dner_totals$terms, 200)
-knitr::kable(dner_totals[1:20], caption="Top 20 diseases by total mentions")
+dner_aact_totals <- dner_aact[, .(N_mentions = .N), by=c("doid", "term")]
+dner_aact_totals <- dner_aact_totals[order(as.integer(sub("DOID:", "", doid)), term)]
+dner_aact_totals <- dner_aact_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse="; ")), by=c("doid")]
+dner_aact_totals <- dner_aact_totals[order(-N_mentions)]
+dner_aact_totals$terms <- truncate.ellipsis(dner_aact_totals$terms, 200)
+knitr::kable(dner_aact_totals[1:20], caption="Top 20 diseases by total mentions")
 ```
 
-## Disease mentions by study.
+### Disease mentions by study.
 Sort synonyms terms by frequency.
 
 ```{r}
-dner <- dner[, .(N_mentions = .N), by=c("nct_id", "doid", "term")]
-dner <- dner[order(nct_id, -N_mentions, -as.integer(sub("DOID:", "", doid)))]
-dner <- dner[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collapse=";")), by=c("nct_id", "doid")]
-knitr::kable(dner[nct_id %in% base::sample(unique(dner$nct_id), 10)], caption="Disease mentions by study (Random sample of studies)")
+dner_aact <- dner_aact[, .(N_mentions = .N), by=c("nct_id", "doid", "term")]
+dner_aact <- dner_aact[order(nct_id, -N_mentions, -as.integer(sub("DOID:", "", doid)))]
+dner_aact <- dner_aact[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collapse=";")), by=c("nct_id", "doid")]
+knitr::kable(dner_aact[nct_id %in% base::sample(unique(dner_aact$nct_id), 10)], caption="Disease mentions by study (Random sample of studies)")
+```
+
+## PubMed references from AACT studies.
+
+```{r message=FALSE, echo=FALSE}
+aact_refs <- read_delim("data/aact_study_refs.tsv", "\t", col_types = cols(.default = col_character()))
+sprintf("Study references: %d ; PMIDs: %d ; studies: %d", nrow(aact_refs), uniqueN(aact_refs$pmid), uniqueN(aact_refs$nct_id))
+dner_pubmed <- read_delim("data/aact_study_refs_pubmed-records_tagger_disease_matches.tsv", "\t", col_names = c("pmid", "term", "serialnm" ), col_types="c----c-c")
+setDT(dner_pubmed)
+dent <- read_delim(paste0(Sys.getenv("HOME"), "/../data/JensenLab/data/diseases_entities.tsv"), "\t", col_names=c("serialnm", "doid"), col_types="c-c")
+setDT(dent)
+dner_pubmed <- merge(dner_pubmed, dent, by="serialnm", all.x=T, all.y=F)
+dbad <- c("disease", "can", "face")
+dner_pubmed <- dner_pubmed[!(tolower(term) %in% dbad)]
+sprintf("Total disease mentions: %d (in %d / %d papers)", nrow(dner_pubmed), uniqueN(dner_pubmed$pmid), uniqueN(aact_refs$pmid))
+```
+
+### Disease mention totals by merging to resolved Disease Ontology term (DOID).
+
+```{r}
+dner_pubmed_totals <- dner_pubmed[, .(N_mentions = .N), by=c("doid", "term")]
+dner_pubmed_totals <- dner_pubmed_totals[grepl("^DOID:", doid)] #Remove non-DOID terms (e.g. AmyCo)
+dner_pubmed_totals <- dner_pubmed_totals[order(as.integer(sub("DOID:", "", doid)), term)]
+dner_pubmed_totals <- dner_pubmed_totals[, .(N_mentions = sum(N_mentions), terms=paste0(term, collapse="; ")), by=c("doid")]
+dner_pubmed_totals <- dner_pubmed_totals[order(-N_mentions)]
+dner_pubmed_totals$terms <- truncate.ellipsis(dner_pubmed_totals$terms, 200)
+knitr::kable(dner_pubmed_totals[1:20], caption="Top 20 diseases by total mentions")
+```
+
+### Disease mentions by paper.
+Sort synonyms terms by frequency.
+
+```{r}
+dner_pubmed_doid <- dner_pubmed[grepl("^DOID:", doid), .(N_mentions = .N), by=c("pmid", "doid", "term")] #Remove non-DOID terms (e.g. AmyCo)
+dner_pubmed_doid <- dner_pubmed_doid[order(pmid, -N_mentions, -as.integer(sub("DOID:", "", doid)))]
+dner_pubmed_doid <- dner_pubmed_doid[, .(N_mentions = sum(N_mentions), disease_terms=paste0(term, collapse=";")), by=c("pmid", "doid")]
+knitr::kable(dner_pubmed_doid[pmid %in% base::sample(unique(dner_pubmed$pmid), 10)], caption="Disease mentions by paper (Random sample of studies)")
+```
+
+## PubMed references from ChEMBL activities.
+
+> `ACTIVITY_ID` &rarr;(ChEMBL)&rarr; `DOCUMENT_CHEMBL_ID`  
+> `DOCUMENT_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `PUBMED_ID`  
+
+```{r message=FALSE}
+docs <- read_delim("data/aact_drugs_chembl_document.tsv", "\t", col_types = cols(.default = col_character(), year = col_integer()))
+sprintf("DOCUMENT_CHEMBL_IDs:: %d ; PMIDs: %d", uniqueN(docs$document_chembl_id), uniqueN(docs$pubmed_id))
 ```
 
 # Enumerate ___study-drug-disease-target___ links.
@@ -430,7 +478,7 @@ build a table of all associated combinations, then aggregate by study (`NCT_ID`)
 For DOIDs with multiple terms, keep only most common term for simplicity.
 
 ```{r}
-sddt_links <- copy(dner)
+sddt_links <- copy(dner_aact)
 sddt_links[, `:=`(disease_term = sub(";.*$", "", disease_terms), disease_terms = NULL, N_mentions = NULL)]
 #sddt_links <- sddt_links[, .(N_disease_mentions = paste0(N_mentions, collapse="; "), disease_terms=paste0(disease_term, collapse="; "), doids = paste0(doid, collapse="; ")), by=c("nct_id")]
 sprintf("study-disease links: %d", nrow(sddt_links))
@@ -507,7 +555,7 @@ sprintf("studies: %d ; drugs: %d ; diseases: %d ; targets: %d",
 uniqueN(sddt_links$nct_id), uniqueN(sddt_links$CID), uniqueN(sddt_links$doid),
 uniqueN(sddt_links$uniprot))
 sddt_links <- merge(sddt_links, tgt[, .(uniprot, gene_symbol = tcrdGeneSymbol, idgTDL)], by="uniprot")
-#write_delim(sddt_links, "data/sddt_links.tsv", "\t")
+write_delim(sddt_links, "data/sddt_links.tsv", "\t")
 knitr::kable(unique(sddt_links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
 ```
 
@@ -515,27 +563,7 @@ Sample Tdark for interesting-ness.
 ```{r}
 sddt_links_sample <- sddt_links[idgTDL=="Tdark", .(nct_id, drug_name, CID, disease_term, doid, gene_symbol, uniprot, idgTDL)]
 sddt_links_sample <- sddt_links_sample[sample(1:nrow(sddt_links_sample), 25)]
-knitr::kable(sddt_links_sample, caption=sprintf("Sample of
-study-drug-disease-target links (N_total = %d)", nrow(sddt_links)))
-```
-
-## PubMed references from AACT studies.
-
-```{r message=FALSE}
-aact_refs <- read_delim("data/aact_study_refs.tsv", "\t", col_types = cols(.default = col_character()))
-sprintf("Study references: %d ; PMIDs: %d ; studies: %d",
-	nrow(aact_refs), uniqueN(aact_refs$pmid), uniqueN(aact_refs$nct_id))
-```
-
-## PubMed references from ChEMBL activities.
-
-> `ACTIVITY_ID` &rarr;(ChEMBL)&rarr; `DOCUMENT_CHEMBL_ID`  
-> `DOCUMENT_CHEMBL_ID` &rarr;(ChEMBL)&rarr; `PUBMED_ID`  
-
-```{r message=FALSE}
-docs <- read_delim("data/aact_drugs_chembl_document.tsv", "\t", col_types = cols(.default = col_character(), year = col_integer()))
-sprintf("DOCUMENT_CHEMBL_IDs:: %d ; PMIDs: %d",
-	uniqueN(docs$document_chembl_id), uniqueN(docs$pubmed_id))
+knitr::kable(sddt_links_sample, caption=sprintf("Sample of study-drug-disease-target links (N_total = %d)", nrow(sddt_links)))
 ```
 
 # Aggregating, scoring and ranking ___disease, target___ associations.
@@ -547,8 +575,10 @@ Evidence variables:
 * nStudyPhase : Study count weighted by phase of study (completed better).
 * nPub : Study publications.
 * nPubTypes : Study publications (results better).
-* nDiseaseMention : Disease mention count for disease-target association.
-* nDrugMention : Drug mention count for disease-target association.
+* nDiseaseMention_aact : Disease mention count (in AACT) for disease-target association.
+* nDiseaseMention_pubmed : Disease mention count (in papers) for disease-target association.
+* nDrugMention_aact : Drug mention count (in AACT) for disease-target association.
+* nDrugMention_pubmed : Drug mention count (in papers) for disease-target association.
 * nDrug : Drug count for disease-target association.
 * nAssay : Assay count for drug-target association.
 * nAssayPchembl : Assay count for drug-target association, weighted by pChembl.

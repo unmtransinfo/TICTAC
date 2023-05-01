@@ -70,15 +70,16 @@ See top level script `Go_tictac_Workflow.sh`.
 1. Data:
   1. `Go_aact_GetData.sh` - Fetch data from AACT db.
   1. `Go_jensenlab_GetData.sh` - Fetch dictionary data from JensenLab.
-  1. `Go_pubmed_GetData.sh` - Fetch TCRD PubMed IDs and corresponding records from PubMed API.
+  1. `Go_pubmed-aact_GetData.sh` - Fetch referenced records from PubMed API.
 1. Cross-references:
   1. `Go_pubchem_GetXrefs.sh` - PubChem IDs via APIs.
   1. `Go_chembl_GetXrefs.sh` - ChEMBL IDs via APIs.
-1. LeadMine:
+1. LeadMine (chemical NER):
   1. `Go_aact_NER_leadmine_chem.sh` - LeadMine NER, CT descriptions.
-  1. `Go_pubmed_NER_leadmine_chem.sh` - LeadMine NER, referenced PMIDs.
-1. Tagger:
+  1. `Go_pubmed-aact_NER_leadmine_chem.sh` - LeadMine NER, referenced PubMed abstracts.
+1. Tagger (disease NER):
   1. `Go_aact_NER_tagger_disease.sh` - Tagger NER, CT descriptions.
+  1. `Go_pubmed-aact_NER_tagger_disease.sh` - Tagger NER, referenced PubMed abstracts.
 1. Results, analysis:
   1. `tictac.Rmd` - Results described and analyzed.
 
@@ -89,7 +90,7 @@ See top level script `Go_tictac_Workflow.sh`.
 * **interventions** include drug names which can be recognized and mapped to standard IDs, a task for which NextMove LeadMine is particularly suited.
 * LeadMine chemical NER also resolves entities to structures via SMILES, enabling downstream cheminformatics such as aggregation by chemical substructure and similarity.
 
-### NextMove
+### NextMove Leadmine
 
 Running NextMove Leadmine NER via `nextmove-tools`.
 
@@ -114,4 +115,31 @@ LeadMine_Utils: NextMove LeadMine chemical entity recognition
  -textcol <TEXTCOL>                  # of text/document input column
  -unquote                            unquote quoted column
  -v,--verbose                        Verbose.
+```
+
+### JensenLab Tagger
+
+```
+$ tagcorpus
+Usage: tagcorpus [OPTIONS]
+Required Arguments
+	--types=filename
+	--entities=filename
+	--names=filename
+Optional Arguments
+	--documents=filename	Read input from file instead of from STDIN
+	--groups=filename
+	--type-pairs=filename	Types of pairs that are allowed
+	--stopwords=filename
+	--local-stopwords=filename
+	--autodetect Turn autodetect on
+	--tokenize-characters Turn single-character tokenization on
+	--document-weight=1.00
+	--paragraph-weight=2.00
+	--sentence-weight=0.20
+	--normalization-factor=0.60
+	--threads=1
+	--out-matches=filename
+	--out-pairs=filename
+	--out-segments=filename
 ```
