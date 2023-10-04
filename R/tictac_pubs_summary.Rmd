@@ -1,0 +1,64 @@
+---
+title: "TICTAC publications summary"
+output:
+  html_document:
+    number_sections: no
+    toc: no
+  pdf_document:
+    toc: no
+  always_allow_html: true
+editor_options:
+  chunk_output_type: console
+---
+
+# TICTAC publications summary
+
+Analysis and summary of publications referenced by the TICTAC workflow.
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE)
+base::date()
+```
+
+```{r setup, echo=FALSE, message=FALSE}
+library(readr)
+library(data.table)
+library(plotly, quietly=T)
+```
+
+## Read files of (1) AACT study references, and (2) referenced PubMed records
+
+```{r}
+aact_study_refs <- read_delim("data/aact_study_refs.tsv", delim="\t", trim_ws=T)
+setDT(aact_study_refs)
+aact_study_refs_pubmed_records <- read_delim("data/aact_study_refs_pubmed-records.tsv", delim="\t", trim_ws=T)
+setDT(aact_study_refs_pubmed_records)
+sprintf("AACT studies: %d; publications: %d", aact_study_refs[, uniqueN(nct_id)], aact_study_refs[, uniqueN(pmid)])
+sprintf("AACT publications found in PubMed: %d", aact_study_refs_pubmed_records[, uniqueN(pmid)])
+```
+
+## Publication types
+
+```{r}
+knitr::kable(aact_study_refs[, .N, by=reference_type], caption="Publication type")
+```
+
+## Publication years
+
+
+```{r}
+ref_counts <- aact_study_refs_pubmed_records[, .N, by = year]
+plot_ly(type = "scatter", mode="line+markers", y = ref_counts[, N], x = ref_counts[, year]) %>%
+  layout(title = paste0("TICTAC: AACT PubMed references by year"))
+  ```
+  
+## Read file of PubMed records referenced by ChEMBL drugs.
+
+The ChEMBL drugs are molecules identified by NER from the study.
+
+```{r}
+aact_drugs_chembl_document_pubmed_records <- read_delim("data/aact_drugs_chembl_document_pubmed-records.tsv", delim="\t", trim_ws=T)
+setDT(aact_drugs_chembl_document_pubmed_records)
+sprintf("ChEMBL publications: %d", aact_drugs_chembl_document_pubmed_records[, uniqueN(pmid)])
+```
+
