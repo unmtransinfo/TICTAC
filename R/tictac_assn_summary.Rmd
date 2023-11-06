@@ -29,7 +29,7 @@ library(plotly, quietly=T)
 ## Read input association file
 
 ```{r}
-gene_disease_assn <- read_csv("data/tictac_gene_disease_association2.csv")
+gene_disease_assn <- read_csv("data/tictac_genes_disease_associations.csv")
 setDT(gene_disease_assn)
 sprintf("Unique DOIDs: %d; GSYMBs: %d; assns: %d", gene_disease_assn[, uniqueN(doid)], gene_disease_assn[, uniqueN(gene_symbol)], gene_disease_assn[, uniqueN(`disease-target`)])
 ```
@@ -78,7 +78,7 @@ sprintf("Associations with max score (%.1f): %d", gene_disease_assn[, max(mean_r
 ## Sample of top ranked associations
 
 ```{r}
-assn_top <- gene_disease_assn[mean_rank_score == max(mean_rank_score)]
+assn_top <- gene_disease_assn[mean_rank_score >= .99*(max(mean_rank_score))]
 knitr::kable(assn_top[sample(1:nrow(assn_top), 20), .(doid, disease_name, gene_symbol, tcrdTargetName, nStudy, nPub, publication_type, unique_drugs_count, mean_rank_score)])
 ```
 
@@ -86,7 +86,7 @@ knitr::kable(assn_top[sample(1:nrow(assn_top), 20), .(doid, disease_name, gene_s
 
 ```{r}
 assn_top <- gene_disease_assn[!is.na(publication_type)]
-assn_top <- assn_top[mean_rank_score == max(mean_rank_score)]
+assn_top <- gene_disease_assn[mean_rank_score >= .99*(max(mean_rank_score))]
 sprintf("Associations (with publication_type) with max score (%.1f): %d", assn_top[, max(mean_rank_score)], assn_top[mean_rank_score == max(mean_rank_score), .N])
-knitr::kable(assn_top[sample(1:nrow(assn_top), 20), .(doid, disease_name, gene_symbol, tcrdTargetName, nStudy, nPub, publication_type, unique_drugs_count, mean_rank_score)])
+knitr::kable(assn_top[sample(1:nrow(assn_top), 20), .(doid, disease_name, gene_symbol, tcrdTargetName, nStudy, nPub, publication_type, unique_drugs_count, mean_rank_score)][order(-mean_rank_score, -nStudy, -nPub)])
 ```
