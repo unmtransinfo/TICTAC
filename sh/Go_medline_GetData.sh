@@ -13,7 +13,7 @@ python3 -m BioClients.medline.genetics.Client list_conditions \
 ###
 # Extract IDs (names with hyphens instead of spaces, etc.)
 cat $DATADIR/medline_genetics_conditions.tsv \
-	|sed '1d' |awk -F '\t' '{print $2}' |sed '/^.*\///' \
+	|sed '1d' |awk -F '\t' '{print $2}' |sed 's/^.*\///' \
 	>$DATADIR/medline_genetics_conditions.id
 ###
 # All associations for all conditions.
