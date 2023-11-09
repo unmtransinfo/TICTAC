@@ -1,0 +1,1274 @@
+id	name	ICD-10-CM	MeSH	OMIM	SNOMED CT	GTR
+10q26-deletion-syndrome	10q26 deletion syndrome		D002872	609625	718687003,16129004	C2674937
+15q11-q13-duplication-syndrome	15q11-q13 duplication syndrome		D025063	608636	723332005	C2675336
+15q133-microdeletion	15q13.3 microdeletion		D025063	612001	699254009	C2677613
+15q24-microdeletion	15q24 microdeletion		D025063	613406	699308002	C4310804
+16p112-deletion-syndrome	16p11.2 deletion syndrome		D025063	611913	699307007	C3150154
+16p112-duplication	16p11.2 duplication		D025063	614671	88326002	C3553407
+16p122-microdeletion	16p12.2 microdeletion		D025063	136570		C3149276
+17-alpha-hydroxylase-17-20-lyase-deficiency	17 alpha-hydroxylase/17,20-lyase deficiency		D000312	202110	124220008	C0268285
+17-beta-hydroxysteroid-dehydrogenase-3-deficiency	17-beta hydroxysteroid dehydrogenase 3 deficiency		D058490	264300	50658006	
+17q12-deletion-syndrome	17q12 deletion syndrome		D002872,D007674,D003920,D001523	614527	733519008	C3281138
+17q12-duplication	17q12 duplication		D012640,D002658,D058674,D008607	614526		C3281137
+19p1313-deletion-syndrome	19p13.13 deletion syndrome		D025063	613638		C3150894
+1p36-deletion-syndrome	1p36 deletion syndrome		D025063	607872	699306003	C1842870
+1q211-microdeletion	1q21.1 microdeletion		D025063	612474	699305004	C2675897
+1q211-microduplication	1q21.1 microduplication		D025063	612475	79649006	C2675891
+21-hydroxylase-deficiency	21-hydroxylase deficiency	E25.0	D000312	201910	237753002,71578002,717261006,124221007,840509001,52604008	C1859995,C2936858
+22q112-deletion-syndrome	22q11.2 deletion syndrome	D82.1,Q93.81	D004062	145420,192430,188400	77128003,449818005,83092002	CN032444,C0220704,C0012236
+22q112-duplication	22q11.2 duplication		D025063	608363	699311001	C2675369
+22q133-deletion-syndrome	22q13.3 deletion syndrome		D025063	606232	699310000	C1853490
+2-hydroxyglutaric-aciduria	2-hydroxyglutaric aciduria		D020739	236792,613657,615182,600721	698870008,237960000,237961001	C3152055,C1855995,C2746066,C3150909
+2q37-deletion-syndrome	2q37 deletion syndrome		D025063	600430	702357000	C2931817
+3-beta-hydroxysteroid-dehydrogenase-deficiency	3-beta-hydroxysteroid dehydrogenase deficiency	E25.0	D000312	201810	124136000,54470008	C0342471
+3-hydroxy-3-methylglutaryl-coa-lyase-deficiency	3-hydroxy-3-methylglutaryl-CoA lyase deficiency		D000592	246450	124611007,410059004	C0268601
+3-hydroxyacyl-coa-dehydrogenase-deficiency	3-hydroxyacyl-CoA dehydrogenase deficiency		D008052	231530	124122005	C1291230
+3mc-syndrome	3MC syndrome		D019465	257920,265050,248340	720756005	C0796279,C0796059,C0796032
+3-methylcrotonyl-coa-carboxylase-deficiency	3-methylcrotonyl-CoA carboxylase deficiency		D008661	210200,210210	13144005	C1859499,C0268600
+3-methylglutaconyl-coa-hydratase-deficiency	3-methylglutaconyl-CoA hydratase deficiency	E71.111	D000592	250950	237951008	C0342727
+3-m-syndrome	3-M syndrome		D004392	614205,612921,273750	702342007	C1848862
+3p-deletion-syndrome	3p deletion syndrome		D002872	613792	449819002	C0795806
+3q29-microdeletion-syndrome	3q29 microdeletion syndrome		D008607,D002872	609425	716456000	C2674949
+3q29-microduplication-syndrome	3q29 microduplication syndrome		D058674,D008607	611936	717973004	C2749873
+46xx-testicular-difference-of-sex-development	46,XX testicular difference of sex development		D058531	400045	74398009	C2936419
+47xyy-syndrome	47,XYY syndrome	Q98.5	D014997		50749006	C3266843
+48xxxy-syndrome	48,XXXY syndrome	Q98.1	D007713		78317008,275263003	
+48xxyy-syndrome	48,XXYY syndrome		D007713		403760006	C0036868
+49xxxxy-syndrome	49,XXXXY syndrome	Q98.1	D007713		38847009,275264009	
+5-alpha-reductase-deficiency	5-alpha reductase deficiency		D058490	264600	57514000,738771004	C0268297
+5q313-microdeletion-syndrome	5q31.3 microdeletion syndrome		D065886			C4015357
+5q-minus-syndrome	5q minus syndrome	D46.C	D009190	153550	277597005	C0740302
+6q24-related-transient-neonatal-diabetes-mellitus	6q24-related transient neonatal diabetes mellitus		D003920	601410	609579009	C1832386
+7q1123-duplication-syndrome	7q11.23 duplication syndrome		D058674	609757	726707004	C1857844
+8p11-myeloproliferative-syndrome	8p11 myeloproliferative syndrome		D009196	613523	450942006	C3150773
+9q223-microdeletion	9q22.3 microdeletion		D025063	109400	711489004	C0004779,C3711390
+aarskog-scott-syndrome	Aarskog-Scott syndrome		D040181	305400	14921002	C0175701
+abetalipoproteinemia	Abetalipoproteinemia	E78.6	D000012	200100	190787008	C0000744
+acad9-deficiency	ACAD9 deficiency		D028361	611126	725046003	C4747517
+acatalasemia	Acatalasemia	E80.3	D020642	614097	267454002	C0268419
+aceruloplasminemia	Aceruloplasminemia		D019189	604290	124224004	C0878682
+achondrogenesis	Achondrogenesis	Q77.0	D010009	200600,200610,600972	2391001,254061001,14870002	C0265273,C0220685,C0265274
+achondroplasia	Achondroplasia	Q77.4	D000130	100800	86268005	C0001080
+achromatopsia	Achromatopsia	H53.51	D003117	610024,613093,262300,613856,216900	56852002	C2751309,C0152200,C1841721,C1857618,C1849792,C3552227
+acrocallosal-syndrome	Acrocallosal syndrome		D055673	200990	715951007	C0796147
+acromicric-dysplasia	Acromicric dysplasia		D010009	102370	254090007	C0265287
+actin-accumulation-myopathy	Actin-accumulation myopathy		D017696	161800	702349003	C3711389
+action-myoclonus-renal-failure-syndrome	Action myoclonus–renal failure syndrome		D020191	254900		C0751779
+activated-pi3k-delta-syndrome	Activated PI3K-delta syndrome		D007153	615513,616005	711480000	C4014934,C3714976
+acute-necrotizing-encephalopathy-type-1	Acute necrotizing encephalopathy type 1	G04.31	D001930	608033	111897007	
+acute-promyelocytic-leukemia	Acute promyelocytic leukemia	C92.42,C92.41,C92.4,C92.40	D015473	612376	28950004,110004001	C0023487
+adams-oliver-syndrome	Adams-Oliver syndrome		D004476	615297,616589,614219,616028,614814,100300	34748004	C3553748,C0265268,C3280182,C4551482,C4014970,C4225271,C3809092
+adcy5-related-dyskinesia	ADCY5-related dyskinesia		D020820	606703	9748009	C5551343
+adenine-phosphoribosyltransferase-deficiency	Adenine phosphoribosyltransferase deficiency		D011686	614723	124274002,238010006,65791008,238009001	C0268120
+adenosine-deaminase-2-deficiency	Adenosine deaminase 2 deficiency	M30.0	D056647	182410,615688	155441006	C3887654,C0282492
+adenosine-deaminase-deficiency	Adenosine deaminase deficiency	D81.3	D016511	102700	44940001	C1863236
+adenosine-monophosphate-deaminase-deficiency	Adenosine monophosphate deaminase deficiency	E79.2	D011686	615511	124525004,9105005	C3714933
+adenylosuccinate-lyase-deficiency	Adenylosuccinate lyase deficiency		D011686	103050	15285008	C0268126
+adermatoglyphia	Adermatoglyphia		D003878	136000,129200	83145004	
+adnp-syndrome	ADNP syndrome		D065886	615873		C4014538
+adult-onset-leukoencephalopathy-with-axonal-spheroids-and-pigmented-glia	Adult-onset leukoencephalopathy with axonal spheroids and pigmented glia		D056784	221820	702427005	C3711381
+adult-polyglucosan-body-disease	Adult polyglucosan body disease		D006008,D002493	263570	721099001	C1849722
+african-iron-overload	African iron overload		D012806	601195	66576001	
+age-related-hearing-loss	Age-related hearing loss	H91.1,H91.10,H91.11,H91.12,H91.13	D011304	612448,612976	49526009	
+age-related-macular-degeneration	Age-related macular degeneration	H35.31,H35.30,H35.32	D008268	610698,615439,613761,613757,611488,611378,613778,608895,615591,603075,611953,613784,615489,610149,153800	267718000	C1857813,C1969651,C3495438,C2677774,C3151060,C3151079,C3151070,C3809523,C3809653,C3151063,C0242383,C3810042,C1969108,C1864205,C1853147
+aicardi-goutieres-syndrome	Aicardi-Goutières syndrome		D020279	615846,615010,610333,225750,612952,610181,610329	230312006	C1835916,C3489724,C3888244,C0393591,C2749659,C0796126,C3539013,C1835912
+alagille-syndrome	Alagille syndrome		D016738	610205,118450	31742004	C1857761,C1956125
+alcohol-use-disorder	Alcohol use disorder	F10.23,F10.21,F10.2,F10.26,F10.288,F10.259,F10.280,F10.25,F10.251,F10.232,F10.230,F10.250,F10.220,F10.282,F10.22,F10.239,F10.229,F10.94,F10.20,F10.281,F10.27,F10.221,F10.28,F10.24,F10.29,F10.231	D000437	103780	7200002	C0001973
+aldosterone-producing-adenoma	Aldosterone-producing adenoma		D000236			C1706762
+alexander-disease	Alexander disease		D038261	203450	81854007	C0270726
+alg12-congenital-disorder-of-glycosylation	ALG12-congenital disorder of glycosylation		D018981	607143	711155008	C2931001
+alg1-congenital-disorder-of-glycosylation	ALG1-congenital disorder of glycosylation		D018981	608540	720941007	C2931005
+alg6-congenital-disorder-of-glycosylation	ALG6-congenital disorder of glycosylation		D018981	603147	709412006	C2930997
+alkaptonuria	Alkaptonuria	E70.29	D000474	203500	360381004	C0002066
+allan-herndon-dudley-syndrome	Allan-Herndon-Dudley syndrome		D009123,D038901	300523	702327009	C0795889
+alopecia-areata	Alopecia areata	L63.8,L63.9,L63.1,L63.2,L63.0	D000506	104000,610753	68225006,19754005	C0263505
+alpers-huttenlocher-syndrome	Alpers-Huttenlocher syndrome	G31.81	D002549	203700	20415001	C0205710
+alpha-1-antitrypsin-deficiency	Alpha-1 antitrypsin deficiency	E88.01	D019896	613490	30188007	C0221757
+alpha-mannosidosis	Alpha-mannosidosis		D008363	248500	124466001	C0024748
+alpha-methylacyl-coa-racemase-deficiency	Alpha-methylacyl-CoA racemase deficiency		D018901	614307	700463002	C3280428
+alpha-thalassemia	Alpha thalassemia	D56.0,D56.3	D017085	141800,141850,604131	68913001	C0002312
+alpha-thalassemia-x-linked-intellectual-disability-syndrome	Alpha thalassemia X-linked intellectual disability syndrome	D56.0	D038901	301040	715342005	C1845055
+alport-syndrome	Alport syndrome	Q87.81	D009394	203780,301050,104200	717768004,717767009,717766000	C4746986,C4746547,C1567741,C4746745
+alstrom-syndrome	Alström syndrome		D056769	203800	63702009	C0268425
+alternating-hemiplegia-of-childhood	Alternating hemiplegia of childhood		D006429	614820,104290	230466004	C3553788,C3549447
+alveolar-capillary-dysplasia-with-misalignment-of-pulmonary-veins	Alveolar capillary dysplasia with misalignment of pulmonary veins		D010547	265380	206597007	C0031190
+alzheimers-disease	Alzheimer's disease	G30.1,G30.9,G30.8,G30,G30.0	D000544	606889,104310,104300,607822	65096006,416780008,416975007,10532003,26929004	C1863051,C1847200,C0002395,C1843013
+amelogenesis-imperfecta	Amelogenesis imperfecta		D000567	612529,104500,130900,301200,204650	78494001,234961008	C1845053,C0399376,C2673923,C0399368
+aminoacylase-1-deficiency	Aminoacylase 1 deficiency		D008661	609924	709282004	C1835922
+amish-lethal-microcephaly	Amish lethal microcephaly		D008831	607196	702437000	C1846648
+amyotrophic-lateral-sclerosis	Amyotrophic lateral sclerosis	G12.21	D000690	606640,612069,614373,105400,105500,205100,600795,608627,613435,615911,602433,612577,616437,602099,608031,615515,613954,616439,616208,615426,614808,611895,300857,608030,105550	86044005,230258005	C0002736
+anauxetic-dysplasia	Anauxetic dysplasia		D004392	607095,617396		
+andermann-syndrome	Andermann syndrome		D015417,D006211	218000	702439002	C0795950
+andersen-tawil-syndrome	Andersen-Tawil syndrome		D050030	170390	422348008	C1563715
+androgenetic-alopecia	Androgenetic alopecia	L64,L64.9,L64.8	D000505	109200,612421,300710	201144006,87872006,1108009	
+androgen-insensitivity-syndrome	Androgen insensitivity syndrome	E34.5,E34.50,E34.52,E34.51	D013734	300068	12313004,52832001,58672003	C0268301,C0039585
+anencephaly	Anencephaly	Q00.0	D000757	601634,182940,206500	85641006,277922001,89369001	C0027794,C0002902,C1866558
+angelman-syndrome	Angelman syndrome		D017204	105830	76880004	C0162635
+anhidrotic-ectodermal-dysplasia-with-immune-deficiency	Anhidrotic ectodermal dysplasia with immune deficiency	Q82.4	D053358	300291	703525006	C1846006
+aniridia	Aniridia	Q13.1	D015783	106210	15987031000119108,15986991000119108,69278003,253231007,15986951000119103,253232000	C0003076,C0344542
+ankyloblepharon-ectodermal-defects-cleft-lip-palate-syndrome	Ankyloblepharon-ectodermal defects-cleft lip/palate syndrome		D004476	129400,106260	55821006	C0406709,C1785148
+ankylosing-spondylitis	Ankylosing spondylitis	M45,M45.6,M45.9,M45.2,M45.7,M45.5,M45.1,M45.3,M45.4,M45.8,M08.1,M45.0	D013167	613238,183840,106300	9631008,838436001	C1862852
+ankyrin-b-syndrome	Ankyrin-B syndrome		D001145	600919		C1970119
+anonychia-congenita	Anonychia congenita	Q84.3	D009264	206800	23610003	C0265998
+apert-syndrome	Apert syndrome		D000168	101200	205258009	C0001193
+arginase-deficiency	Arginase deficiency	E72.21	D020162	207800	23501004	C0268548
+arginineglycine-amidinotransferase-deficiency	Arginine:glycine amidinotransferase deficiency		D020739	612718	702440000	C2675179
+argininosuccinic-aciduria	Argininosuccinic aciduria	E72.22	D056807	207900	41013004	C0268547
+aromatase-deficiency	Aromatase deficiency		D017588	613546	427627006,425708006	C1960539
+aromatase-excess-syndrome	Aromatase excess syndrome		D012734	139300	709075008	C1970109
+aromatic-l-amino-acid-decarboxylase-deficiency	Aromatic l-amino acid decarboxylase deficiency		D000592	608643	124600004	C1291564
+arrhythmogenic-right-ventricular-cardiomyopathy	Arrhythmogenic right ventricular cardiomyopathy		D019571	107970,602087,604772,610476,610193,615616,609040,604400,602086,611528,607450,604401	253528005,281170005	C1832931,C1969081,C1858378,C1864850,C1865882,C3810138,C1865881,CN128708,C1836906,C1836704,C1857777,C1858379,C1862511,C0349788,C1843896
+arterial-tortuosity-syndrome	Arterial tortuosity syndrome	Q87.82	D054079	208050	458432002	C1859726
+arts-syndrome	Arts syndrome		D009422	301835	702441001	C0796028
+asparagine-synthetase-deficiency	Asparagine synthetase deficiency		D000592	615574		C3809971
+aspartylglucosaminuria	Aspartylglucosaminuria	E77.1	D054880	208400	54954004	C0268225
+asphyxiating-thoracic-dystrophy	Asphyxiating thoracic dystrophy	Q77.2	D010009	613819,263520,611263,208500,613091,615503,614091,615633,266920,615630,614376	75049004	C1970005,C4551856,C0265275,C3280598,C3151185
+ataxia-neuropathy-spectrum	Ataxia neuropathy spectrum		D028361	607459	193165008	C1843851
+ataxia-pancytopenia-syndrome	Ataxia-pancytopenia syndrome		D010198,D001259	252270,159550		C1327919
+ataxia-telangiectasia	Ataxia-telangiectasia		D001260	208900	68504005	C0004135
+ataxia-with-oculomotor-apraxia	Ataxia with oculomotor apraxia		D002524	208920,606002,615217,616267	725408001,715366004	C1853761,C3554690,C4225397,C1859598
+ataxia-with-vitamin-e-deficiency	Ataxia with vitamin E deficiency		D014811	277460	702442008	C1848533
+atelosteogenesis-type-1	Atelosteogenesis type 1		D010009	108720	725141006	C0265283
+atelosteogenesis-type-2	Atelosteogenesis type 2		D010009	256050	254055004	C1850554
+atelosteogenesis-type-3	Atelosteogenesis type 3		D010009	108721	725142004	C3668942
+atopic-dermatitis	Atopic dermatitis	L20.89,L20.83,L20.9,L20.82,L20.84	D003876	617638,603165,605803	24079001,402194008,402189008	C1853965
+atypical-hemolytic-uremic-syndrome	Atypical hemolytic-uremic syndrome	D59.3	D006463	612922,612925,235400,612926,612923,612924	373422007	C2931788,C2752038,C2749604,C2752040,C2752037,C2752039,C2752036
+au-kline-syndrome	Au-Kline syndrome		D002658,D008607	616580		C4225274
+auriculo-condylar-syndrome	Auriculo-condylar syndrome		D004427	602483,614669	702443003	C3553404,C4551996
+autism-spectrum-disorder	Autism spectrum disorder	F84.0	D000067877	209850	408856003	C1510586
+autoimmune-addison-disease	Autoimmune Addison disease	E27.2,E27.1	D000224		363732003	
+autoimmune-lymphoproliferative-syndrome	Autoimmune lymphoproliferative syndrome	D89.82	D056735	601859	702444009	C1328840
+autoimmune-polyendocrinopathy-candidiasis-ectodermal-dystrophy	Autoimmune polyendocrinopathy-candidiasis-ectodermal dystrophy	E31.0	D016884	240300	11244009	C2749602,C0085859
+autosomal-dominant-cerebellar-ataxia-deafness-and-narcolepsy	Autosomal dominant cerebellar ataxia, deafness, and narcolepsy		D002524	604121	722293005	C3807295
+autosomal-dominant-congenital-stationary-night-blindness	Autosomal dominant congenital stationary night blindness	H53.63	D009755	163500,610444,610445	232061009	C0339535
+autosomal-dominant-hyper-ige-syndrome	Autosomal dominant hyper-IgE syndrome	D82.4	D007589	147060	50926003	C4721531
+autosomal-dominant-hypocalcemia	Autosomal dominant hypocalcemia		D006996	601198,615361	711152006	C4048195
+autosomal-dominant-leukodystrophy-with-autonomic-disease	Autosomal dominant leukodystrophy with autonomic disease		D020279	169500	448054001	C1868512
+autosomal-dominant-nocturnal-frontal-lobe-epilepsy	Autosomal dominant nocturnal frontal lobe epilepsy		D017034	610353,600513,605375,603204	698021005,230445007	C1838049,C1864125,C1854335,C1835905
+autosomal-dominant-optic-atrophy-and-cataract	Autosomal dominant optic atrophy and cataract	H47.22	D015418	165300	719517009	C1833809
+autosomal-dominant-partial-epilepsy-with-auditory-features	Autosomal dominant partial epilepsy with auditory features		D004828	600512	72103000	C4551957
+autosomal-dominant-vitreoretinochoroidopathy	Autosomal dominant vitreoretinochoroidopathy		D058499,D015785	193220	711162004	C3888099
+autosomal-recessive-axonal-neuropathy-with-neuromyotonia	Autosomal recessive axonal neuropathy with neuromyotonia		D010523	137200	711406009	C5700127
+autosomal-recessive-cerebellar-ataxia-type-1	Autosomal recessive cerebellar ataxia type 1		D002524	610743	230233000	C1853116
+autosomal-recessive-congenital-methemoglobinemia	Autosomal recessive congenital methemoglobinemia	D74.0	D008708	250800	234395000	C2749559,C2749560
+autosomal-recessive-congenital-stationary-night-blindness	Autosomal recessive congenital stationary night blindness	H53.63	D009755	613216,613830,615058,257270,614565,610427	232061009	C3281215,C1850362,C2750747,C3151193,C4041558,C3554399
+autosomal-recessive-hypotrichosis	Autosomal recessive hypotrichosis		D007039	278150,604379,607903	723362004,56558005	C1848435,C1842839,C1836672
+autosomal-recessive-primary-microcephaly	Autosomal recessive primary microcephaly	Q02	D008831	608393,251200,608716,604317,604321,604804,612703	715981004	C1858516,C1837501,C2675187,C1842109,C1858108,C1858535,C1855081
+autosomal-recessive-spastic-ataxia-of-charlevoix-saguenay	Autosomal recessive spastic ataxia of Charlevoix-Saguenay		D001259	270550	702445005	C1849140
+axenfeld-rieger-syndrome	Axenfeld-Rieger syndrome	Q13.81	D005124	602482,180500,601499	417604002,204152008	C3714873,C2678503,C0265341,C1832229
+baller-gerold-syndrome	Baller-Gerold syndrome		D019465	218600	77608001	C0265308
+bannayan-riley-ruvalcaba-syndrome	Bannayan-Riley-Ruvalcaba syndrome	E71.440	D006223	158350	234138005,3073006	C0265326
+bap1-tumor-predisposition-syndrome	BAP1 tumor predisposition syndrome		D009386	614327		C3280492
+baraitser-winter-syndrome	Baraitser-Winter syndrome		D054221	614583,243310	702410002	C3281235,C1855722
+bardet-biedl-syndrome	Bardet-Biedl syndrome		D020788	209900	232059000,5619004	C0752166
+bare-lymphocyte-syndrome-type-i	Bare lymphocyte syndrome type I	D81.6	D007153	604571	725136003	C1858266
+bare-lymphocyte-syndrome-type-ii	Bare lymphocyte syndrome type II	D81.7	D007153	209920	71904008	C1859534,C1859536
+barth-syndrome	Barth syndrome	E78.71	D056889	302060	297231002	C0574083
+bart-pumphrey-syndrome	Bart-Pumphrey syndrome		D007645	149200	1271009	C0266004
+bartter-syndrome	Bartter syndrome	E26.81	D001477	602522,607364,601678,241200,613090	69194003,707742001	C0004775,CN239220,C1865270,C1846343,C4310805
+beare-stevenson-cutis-gyrata-syndrome	Beare-Stevenson cutis gyrata syndrome		D012873,D003398	123790	703528008	C1852406
+beckwith-wiedemann-syndrome	Beckwith-Wiedemann syndrome		D001506	130650	81780002	C0004903
+behcet-disease	Behçet disease	M35.2	D001528	109650	310701003	C0004943
+benign-essential-blepharospasm	Benign essential blepharospasm	G24.5	D001764	606798	59026006	
+benign-familial-neonatal-seizures	Benign familial neonatal seizures		D020936	121200,121201	230410004	C3149074,C1852581
+benign-recurrent-intrahepatic-cholestasis	Benign recurrent intrahepatic cholestasis		D002780	243300,605479	31155007,838305005	C2608083
+bernard-soulier-syndrome	Bernard-Soulier syndrome		D001606	231200,153670	54569005	C0005129
+beta-ketothiolase-deficiency	Beta-ketothiolase deficiency		D018901	203750	124258007,124265004,237953006	C1536500
+beta-mannosidosis	Beta-mannosidosis		D044905	248510	238047006	C4048196
+beta-propeller-protein-associated-neurodegeneration	Beta-propeller protein-associated neurodegeneration		D020271	300894	732959007	C3550973
+beta-thalassemia	Beta thalassemia	D56.1	D017086	613985,603902	39586009,15326009,65959000,47084006,79592006,61395005,86715000,27080008,26682008,111572002,716682000,191189009,5967006	C0005283,C1858990
+beta-ureidopropionase-deficiency	Beta-ureidopropionase deficiency		D011686	613161	124511000	C1291512
+bietti-crystalline-dystrophy	Bietti crystalline dystrophy		D012162	210370	312927001	C1859486
+biotinidase-deficiency	Biotinidase deficiency	D81.810	D028921	253260	8808004	C0220754
+biotin-thiamine-responsive-basal-ganglia-disease	Biotin-thiamine-responsive basal ganglia disease		D001480	607483	703522009	C1843807
+birt-hogg-dube-syndrome	Birt-Hogg-Dubé syndrome		D058249	135150	110985001	C0346010
+bjornstad-syndrome	Björnstad syndrome		D028361	262000	67817003	C0266006
+bladder-cancer	Bladder cancer	C67.1,C67.3,C67.5,C67.6,D09.0,C67.2,C67,C67.7,C67.4,C67.8,C67.9,C67.0	D001749	109800	399326009,255108000,126885006	C0699885
+blau-syndrome	Blau syndrome		D012507	186580	699861000	
+blepharocheilodontic-syndrome	Blepharocheilodontic syndrome		D000015	617681,119580	717911008	C4540127,C4551988
+blepharophimosis-ptosis-and-epicanthus-inversus-syndrome	Blepharophimosis, ptosis, and epicanthus inversus syndrome		D005141	110100	79833006	C0220663
+bloom-syndrome	Bloom syndrome		D001816	210900	4434006	C0005859
+bohring-opitz-syndrome	Bohring-Opitz syndrome		D008607,D003398	605039	720565000	C0796232
+boomerang-dysplasia	Boomerang dysplasia		D010009	112310	254054000	C0432201
+bosma-arhinia-microphthalmia-syndrome	Bosma arhinia microphthalmia syndrome		D000015	603457	720511000	C1863878
+boucher-neuhauser-syndrome	Boucher-Neuhäuser syndrome		D052439	215470	715984007	C1859093
+bowen-conradi-syndrome	Bowen-Conradi syndrome		D000015	211180	711153001	C1859405
+bradyopsia	Bradyopsia		D015785	608415	711163009	C1842073
+brain-lung-thyroid-syndrome	Brain-lung-thyroid syndrome		D003409,D012127,D002819	610978	719098007	C1970269,C0393584
+branchio-oculo-facial-syndrome	Branchio-oculo-facial syndrome		D019465	113620	449821007	C0376524
+branchiootorenal-branchiootic-syndrome	Branchiootorenal/branchiootic syndrome		D019280	113650,608389,610896,120502,602588	290006	C1842124,C1970479,C4551702,C1865143
+breast-cancer	Breast cancer	C50.011,C50.01,C50.512,Z15.01,C50.112,C50.329,C50.021,C50.92,C50.622,D05.10,C50.02,C50.012,C50.919,D05.12,Z80.3,C50.322,C50.321,C50.82,C50.81,C50.91,C50.822,C50.42,C50.621,C50.419,D05.1,C50.41,C50.912,C50.222,C50.619,C50.119,C50.022,D05.00,D05.0,C50.911,C50.52,C50.529,C50.522,C50.51,C50.31,C50.312,C50.229,D05.11,C50.421,C50.812,C50.811,C50.921,C50.32,C50.411,C50.929,C50.829,C50.311,C50.212,C50.221,C50.211,C50.21,C50.611,C50.629,D05.90,C50.111,C50.22,C50.821,C50.519,C50.319,C50.11,D05.9,C50.612,C50.412,C50.922,D05.02,C50.422,D05.91,C50.029,D05.92,C50.521,C50.61,C50.019,C50.62,C50.429,C50.819,C50.511,C50.219,D05.01	D001943	612555,604370,114480	254838004,254837009,865954003,254843006,126926005	C1861906,C0006142,C3469522
+brody-myopathy	Brody myopathy		D009135	601003	703530005	C1832918
+brugada-syndrome	Brugada syndrome		D053840	601144	418818005	C4551804,C1142166
+burn-mckeown-syndrome	Burn-McKeown syndrome		D000015	608572	720640005	C1837822
+buschke-ollendorff-syndrome	Buschke-Ollendorff syndrome		D010023	166700	9147009,60399005	C0265514
+c3-glomerulopathy	C3 glomerulopathy	N06.6,N00.6,N02.6,N05.6,N07.6,N04.6,N01.6,N03.6	D015432	609814,614809	59479006,197599000	C3553720,C4055342,CN120381,C0268743,C0398777
+caffey-disease	Caffey disease		D006958	114000	24752008	C0020497
+campomelic-dysplasia	Campomelic dysplasia		D055036	114290	74928006	C1861922
+camurati-engelmann-disease	Camurati-Engelmann disease	Q78.3	D003966	606631,131300	34643004	C0011989
+canavan-disease	Canavan disease	E75.29	D017825	271900	80544005	C0751663,C4017127,C0206307
+cantu-syndrome	Cantú syndrome		D010009	239850	239087008	C0795905
+capillary-malformation-arteriovenous-malformation-syndrome	Capillary malformation-arteriovenous malformation syndrome		D054079	608354	703533007	C4747394
+cap-myopathy	Cap myopathy		D020914	609285,609284	703532002	
+carbamoyl-phosphate-synthetase-i-deficiency	Carbamoyl phosphate synthetase I deficiency	E72.29	D020165	237300	62522004	C4082171
+carbonic-anhydrase-va-deficiency	Carbonic anhydrase VA deficiency		D022124,D020739	615751		C3810404
+cardiofaciocutaneous-syndrome	Cardiofaciocutaneous syndrome		D006330,D004476	115150	403770008	C1275081
+carney-complex	Carney complex		D056733	160980	733491005	C2607929,C1854540,C0406810
+carnitine-acylcarnitine-translocase-deficiency	Carnitine-acylcarnitine translocase deficiency		D008052	212138	238003000	C0342791
+carnitine-palmitoyltransferase-i-deficiency	Carnitine palmitoyltransferase I deficiency		D008052	255120	238001003	C1829703
+carnitine-palmitoyltransferase-ii-deficiency	Carnitine palmitoyltransferase II deficiency	E71.314	D008052	600649,608836,255110	238002005	C1833511,C0342790,C1833508
+carpal-tunnel-syndrome	Carpal tunnel syndrome	G56.00	D002349	115430,613353	57406009	C0007286
+carpenter-syndrome	Carpenter syndrome		D000168	201000,614976	403767009	C3554247,C1275078
+cartilage-hair-hypoplasia	Cartilage-hair hypoplasia		D004392	250250	7720002	C0220748
+cask-related-intellectual-disability	CASK-related intellectual disability		D008607	300749,300422	703389002	C2677903
+catecholaminergic-polymorphic-ventricular-tachycardia	Catecholaminergic polymorphic ventricular tachycardia	I47.2	D017180	611938,604772	419671004	C2677794,C1631597
+catsper1-related-nonsyndromic-male-infertility	CATSPER1-related nonsyndromic male infertility		D007248	612997	236792002	C2751811
+cav3-related-distal-myopathy	CAV3-related distal myopathy		D049310	614321	711265009	C3280443
+cdkl5-deficiency-disorder	CDKL5 deficiency disorder		D013036	300672	718393002	C4750718
+celiac-disease	Celiac disease	K90.0	D002446	212750	396331005	C0007570
+central-core-disease	Central core disease		D020512	117000	43152001	
+central-precocious-puberty	Central precocious puberty	E30.1	D011629	615346,176400	237816004	C3809199,C3805879
+centronuclear-myopathy	Centronuclear myopathy	G71.2	D020914	614807,255200,615959,160150	716696006,240081004	C0175709,C4014814,C4707232
+cerebral-autosomal-dominant-arteriopathy-with-subcortical-infarcts-and-leukoencephalopathy	Cerebral autosomal dominant arteriopathy with subcortical infarcts and leukoencephalopathy		D046589	125310	390936003	C4551768
+cerebral-autosomal-recessive-arteriopathy-with-subcortical-infarcts-and-leukoencephalopathy	Cerebral autosomal recessive arteriopathy with subcortical infarcts and leukoencephalopathy		D002539	600142	703219008	C1838577
+cerebral-cavernous-malformation	Cerebral cavernous malformation		D020786	116860	444869007	C2919945,C1864040,C1366911,C1864041
+cerebral-folate-transport-deficiency	Cerebral folate transport deficiency		D019150	613068	711403001	C2751584
+cerebro-facio-thoracic-dysplasia	Cerebro-facio-thoracic dysplasia		D008607,D019465	213980	720635002	C1859252
+cerebrotendinous-xanthomatosis	Cerebrotendinous xanthomatosis	E75.5	D019294	213700	63246000	C0238052
+chanarin-dorfman-syndrome	Chanarin-Dorfman syndrome		D008052	275630	19604005	C0268238
+channelopathy-associated-congenital-insensitivity-to-pain	Channelopathy-associated congenital insensitivity to pain		D000699	243000	403605007	C1855739
+charcot-marie-tooth-disease	Charcot-Marie-Tooth disease	G60.0	D002607	609260,600361,607831,608340,607684,600882,601472,605589,601098,605253,606482,214370,605285,607791,607706,310490,614436,601382,605588,604563,145900,611228,601455,614228,607736,148360,118200,302800,118210,613287,607734,614455,606071,311070,606595,607677,118300,256855,608673,609311,180800,214400,608323,616505,601152,118230,607678,601596,118220	45853006,398100001	C0007959
+charge-syndrome	CHARGE syndrome		D058747	214800	47535005	C0265354
+char-syndrome	Char syndrome		D004374,D000015	169100	703534001	C1868570
+chd2-myoclonic-encephalopathy	CHD2 myoclonic encephalopathy		D004831	615369	192845009	C3809278
+chediak-higashi-syndrome	Chediak-Higashi syndrome	E70.330	D002609	214500	111396008	C0007965
+cherubism	Cherubism		D002636	118400	76098004	C0008029
+childhood-absence-epilepsy	Childhood absence epilepsy		D004832	612269,607681,600131,611942	50866000	C2677087,C2749872,CN240376,C1843244,C1970160,C1838604
+childhood-myocerebrohepatopathy-spectrum	Childhood myocerebrohepatopathy spectrum		D028361		702366001	C0205710
+chmp2b-related-frontotemporal-dementia	CHMP2B-related frontotemporal dementia		D057180	600795	702393003	C1833296
+cholangiocarcinoma	Cholangiocarcinoma	C22.1	D018281	615619	70179006,312104005	C3810156
+chops-syndrome	CHOPS syndrome		D000015	616368		C4085597
+chordoma	Chordoma	C41.2	D002817	215400	50007008	C0008487
+chorea-acanthocytosis	Chorea-acanthocytosis		D054546	200150	66881004,26848004	C0393576
+choroideremia	Choroideremia	H31.21	D015794	303100	75241009,15989831000119105	C0008525
+christianson-syndrome	Christianson syndrome		D038901	300243	702354007	C2678194
+chronic-atrial-and-intestinal-dysrhythmia	Chronic atrial and intestinal dysrhythmia		D001145,D007418	616201	720507006	
+chronic-granulomatous-disease	Chronic granulomatous disease	D71	D006105	233690,233710,613960,306400,233700	387759001	C3151409,C1856251,C1844376,C1856255,C1856245
+chronic-myeloid-leukemia	Chronic myeloid leukemia	C92.10,C92.11,C92.1,C92.12	D015464	608232	92818009	C0023473
+chst3-related-skeletal-dysplasia	CHST3-related skeletal dysplasia		D010009	143095	702400006	
+chylomicron-retention-disease	Chylomicron retention disease	E78.3	D006995	246700	702364003	C0795956
+citrullinemia	Citrullinemia	E72.23	D020159	215700,603471,605814	398680004	C1853942,C4721769,C1863844
+clcn2-related-leukoencephalopathy	CLCN2-related leukoencephalopathy		D056784	615651		
+cleidocranial-dysplasia	Cleidocranial dysplasia		D002973	119600	65976001	C0008928
+cln10-disease	CLN10 disease	E75.4	D009472	610127	720831008,720830009	
+cln11-disease	CLN11 disease	E75.4	D009472	614706	62009002	C3539123
+cln1-disease	CLN1 disease	E75.4	D009472	256730	58258004	C0268281,C1850451
+cln2-disease	CLN2 disease	E75.4	D009472	204500	14637005	C0027877,C0022340,C1876161
+cln3-disease	CLN3 disease	E75.4	D009472	204200	61663001	C0751383
+cln4-disease	CLN4 disease	E75.4	D009472	162350	62009002	C1834207
+cln5-disease	CLN5 disease	E75.4	D009472	256731	14637005	C1850442
+cln6-disease	CLN6 disease	E75.4	D009472	601780	14637005	C5561927,C5551375
+cln7-disease	CLN7 disease	E75.4	D009472	610951	14637005	C1838571
+cln8-disease	CLN8 disease	E75.4	D020191,D009472	600143,610003	703526007	C1864923,C1838570
+clopidogrel-resistance	Clopidogrel resistance		D004305	609535	419253001	C1836023,C2674941
+clouston-syndrome	Clouston syndrome		D004476	129500	54209007	C0162361
+clpb-deficiency	CLPB deficiency		D001927	616271		C5676893
+coats-plus-syndrome	Coats plus syndrome		D012164	612199	711482008	C4552029
+cockayne-syndrome	Cockayne syndrome		D003057	133540,214150,216400	21086008	C0009207
+coffin-lowry-syndrome	Coffin-Lowry syndrome		D038921	303600	15182000	C0265252
+coffin-siris-syndrome	Coffin-Siris syndrome		D008607	135900	10007009	C0265338
+cog5-congenital-disorder-of-glycosylation	COG5-congenital disorder of glycosylation		D018981	613612	721100009	C3150876
+cohen-syndrome	Cohen syndrome		D002658,D000015	216550	56604005	C0265223
+col4a1-related-brain-small-vessel-disease	COL4A1-related brain small-vessel disease		D002543	175780	443929000	
+cold-induced-sweating-syndrome	Cold-induced sweating syndrome		D005334,D000015	272430,610313,617055	702363009	C1853198,C1832409,C4310742,C1848947
+cole-disease	Cole disease	L85.2	D007645	615522	711154007	C3809781
+collagen-vi-related-myopathy	Collagen VI-related dystrophy		D009136	158810,254090	193222002,240062007	CN230143,C0410179,C1834674,CN117976
+coloboma	Coloboma	H47.313,H47.319,H47.31,H47.312,Q13.0,H47.311,Q12.2	D003103	120200,216820	93390002	C0009363,C4011974
+color-vision-deficiency	Color vision deficiency	H53.52,H53.59,H53.55,H53.53,H53.54,H53.50,H53.51,H53.5	D003117	190900,303900,303700,303800	51445007,51886007,193683001,24704003,367469000,77479002	C0155017,C0339537
+combined-malonic-and-methylmalonic-aciduria	Combined malonic and methylmalonic aciduria		D008661	614265	702365002	C3280314
+combined-oxidative-phosphorylation-deficiency-1	Combined oxidative phosphorylation deficiency 1		D028361	609060		C1836797
+combined-pituitary-hormone-deficiency	Combined pituitary hormone deficiency	E23.0	D007018	262600,613038,221750,262700	367460001,190470005,32390006,71003000,237683004,91187007,237682009	C4273747
+common-variable-immune-deficiency	Common variable immune deficiency	D83.8,D83.0,D83.9,D83	D017074	240500,616873,607594,615559,616576,613494,615767,613496,615577,614700,613495,613493,614699	23238000,191011000	C0009447
+complement-component-2-deficiency	Complement component 2 deficiency		D007153	217000	234599007	C3150275
+complement-component-8-deficiency	Complement component 8 deficiency	D84.1	D007153	613790,613789	234616007,234614005	C3151081,C3151080
+complement-factor-i-deficiency	Complement factor I deficiency		D007153	610984	234621005	C0019250
+complete-lcat-deficiency	Complete LCAT deficiency		D007863	245900	238091006	C0023195
+complete-plasminogen-activator-inhibitor-1-deficiency	Complete plasminogen activator inhibitor 1 deficiency		D025861	613329	717407006	C2750067
+cone-rod-dystrophy	Cone-rod dystrophy	H35.52	D000071700	612775,615163,600624,602093,300476,300085,120970,615973,600977,604116,616502,304020,601777,612657,603649,608194,605549,615374,610283,615860,610381	80328002	C1844776,C2675210,C1846529,C1858806,C3489532,C4085590,C1835865,C1832976,C1845407,C4014501,C3554610,C1866293,C4014856,C3281045,C1423873,C3150912,C1863634,C3809299,C1833564,C2750720
+congenital-adrenal-hyperplasia-due-to-11-beta-hydroxylase-deficiency	Congenital adrenal hyperplasia due to 11-beta-hydroxylase deficiency	E25.0	D000312	202010	124214007,237751000	C0268292
+congenital-afibrinogenemia	Congenital afibrinogenemia		D000347	202400	154818001	C0019250
+congenital-anomalies-of-kidney-and-urinary-tract	Congenital anomalies of kidney and urinary tract		D014570,D014564	610805,143400	44513007,118642009	C1968949
+congenital-bilateral-absence-of-the-vas-deferens	Congenital bilateral absence of the vas deferens	Q55.3	D052801	277180	275416002,5286009	C0403814
+congenital-bile-acid-synthesis-defect-type-1	Congenital bile acid synthesis defect type 1		D002779	607765	238033007	C1843116
+congenital-bile-acid-synthesis-defect-type-2	Congenital bile acid synthesis defect type 2		D002779	235555	238035000	C1856127
+congenital-cataracts-facial-dysmorphism-and-neuropathy	Congenital cataracts, facial dysmorphism, and neuropathy		D015417	604168	702433001	C1858726
+congenital-central-hypoventilation-syndrome	Congenital central hypoventilation syndrome	G47.35	D020182	209880	399040002	C1275808
+congenital-contractural-arachnodactyly	Congenital contractural arachnodactyly		D001176	121050	205821003	C0220668
+congenital-deafness-with-labyrinthine-aplasia-microtia-and-microdontia	Congenital deafness with labyrinthine aplasia, microtia, and microdontia		D006311	610706	702360007	C1853144
+congenital-diaphragmatic-hernia	Congenital diaphragmatic hernia	Q79.0	D006548	610187,222400,142340	17190001	C1857284,C1857781
+congenital-dyserythropoietic-anemia	Congenital dyserythropoietic anemia	D64.4	D000742	105600,224120,224100	68870007,59548005,52951008,26409005	C0002876
+congenital-fiber-type-disproportion	Congenital fiber-type disproportion		D020914	255310	240084007	C0546264
+congenital-fibrosis-of-the-extraocular-muscles	Congenital fibrosis of the extraocular muscles		D015785	135700,609428,602078,600638	400946004,204217005	C1302995
+congenital-generalized-lipodystrophy	Congenital generalized lipodystrophy		D052497	613327,608594,269700,612526	284449005	C2675861,C1720863,C0221032,C2750069,C1720862
+congenital-hemidysplasia-with-ichthyosiform-erythroderma-and-limb-defects	Congenital hemidysplasia with ichthyosiform erythroderma and limb defects		D016113	308050	17608003	C0265267
+congenital-hyperinsulinism	Congenital hyperinsulinism	E16.1	D044903	609968,602485,256450,601820,606762,609975,610021	360339005	C2931832,C1865290,C2931833,C3888018,C1864952,C1864948,C1864902,C1847555
+congenital-hypothyroidism	Congenital hypothyroidism	E03.8,E03.1,E03.9,E03.0	D003409	274500,275200,274400,218700,274900,607200	278503003,367524008,237515009,64491003,190268003,75065003	C0342196,C1846632,C1869118,C0010308,C3493776,C1848805,C1291299
+congenital-insensitivity-to-pain-with-anhidrosis	Congenital insensitivity to pain with anhidrosis		D009477	256800	62985007	C0020074
+congenital-leptin-deficiency	Congenital leptin deficiency		D009767	614962	700150001	C3554224
+congenital-mirror-movement-disorder	Congenital mirror movement disorder		D009069	157600,614508	229247004	
+congenital-myasthenic-syndrome	Congenital myasthenic syndrome	G70.2	D020294	254300,603034,608930,608931,601462,610542,254210,614198	230672006,230670003	C4225374,CN119608,C4225413,C0393929,C1864233,C3552335,C0751882,C1850792,C4225367,C2931107,C4225368,C4225372,C3280112,C3808739,C4225405
+congenital-nephrotic-syndrome	Congenital nephrotic syndrome	N04	D009404	600995,256300	48796009	C0403399,C1868672
+congenital-plasminogen-deficiency	Congenital plasminogen deficiency	H10.511,H10.513,H10.519,H10.51,H10.512	D020147	217090	95841006,403435005	C1968804
+congenital-stromal-corneal-dystrophy	Congenital stromal corneal dystrophy		D003317	610048	702359002	C1864738
+congenital-sucrase-isomaltase-deficiency	Congenital sucrase-isomaltase deficiency	E74.31	D002239	222900	78373000	C1283620
+constitutional-mismatch-repair-deficiency-syndrome	Constitutional mismatch repair deficiency syndrome		D015179	276300		C5399763
+core-binding-factor-acute-myeloid-leukemia	Core binding factor acute myeloid leukemia		D015470	601626	702446006,838355002	C0023467
+cornelia-de-lange-syndrome	Cornelia de Lange syndrome		D003635	300882,300590,122470,614701,610759	40354009	C4551851,C3550903,C1853099,C3553517,C0270972
+corticosteroid-binding-globulin-deficiency	Corticosteroid-binding globulin deficiency		D030342	611489	237768001	C1852529
+corticosterone-methyloxidase-deficiency	Corticosterone methyloxidase deficiency		D006994	610600,203400	47757001	C0268293,C3463917
+costeff-syndrome	Costeff syndrome	E71.111	D008661	258501	297232009	C0574084
+costello-syndrome	Costello syndrome		D056685	218040	309776008	C0587248
+cowden-syndrome	Cowden syndrome	Q85.8	D006223	616858,615107,615108,615109,158350	58037000	CN072330,C4225179,C3554518,C0018553,C3554517,C3554519
+cranioectodermal-dysplasia	Cranioectodermal dysplasia		D004476,D000015	614378,614099,218330,613610	254093009	C3150874,C0432235,C3279807,C3280616
+craniofacial-deafness-hand-syndrome	Craniofacial-deafness-hand syndrome		D019465,D006319	122880	702362004	C1852510
+craniofrontonasal-syndrome	Craniofrontonasal syndrome		D019465	304110	715421009	C0220767
+craniometaphyseal-dysplasia	Craniometaphyseal dysplasia		D009139	123000	36601008,254135003,254134004	C2931244,C1852502
+cri-du-chat-syndrome	Cri-du-chat syndrome	Q93.4	D003410	123450	70173007	C0010314
+crigler-najjar-syndrome	Crigler-Najjar syndrome	E80.5	D003414	218800,606785	8933000,28259009,68067009	C0010324,C2931132
+critical-congenital-heart-disease	Critical congenital heart disease	Q20.1,Q22.5,Q22.0,Q22.4,Q25.1,Q23.4,Q21.3	D006330	605376,120000,217095,265150,608808,241550,613854,224700,178370,187500,106700,605067,614435	447832002,447914003,253590009,204354004,448794008,45503006,63042009,7305005,86299006,204357006,719955006,204296002,39905002,253443005,7484005,17394001,399228007,26146002,61959006,443379009,62067003,253591008,218728005,448599000	C0152101,C0013481,C0040761,C0039685,C3151221,C0152021,C3280795,C1415817
+crohns-disease	Crohn's disease	K50.112,K50.10,K50.90,K50.812,K50.01,K50.1,K50.0,K50.9,K50.013,K50.111,K50.818,K50.814,K50.919,K50.00,K50.11,K50.018,K50.914,K50.118,K50.113,K50.91,K50.80,K50.811,K50.913,K50.014,K50.119,K50.813,K50.918,K50.012,K50.8,K50.819,K50.114,K50.011,K50.912,K50,K50.81,K50.911,K50.019	D003424	612259,266600,612354,612245,612261,606674,612262,612381,604519,191390,612567,612796,612255,611081,608448,605225,612566,612241,612244,601458,612288,606348,612278,612380,613148,606675,606668	50440006,38106008,34000006,52457000	CN260071
+crouzon-syndrome	Crouzon syndrome	Q75.1	D003394	123500	28861008	C0010273
+crouzon-syndrome-with-acanthosis-nigricans	Crouzon syndrome with acanthosis nigricans	Q75.1	D003394,D000052,D003398	612247	702361006	C2677099
+cryopyrin-associated-periodic-syndromes	Cryopyrin-associated periodic syndromes 		D056587	191900,607115,120100		C0409818,C4551895,C0268390
+cryptogenic-cirrhosis	Cryptogenic cirrhosis	K74.69	D008103	215600	89580002	C0267809
+cul3-related-neurodevelopmental-disorder	CUL3-related neurodevelopmental disorder			619239		C5543225
+cutis-laxa	Cutis laxa		D003483	304150,614437,219150,613177,219200,614100,612940,123700,614434,616603,614438,219100	73856006,59451000,58588007,59399004	C0268355,C0268350,C0268353,C3665335
+cyclic-neutropenia	Cyclic neutropenia	D70.4	D009503	162800	191347008	C0221023
+cyclic-vomiting-syndrome	Cyclic vomiting syndrome	G43.A0,G43.A1,G43.A	D014839	500007	18773000	
+cyld-cutaneous-syndrome	CYLD cutaneous syndrome		D018250,D003528	132700,605041,601606		C1857941,C1851526,C1275122
+cystic-fibrosis	Cystic fibrosis	E84.1,E84.8,E84,E84.9,E84.19,E84.11,Z14.1,E84.0	D003550	219700	190905008,86555001,235978006	C0010674
+cystinosis	Cystinosis	E72.04	D003554	219900,219800,219750	236466005,190681003,22830006	C4316899
+cystinuria	Cystinuria	E72.01	D003555	220100	85020001	C0010691
+cytochrome-c-oxidase-deficiency	Cytochrome c oxidase deficiency		D030401	604377,615119,616500,220110,616501	67434000	C3554534,C4225154,C5399977,C4225304
+cytochrome-p450-oxidoreductase-deficiency	Cytochrome P450 oxidoreductase deficiency		D054882	201750	62964007	C1860042
+cytogenetically-normal-acute-myeloid-leukemia	Cytogenetically normal acute myeloid leukemia		D015470	601626	703387000	C0023467
+czech-dysplasia	Czech dysplasia		D010009	609162	389159004	C1836683
+dandy-walker-malformation	Dandy-Walker malformation	Q03.1	D003616	220200	14447001,840471002	C0010964
+danon-disease	Danon disease		D052120	300257	419097006	C0878677
+darier-disease	Darier disease		D007644	124200	403784003,48611009,239110000,403785002,403787005,403786001,403783009,400018004	C0022595
+d-bifunctional-protein-deficiency	D-bifunctional protein deficiency	E71.541	D018901	261515	238068007	C0342870
+deafness-and-myopia-syndrome	Deafness and myopia syndrome		D009216,D006319	221200	720506002	C3806275
+deafness-dystonia-optic-neuronopathy-syndrome	Deafness-dystonia-optic neuronopathy syndrome		D040181	304700	702423009	C0796074
+dementia-with-lewy-bodies	Dementia with Lewy bodies	G31.83	D020961	127750	80098002	C0752347
+dentatorubral-pallidoluysian-atrophy	Dentatorubral-pallidoluysian atrophy		D020191	125370	68116008	C0751781
+dent-disease	Dent disease		D057973	300555,300009	444645005	C1848336,C1845167
+dentinogenesis-imperfecta	Dentinogenesis imperfecta	Q78.0	D003811	125490,125420,125500	196286005,234970006,234969005	C0399378,C2973527
+denys-drash-syndrome	Denys-Drash syndrome		D030321	194080	236385009	C0950121
+deoxyguanosine-kinase-deficiency	Deoxyguanosine kinase deficiency		D028361	251880	237995002	C5191055
+dermatofibrosarcoma-protuberans	Dermatofibrosarcoma protuberans		D018223	607907	276799004	C3693482
+desmoid-tumor	Desmoid tumor		D018222	135290	47284001,399994005,725049005	C1851124
+desmosterolosis	Desmosterolosis		D008052	602398	709490002	C1865596
+developmental-and-epileptic-encephalopathy-1	Developmental and epileptic encephalopathy 1		D038901	308350	28055006	C0037769,C3463992
+diamond-blackfan-anemia	Diamond-Blackfan anemia	D61.01	D029503	617408,105650,612563,614900,613309,606129,615550,606164,612528,612561,612562,613308,615909,617409,612527,300946,610629	88854002,191240007,71988008	C1260899
+diastrophic-dysplasia	Diastrophic dysplasia	Q77.5	D010009	222600	58561002	C0220726
+dicer1-syndrome	DICER1 syndrome		D009386	601200,138800	702411003	C1266144
+dihydrolipoamide-dehydrogenase-deficiency	Dihydrolipoamide dehydrogenase deficiency		D028361	246900	29914000	CN043137
+dihydropyrimidinase-deficiency	Dihydropyrimidinase deficiency		D011686	222748	238014002	C0342803
+dihydropyrimidine-dehydrogenase-deficiency	Dihydropyrimidine dehydrogenase deficiency		D054067	274270	77365006	
+dilated-cardiomyopathy-with-ataxia-syndrome	Dilated cardiomyopathy with ataxia syndrome	E71.111	D008661	610198	711412004	C1857776
+distal-18q-deletion-syndrome	Distal 18q deletion syndrome		D025063	601808		C0432443
+distal-arthrogryposis-type-1	Distal arthrogryposis type 1		D001176	108120	715314008	C0220662
+distal-hereditary-motor-neuropathy-type-ii	Distal hereditary motor neuropathy, type II		D009134	608634,158590	230247001	C1834692,C2608087
+distal-hereditary-motor-neuropathy-type-v	Distal hereditary motor neuropathy, type V		D009134	614751,600794	230247001	C3553656,C5399969,C5436838,CN305318
+distal-myopathy-2	Distal myopathy 2		D049310	606070	702383005	C3807521
+dlg4-related-synaptopathy	DLG4-related synaptopathy			618793		C5394083
+dnmt3a-overgrowth-syndrome	DNMT3A overgrowth syndrome		D005877	615879		C4014545
+dock8-immunodeficiency-syndrome	DOCK8 immunodeficiency syndrome	D82.4	D007153	243700		C4722305
+dolk-congenital-disorder-of-glycosylation	DOLK-congenital disorder of glycosylation		D018981	610768	718712005	C1835849
+donnai-barrow-syndrome	Donnai-Barrow syndrome		D015499	222448	702418009	C1857277
+donohue-syndrome	Donohue syndrome		D056731	246200	111307005	C0265344
+doors-syndrome	DOORS syndrome		D000015	220500	719800009	
+dopamine-beta-hydroxylase-deficiency	Dopamine beta-hydroxylase deficiency		D001342	223360	237923004	C4746777
+dopamine-transporter-deficiency-syndrome	Dopamine transporter deficiency syndrome		D020821,D010300	613135	722763000	C5700336
+dopa-responsive-dystonia	Dopa-responsive dystonia		D004421	612716,128230,605407	715768000,230332007,715827001,45116002	C0268468,C1851920,C2673535
+dowling-degos-disease	Dowling-Degos disease		D012873	615674,615696,179850,615327	239054009	C3809147,C3810313,C4552092
+down-syndrome	Down syndrome	Q90,Q90.1,Q90.0,Q90.9,Q90.2	D004314	190685	371045000,205615000,254264002,205616004,41040004	C0013080
+duane-radial-ray-syndrome	Duane-radial ray syndrome	H50.811,H50.812,H50.81	D004370	607323	699867001	C1623209
+dubin-johnson-syndrome	Dubin-Johnson syndrome	E80.6	D007566	237500	44553005	C0022350
+duchenne-and-becker-muscular-dystrophy	Duchenne and Becker muscular dystrophy		D020388	300376,310200	387732009,76670001	C0013264,C0917713
+dupuytren-contracture	Dupuytren contracture	M72.0	D004387	126900	274142002	
+dyserythropoietic-anemia-and-thrombocytopenia	Dyserythropoietic anemia and thrombocytopenia		D013921	300367	713388002	C3550789
+dyskeratosis-congenita	Dyskeratosis congenita		D019871	613987,224230,268130,613988,127550,615190,613990,613989,305000	74911008	C0265965
+dystonia-16	Dystonia 16		D020821	612067	722435003	C2677567
+dystonia-6	Dystonia 6	G24.1	D020821	602629	702448007	C1414216
+dystrophic-epidermolysis-bullosa	Dystrophic epidermolysis bullosa	Q81.2	D016108	226600,131750	254185007,48528004,111389006,75875004,254188009,254186008	C0079294,C0432322,C0079474
+early-onset-glaucoma	Early-onset glaucoma	Q15.0	D005901	231300,137750	71111008,415176004	C2981140,C1842028
+early-onset-isolated-dystonia	Early-onset isolated dystonia	G24.1	D020821	128100	22451001	C1851945
+early-onset-myopathy-with-fatal-cardiomyopathy	Early-onset myopathy with fatal cardiomyopathy		D009135	611705	702343002	C2673677
+ehlers-danlos-syndrome	Ehlers-Danlos syndrome	Q79.6	D004535	608763,225410,614557,130000,130090,618000,130010,130070,225400,615349,130050,601776,229200,130080,606408,225320,615539,617174,225310,130060,314400,130020	55711009,30652003,83470009,398114001,25606004,20766005,17025000	C3281160,C3809845,C4310681,C0268342,C2700425,C4303789,C3508773,C0013720,C4551499,C1866294,C1851801
+ellis-van-creveld-syndrome	Ellis-van Creveld syndrome	Q77.6	D004613	225500	62501005	C0013903
+emanuel-syndrome	Emanuel syndrome		D025063	609029	702417004	
+emery-dreifuss-muscular-dystrophy	Emery-Dreifuss muscular dystrophy		D020389	181350,310300,612998,614302,612999,616516	111508004	C0410189
+encephalocraniocutaneous-lipomatosis	Encephalocraniocutaneous lipomatosis		D020752,D008068,D005128	613001	238905009	C0406612
+enlarged-parietal-foramina	Enlarged parietal foramina		D004413	609597,168500	718099006	C1868598,C1865044,C1868599
+eosinophil-peroxidase-deficiency	Eosinophil peroxidase deficiency		D007960	261500	711160007	C1850000
+epidermal-nevus	Epidermal nevus		D009506	162900	239107007	C0334082
+epidermolysis-bullosa-simplex	Epidermolysis bullosa simplex	Q81.0	D016110	609352,131900,131950,131800,601001,131960,131760	67144006,254180002,398071000,90496008	C0079298,C0432317
+epidermolysis-bullosa-with-pyloric-atresia	Epidermolysis bullosa with pyloric atresia	Q81.0	D004820	226730,612138	53748002	C2677349,C5676957,C5676875
+epidermolytic-hyperkeratosis	Epidermolytic hyperkeratosis	Q80.3	D017488	113800	254167000	C0079153
+epilepsy-aphasia-spectrum	Epilepsy-aphasia spectrum		D007805,D013064,D019305,D018887,D004827	245570	230384001,230438007,230439004,44145005	
+episodic-ataxia	Episodic ataxia		D001259	600111,160120,611907,606554,606552,108500,601949	420932006,421182009,421455009	C2677843,C1719788,C1720416
+erdheim-chester-disease	Erdheim-Chester disease		D031249		703711007	
+erythrokeratodermia-variabilis-et-progressiva	Erythrokeratodermia variabilis et progressiva		D056266	133200,617525,617756,617526,617524	70041004	C4551486
+erythromelalgia	Erythromelalgia	I73.81	D004916	133020	37151006,403390002	C0014805
+essential-pentosuria	Essential pentosuria		D002239	260800	190764000	C0268162
+essential-thrombocythemia	Essential thrombocythemia	D47.3	D013920	187950	128844009,109994006	C3277671
+ethylmalonic-encephalopathy	Ethylmalonic encephalopathy		D001928	602473	723307008	C1865349
+ewing-sarcoma	Ewing sarcoma		D012512	612219	307608006,447951009,76909002,128783001	C0553580
+fabry-disease	Fabry disease	E75.21	D000795	301500	838319005,124464003,16652001	C0002986
+facioscapulohumeral-muscular-dystrophy	Facioscapulohumeral muscular dystrophy		D020391	158900,158901	399091004	C0238288,C1834671
+factor-v-deficiency	Factor V deficiency		D005166	227400	4320005	C0015499
+factor-vii-deficiency	Factor VII deficiency		D005168	227500	37193007	C0015503
+factor-v-leiden-thrombophilia	Factor V Leiden thrombophilia	D68.51	D020016	188055	421527008	C1861171
+factor-x-deficiency	Factor X deficiency	D68.2	D005171	227600	76642003	C0015519
+factor-xi-deficiency	Factor XI deficiency	D68.1	D005173	612416	49762007	C0015523
+factor-xiii-deficiency	Factor XIII deficiency		D005177	613225,613235	18604004	C2750481,C2750514
+familial-acute-myeloid-leukemia-with-mutated-cebpa	Familial acute myeloid leukemia with mutated CEBPA		D015470	601626	397340004	C0023467
+familial-adenomatous-polyposis	Familial adenomatous polyposis		D011125	135290,608456,175100	423471004,72900001	C0032580,C2713442,C3272841,C1851124
+familial-atrial-fibrillation	Familial atrial fibrillation	I48.4,I48.3,I48.9,I48	D001281	614022,612240,608583,607554,613055,612201,613980,615378,615770,611494,614050,608988,617280,614049,615377,611493	49436004	C1837014,C3151464,C3809312,C2677294,C2677106,C3279693,C4013699,C3151431,C3279695,C1843687,C4013560,C4014269,C4310636,C3809311,C1862394
+familial-candidiasis	Familial candidiasis	B37	D002178	616622,616445,615527,613953,613956,607644,614162,613108,212050,114580	235073000	C0341024
+familial-cold-autoinflammatory-syndrome-type-2	Familial cold autoinflammatory syndrome type 2			611762		C2673198
+familial-dilated-cardiomyopathy	Familial dilated cardiomyopathy	I42.0	D002311	115200,611878,606685,613426,605582,608569,615235,613424,607487,611879,611880,607482,604145,613172,601493,600884,609909,612158,615396,615184,613694,604288,612877,615248,601494,302045,614672,613697,611407,609915,601154,613252,604765,613881,605362	52029003	C0007193
+familial-dysautonomia	Familial dysautonomia	G90.1	D004402	223900	29159009	C0013364
+familial-encephalopathy-with-neuroserpin-inclusion-bodies	Familial encephalopathy with neuroserpin inclusion bodies		D004831,D020271	604218	702421006	C1858680
+familial-erythrocytosis	Familial erythrocytosis	D75.0	D011086	609820,263400,611783,133100	17342003	C1837915,C2673187,C1853286
+familial-exudative-vitreoretinopathy	Familial exudative vitreoretinopathy		D012164	305390,605750,601813,133780	232063007	C1844579,C1866176,C1851402
+familial-focal-epilepsy-with-variable-foci	Familial focal epilepsy with variable foci		D004828	617118,617116,604364		C4310709,C4310708,C4551983
+familial-glucocorticoid-deficiency	Familial glucocorticoid deficiency		D000309	202200,609981,609197,614736,607398	71974009	C3553587,C1864947,C4049650,C4049714
+familial-hdl-deficiency	Familial HDL deficiency		D052456	604091	190785000,15346004	
+familial-hemiplegic-migraine	Familial hemiplegic migraine	G43.409	D020325	609634,141500,602481	95656000	C1865322,C0338484,C1864987
+familial-hemophagocytic-lymphohistiocytosis	Familial hemophagocytic lymphohistiocytosis	D76.1	D051359	608898,603553,267700,603552,613101	398250003	C0272199
+familial-hyperaldosteronism	Familial hyperaldosteronism	E26.02	D006929	103900,613677,605635	703231005	C3713420
+familial-hypercholesterolemia	Familial hypercholesterolemia	E78.0,E78.01	D006937	603813,143890,603776,144010	397915002,238076009,238081000,398036000	C1863512,C1863551,C0020445,C1704417
+familial-hypertrophic-cardiomyopathy	Familial hypertrophic cardiomyopathy		D024741	192600,612098,613690,608751,600858,612124,613838,607487,613765,613243,115196,115197,614676,613251,613874,608758,613876,613873,613255,115195	83978005,360465008	C1861862,C1861864,C3495498,C1860752
+familial-hypobetalipoproteinemia	Familial hypobetalipoproteinemia	E78.6	D006995	615558,605019	190786004,60193003,238094003,238093009	C1862596,C1857970
+familial-isolated-hyperparathyroidism	Familial isolated hyperparathyroidism	E21.0	D049950	145000	237653008	C1840402
+familial-isolated-pituitary-adenoma	Familial isolated pituitary adenoma		D010911	102200	702375004	CN169290
+familial-lipoprotein-lipase-deficiency	Familial lipoprotein lipase deficiency	E78.3	D008072	238600	275598004,238086005,267435002,403827000	C0023817
+familial-male-limited-precocious-puberty	Familial male-limited precocious puberty	E29.0	D011629	176410	725295005	C0342549
+familial-mediterranean-fever	Familial Mediterranean fever	E85.0	D010505	134610,249100	12579009	C0031069,C1851347
+familial-osteochondritis-dissecans	Familial osteochondritis dissecans	M93.212,M93.27,M93.29,M93.222,M93.259,M93.231,M93.242,M93.24,M93.262,M93.26,M93.232,M93.239,M93.23,M93.2,M93.22,M93.272,M93.261,M93.229,M93.271,M93.252,M93.279,M93.241,M93.221,M93.249,M93.28,M93.219,M93.251,M93.21,M93.25,M93.269,M93.20,M93.211	D010008	165800	82562007	C3665488
+familial-paroxysmal-kinesigenic-dyskinesia	Familial paroxysmal kinesigenic dyskinesia		D020820	128200	609221008	C4552000
+familial-paroxysmal-nonkinesigenic-dyskinesia	Familial paroxysmal nonkinesigenic dyskinesia		D020820	611147,118800	609218006	C1970149,C1869117
+familial-partial-lipodystrophy	Familial partial lipodystrophy		D052496	151660,608600,604367,615980,615238,613877	49292002	C0271694
+familial-pityriasis-rubra-pilaris	Familial pityriasis rubra pilaris	L44.0	D010916	173200	238622008	C0032027
+familial-porencephaly	Familial porencephaly	Q04.6	D065708	175780	38353004	C1867983
+familial-restrictive-cardiomyopathy	Familial restrictive cardiomyopathy	I42.5	D002313	612422,115210,609578	233878008	C1861861,C0340429,C2676271
+familial-thoracic-aortic-aneurysm-and-dissection	Familial thoracic aortic aneurysm and dissection	I71.03,I71.1,I71.0,I71.00,I71.6,I71.5,I71.01,I71.2	D017545	615436,607087,613780,132900,611788,607086	433068007	C4707243
+fanconi-anemia	Fanconi anemia	D61.09	D005199	227646,609644,610832,613390,614082,300514,227650,609054,227645,613951,609053,614083,600901,603467,605724	30575002	C3160738,C3469542,C1836861,C3150653,C3468041,C3469528,C0015625,C1845292,C3160739,C3469521,C3469529,C3469526,C1838457,C1836860,C1835817,C3469527
+farber-lipogranulomatosis	Farber lipogranulomatosis	E75.29	D055577	228000	79935000	C0268255
+farsightedness	Farsightedness	H52.02,H52.01,H52.0,H52.03,H52.00	D006956	238950	38101003	
+fatty-acid-hydroxylase-associated-neurodegeneration	Fatty acid hydroxylase-associated neurodegeneration		D020271	612319	702419001	C3496228
+fbxl4-related-encephalomyopathic-mitochondrial-dna-depletion-syndrome	FBXL4-related encephalomyopathic mitochondrial DNA depletion syndrome		D017237	615471		C3809592
+feingold-syndrome	Feingold syndrome		D030342	614326,164280	702431004	C4551774,C3280489,C0796068
+fg-syndrome	FG syndrome		D038901,D000015	300321,305450,300581,300406,300422	49984004	C1845119,C0220769,C1845546,C1845902
+fibrochondrogenesis	Fibrochondrogenesis		D004392,D000015	614524,228520	17144009	C3281128,C3278138
+fibrodysplasia-ossificans-progressiva	Fibrodysplasia ossificans progressiva	M61.132,M61.179,M61.17,M61.151,M61.11,M61.122,M61.162,M61.143,M61.129,M61.172,M61.169,M61.18,M61.146,M61.142,M61.13,M61.141,M61.121,M61.119,M61.144,M61.19,M61.161,M61.159,M61.1,M61.15,M61.177,M61.174,M61.131,M61.173,M61.175,M61.145,M61.112,M61.111,M61.171,M61.176,M61.10,M61.16,M61.152,M61.12,M61.139,M61.14,M61.178	D009221	135100	82725007	C0016037
+fibromyalgia	Fibromyalgia	M79.7	D005356		203082005	
+fibronectin-glomerulopathy	Fibronectin glomerulopathy	N07.5	D015432	137950,601894	236535001	C1866075
+fish-eye-disease	Fish-eye disease		D007863	136120	238092004	C0342895
+floating-harbor-syndrome	Floating-Harbor syndrome		D000015	136140	312214005	C0729582
+focal-dermal-hypoplasia	Focal dermal hypoplasia		D005489	305600	2298005,205573006	C0016395
+foxg1-syndrome	FOXG1 syndrome		D020271	613454	702450004	C3150705
+foxp2-related-speech-and-language-disorder	FOXP2-related speech and language disorder		D001072	602081	229703009	C0750927
+fragile-x-associated-primary-ovarian-insufficiency	Fragile X-associated primary ovarian insufficiency		D016649	311360	237788002	C4552079
+fragile-x-associated-tremor-ataxia-syndrome	Fragile X-associated tremor/ataxia syndrome		D002526	300623	448045004	C1839780
+fragile-xe-syndrome	Fragile XE syndrome		D038901	309548	254288000	C0751157
+fragile-x-syndrome	Fragile X syndrome	Q99.2	D005600	309550	613003	C0016667
+fraser-syndrome	Fraser syndrome		D058497	219000	204102004	C4551480
+frasier-syndrome	Frasier syndrome		D052159	136680	445431000	C0950122
+freeman-sheldon-syndrome	Freeman-Sheldon syndrome		D003394	193700	52616002	C0265224
+friedreich-ataxia	Friedreich ataxia		D005621	229300	10394003	C1856689
+frontometaphyseal-dysplasia	Frontometaphyseal dysplasia		D010009	305620,617137	62803002	C4310697,C4281559
+frontonasal-dysplasia	Frontonasal dysplasia		D019465	613451,613456,136760	254005007,86610004	C3150703,C1876203,C3150706
+frontotemporal-dementia-with-parkinsonism-17	Frontotemporal dementia with parkinsonism-17		D057180	600274	702429008	C0338451
+fuchs-endothelial-dystrophy	Fuchs endothelial dystrophy	H18.51	D005642	136800,610158,613270,613269,613271,613268,615523,613267	193839007	C3809798,C2750448,C2750450,C1850959,C2750451
+fucosidosis	Fucosidosis	E77.1	D005645	230000	399045007,64716005,61172008	C0016788
+fukuyama-congenital-muscular-dystrophy	Fukuyama congenital muscular dystrophy		D009136	253800	111502003	C0410174
+fumarase-deficiency	Fumarase deficiency		D008661	606812	124616002,237983002	C0342770
+fundus-albipunctatus	Fundus albipunctatus	H35.52	D009755,D015785	136880	68222009	C0311338
+gaba-transaminase-deficiency	GABA-transaminase deficiency		D020739	613163	237941007	C0342708
+galactosemia	Galactosemia	E74.21	D005693	230400,230350,230200	124302001,190745006,8849004,124354006	C0268151,C0268155,C0016952,C0751161
+galactosialidosis	Galactosialidosis		D020140	256540	35691006	C0268233
+gastrointestinal-stromal-tumor	Gastrointestinal stromal tumor	C49.A2,C49.A9,C49.A,C49.A0,C49.A3,C49.A4,C49.A5,C49.A1	D046152	606764	420120006	C0238198
+gaucher-disease	Gaucher disease	E75.22	D005776	231005,230800,231000,230900	12246008,190794006,870313002,62201009,5963005,192791009	C0268250,C1961835,C0268251,C1856476,C0017205
+geleophysic-dysplasia	Geleophysic dysplasia		D009139,D017880	614185,231050	28557005	C3280054
+generalized-arterial-calcification-of-infancy	Generalized arterial calcification of infancy		D061205	208000,614473	68926002	C3276161
+generalized-pustular-psoriasis	Generalized pustular psoriasis	L40.1	D011565	616106,602723,614204	238612002	C0343055,C4015235
+genetic-epilepsy-with-febrile-seizures-plus	Genetic epilepsy with febrile seizures plus		D004827,D003294	613863,604403,613060,616172,607681,604233	699688008	C1858673,C1858672,C3502809,CN120574,C1858674,C4015395
+genitopatellar-syndrome	Genitopatellar syndrome		D014564,D008607,D000015	606170	702367005	C1853566
+gestational-diabetes	Gestational diabetes	O24.41,O24.414,O24.434,Z86.32,O24.4,O24.430,O24.410,O24.43,O24.420,O24.425,O24.435,O24.439,O24.42,O24.429,O24.424,O24.419,O24.415	D016640	610582,610374,606176	472699005,11687002	C0085207
+ghosal-hematodiaphyseal-dysplasia	Ghosal hematodiaphyseal dysplasia		D010009	231095	389214003	C1856465
+giant-axonal-neuropathy	Giant axonal neuropathy		D056768	256850	128207002	C1850386
+giant-congenital-melanocytic-nevus	Giant congenital melanocytic nevus	D22	D009508	137550	254815002	C1842036
+gilbert-syndrome	Gilbert syndrome	E80.4	D005878	143500	27503000	C0017551
+gillespie-syndrome	Gillespie syndrome		D015783	206700	253176002	C0431401
+gitelman-syndrome	Gitelman syndrome		D053579	263800	707756004	C0268450
+glanzmann-thrombasthenia	Glanzmann thrombasthenia	D69.1	D013915	273800	32942005	C0040015
+globozoospermia	Globozoospermia		D000072660	613958	236818008	C0403825
+glucose-6-phosphate-dehydrogenase-deficiency	Glucose-6-phosphate dehydrogenase deficiency	D55.0	D005955	305900	124134002,62403005	C2720289
+glucose-galactose-malabsorption	Glucose-galactose malabsorption		D008286	606824	27943000,190749000	C0268186
+glucose-phosphate-isomerase-deficiency	Glucose phosphate isomerase deficiency		D000745	613470	234404008,124669001,52413004	C3150730
+glut1-deficiency-syndrome	GLUT1 deficiency syndrome		D020739	606777	445252005	C1847501
+glutamate-formiminotransferase-deficiency	Glutamate formiminotransferase deficiency		D008661	229100	59761008	C0268609
+glutaric-acidemia-type-i	Glutaric acidemia type I		D000592	231670	76175005	C0268595
+glutaric-acidemia-type-ii	Glutaric acidemia type II	E71.313	D054069	231680	22886006	C0268596
+glutathione-synthetase-deficiency	Glutathione synthetase deficiency		D008661	231900,266130	124706000,39112005,234589002	C0398746,C1856399
+glycogen-storage-disease-type-0	Glycogen storage disease type 0	E74.09	D006008	240600,611556	237964009	C1969054,C1855861
+glycogen-storage-disease-type-i	Glycogen storage disease type I	E74.01	D005953	232220,232200	124437004,444707001,30102006,7265005	C0268146,C2919796,C0017920
+glycogen-storage-disease-type-iii	Glycogen storage disease type III	E74.03	D006010	232400	66937008	C0017922
+glycogen-storage-disease-type-iv	Glycogen storage disease type IV	E74.09	D006011	232500	124267007,11179002	C0017923
+glycogen-storage-disease-type-ix	Glycogen storage disease type IX		D006008	300559,613027,261750,306000	235908005,860860004	C1845151,C0543514,C2751643,C3694531
+glycogen-storage-disease-type-v	Glycogen storage disease type V	E74.04	D006012	232600	55912009	C0017924
+glycogen-storage-disease-type-vi	Glycogen storage disease type VI	E74.09	D006013	232700	29291001	C0017925
+glycogen-storage-disease-type-vii	Glycogen storage disease type VII		D006014	232800	89597008	C0017926
+glycoprotein-vi-deficiency	Glycoprotein VI deficiency		D025861	614201	234470000	C3280120
+gm1-gangliosidosis	GM1 gangliosidosis	E75.19	D016537	230600,230650,230500	238027003,18756002,238025006,238026007,124465002	C0085131,C0268272,C0268273,C0268271
+gm2-gangliosidosis-ab-variant	GM2-gangliosidosis, AB variant		D049290	272750	71253000	C0268275
+gm3-synthase-deficiency	GM3 synthase deficiency		D004827	609056	722762005	C1836824
+gnathodiaphyseal-dysplasia	Gnathodiaphyseal dysplasia		D010009	166260	715568002	C1833736
+gordon-holmes-syndrome	Gordon Holmes syndrome		D002526,D007006	212840	230240004	C1859305
+gorlin-chaudhry-moss-syndrome	Gorlin-Chaudhry-Moss syndrome		D006983,D003398	612289	205800003	C2676780
+gorlin-syndrome	Gorlin syndrome		D001478	109400	69408002	C0004779
+gout	Gout	M10.9	D006073	612076,138900	90560007	
+gracile-syndrome	GRACILE syndrome		D008661	603358	703388005	C1864002
+grange-syndrome	Grange syndrome		D006330,D001157	602531	717824007	C1865267
+granulomatosis-with-polyangiitis	Granulomatosis with polyangiitis	M31.30,M31.3,M31.31	D014890	608710	195353004	
+graves-disease	Graves' disease	E05.0,E05.01,E05.00	D006111	300351,603388,275000	353295004	C1848795
+gray-platelet-syndrome	Gray platelet syndrome	D69.1	D055652	139090	51720005	C0272302
+greenberg-dysplasia	Greenberg dysplasia		D010009	215140	389261002	C2931048
+greig-cephalopolysyndactyly-syndrome	Greig cephalopolysyndactyly syndrome		D017689	175700	32985001	C0265306
+grin2b-related-neurodevelopmental-disorder	GRIN2B-related neurodevelopmental disorder		D008607,D001927	616139,613970		C4015316,C3151411
+griscelli-syndrome	Griscelli syndrome		D017496	609227,607624,256710,214450	37548006	C1836573,C1868679,C1859194
+grn-related-frontotemporal-lobar-degeneration	GRN-related frontotemporal lobar degeneration		D057180	607485	702426001	C1843792
+guanidinoacetate-methyltransferase-deficiency	Guanidinoacetate methyltransferase deficiency		D008661	612736	124239003	C0574080
+guillain-barre-syndrome	Guillain-Barré syndrome	G65.0,G61.0	D020275	139393	40956001	C4083008
+gyrate-atrophy-of-the-choroid-and-retina	Gyrate atrophy of the choroid and retina	H31.23	D015799	258870	314467007	C0599035
+hailey-hailey-disease	Hailey-Hailey disease		D016506	169600	79468000	C0085106
+hajdu-cheney-syndrome	Hajdu-Cheney syndrome		D031845	102500	63122002	C0917715
+hand-foot-genital-syndrome	Hand-foot-genital syndrome		D005532,D014564,D006228	140000	702425002	C1841679
+harlequin-ichthyosis	Harlequin ichthyosis	Q80.4	D016113	242500	205548006,268245001	C0598226
+hartnup-disease	Hartnup disease	E72.02	D006250	234500	80902009	C0018609
+hartsfield-syndrome	Hartsfield syndrome		D006228,D016142	615465		C1845146
+hashimotos-disease	Hashimoto's disease	E06.3	D050031	140300	21983002	C0677607
+head-and-neck-squamous-cell-carcinoma	Head and neck squamous cell carcinoma		D006258,D002294	275355	408649007,419842002,405822008	C1168401
+hemophilia	Hemophilia	M36.2,Z14.02,D67,D68.311,Z14.01,D66	D002836,D006467	306700,306900	41788008,90935002	C0008533,CN043453,C0019069,C0684275
+hennekam-syndrome	Hennekam syndrome		D008201	616006,235510	234146006	C4012050,C4014939
+hepatic-lipase-deficiency	Hepatic lipase deficiency		D008052	614025	720940008	C3151466
+hepatic-veno-occlusive-disease-with-immunodeficiency	Hepatic veno-occlusive disease with immunodeficiency	K76.5	D006504	235550	65617004	C1856128
+hereditary-angioedema	Hereditary angioedema		D054179	610618,106100	846575004,82966003	C0019243,C0398776,C1857728
+hereditary-angiopathy-with-nephropathy-aneurysms-and-muscle-cramps-syndrome	Hereditary angiopathy with nephropathy, aneurysms, and muscle cramps syndrome		D002561	611773	702428000	C2673195
+hereditary-antithrombin-deficiency	Hereditary antithrombin deficiency		D020152	107300	439699000,36351005	C0272375
+hereditary-cerebral-amyloid-angiopathy	Hereditary cerebral amyloid angiopathy	I68.0	D028243	176500,117300,605714,105150	230724001,56453003,45639009,703220002,237867001	C0085220,C1861735,C1527338,C2751536
+hereditary-diffuse-gastric-cancer	Hereditary diffuse gastric cancer		D013274	137215	716859000	C1708349
+hereditary-fibrosing-poikiloderma-with-tendon-contractures-myopathy-and-pulmonary-fibrosis	Hereditary fibrosing poikiloderma with tendon contractures, myopathy, and pulmonary fibrosis		D012873	615704	402769003	C3810325
+hereditary-folate-malabsorption	Hereditary folate malabsorption		D008286	229050	62578003	C0342705
+hereditary-fructose-intolerance	Hereditary fructose intolerance	E74.12	D005633	229600	20052008	C0016751
+hereditary-hemochromatosis	Hereditary hemochromatosis	E83.110,E83.119,E83.118,E83.11	D006432	613313,606069,604250,602390,235200	50855007,838361004,399144008,35400008,6160004,399170009,399126000	C0392514
+hereditary-hemorrhagic-telangiectasia	Hereditary hemorrhagic telangiectasia	I78.0	D013683	600376,187300,175050,601101,610655	21877004	C1832774,C4551861,C1838163,C1832942
+hereditary-hyperekplexia	Hereditary hyperekplexia	G25.82	D016750	614618,614619,149400	724351008	C3553288,C0234166,C3553291,C4551954
+hereditary-hypophosphatemic-rickets	Hereditary hypophosphatemic rickets	E83.31	D053098	193100,300554,613312,241530,241520,307800	82236004,90505000,237889002,237891005,4996001	C1853271,C0342642,C2750078,C4551495,C0733682
+hereditary-leiomyomatosis-and-renal-cell-cancer	Hereditary leiomyomatosis and renal cell cancer		D009386	150800	404043000	C1708350
+hereditary-multiple-osteochondromas	Hereditary multiple osteochondromas	Q78.6	D005097	133700,133701	254044004	C0015306,C1851413
+hereditary-myopathy-with-early-respiratory-failure	Hereditary myopathy with early respiratory failure		D009135,D012131	603689	702373006	C1863599
+hereditary-neuralgic-amyotrophy	Hereditary neuralgic amyotrophy	G54.5	D020968	162100	26609002	C1834304
+hereditary-neuropathy-with-liability-to-pressure-palsies	Hereditary neuropathy with liability to pressure palsies		D015417,D006211	162500	230558006	C0393814
+hereditary-pancreatitis	Hereditary pancreatitis	K86.1	D050500	167800	235956004,235949005,68072000	C0238339
+hereditary-paraganglioma-pheochromocytoma	Hereditary paraganglioma-pheochromocytoma		D010235	614165,115310,605373,168000,601650	716857003	C1866552,C3279992,C1861848,C1868633,C1854336
+hereditary-sensory-and-autonomic-neuropathy-type-ie	Hereditary sensory and autonomic neuropathy type IE		D009477	614116	397734008	C3279885
+hereditary-sensory-and-autonomic-neuropathy-type-ii	Hereditary sensory and autonomic neuropathy type II		D009477	613115,201300	860809000,398148000,860810005	C2752089,C2751092
+hereditary-sensory-and-autonomic-neuropathy-type-v	Hereditary sensory and autonomic neuropathy type V		D009477	608654	128206006	C0020075
+hereditary-sensory-neuropathy-type-ia	Hereditary sensory neuropathy type IA	G60.8	D009477	162400	397734008	C0020071
+hereditary-spherocytosis	Hereditary spherocytosis	D58.0	D013103	182870,612690,182900,270970,612653	55995005	C2674219,C0037889,C2678338,C2675212,C2675192
+hereditary-xanthinuria	Hereditary xanthinuria		D008661	603592,278300	124147007,836343001,29692004,72682008,54627004	C0268118,C1863688
+hermansky-pudlak-syndrome	Hermansky-Pudlak syndrome	E70.331	D022861	203300	9311003	C2931875,C0079504
+heterotaxy-syndrome	Heterotaxy syndrome	Q89.3	D059446	605376,614779,606325,270100,613751,306955,208530,606217	8641000119101,14821001	C3553676,C3151057,C3178805,C1853509,C1844020,C3495537,C1415817
+hidradenitis-suppurativa	Hidradenitis suppurativa	L73.2	D017497	142690,613736,613737	59393003	C1840560
+hirschsprung-disease	Hirschsprung disease	Q43.1	D006627	613711,142623,613712,600155	204739008,253780003	C3888239,C1838564,C3150974,C3150975
+histidinemia	Histidinemia	E70.41	D000592	235800	124628005,410058007	C0220992
+histiocytosis-lymphadenopathy-plus-syndrome	Histiocytosis-lymphadenopathy plus syndrome		D015614	602782	711159002	C1864445
+hivep2-related-intellectual-disability	HIVEP2-related intellectual disability		D008607	616977		C4310771
+holocarboxylase-synthetase-deficiency	Holocarboxylase synthetase deficiency	D81.818	D028922	253270	15307001	C0268581
+holt-oram-syndrome	Holt-Oram syndrome		D006330,D038062	142900	19092004	C0265264
+homocystinuria	Homocystinuria	E72.12,E72.11	D006712	236200,236250,250940,236270,277410	11282001,24308003,28093001,360373000	C1856058,C1848553,C0751202,C0019880
+horizontal-gaze-palsy-with-progressive-scoliosis	Horizontal gaze palsy with progressive scoliosis		D012600,D015785	607313	702381007	C4551964
+hsd10-disease	HSD10 disease		D028361	300438	791000124107,801000124108	C3266731
+huntingtons-disease	Huntington's disease	G10	D006816	143100	230299004,58756001,230300007	C0751208,C0020179
+huntingtons-disease-like-syndrome	Huntington's disease-like syndrome		D006816,D020271	604802,606438,607136,603218	702376003	C1864112,C1846707,C1847987
+hutchinson-gilford-progeria-syndrome	Hutchinson-Gilford progeria syndrome		D011371	176670	238870004	C0033300,C2750285
+hyaline-fibromatosis-syndrome	Hyaline fibromatosis syndrome		D057770	228600	238861002,238867003	C2745948
+hyperferritinemia-cataract-syndrome	Hyperferritinemia-cataract syndrome		D019189	600886	702398007	C1833213
+hyperkalemic-periodic-paralysis	Hyperkalemic periodic paralysis	G72.3	D020513	170500	304737009	C0238357
+hyperlysinemia	Hyperlysinemia	E72.3	D020167	268700,238700	341536001,342553006,111397004,66002008,340519003,58558003	C0268553,C0268556
+hypermanganesemia-with-dystonia	Hypermanganesemia with dystonia		D008664	617013,613280	702377007	C4310765
+hypermethioninemia	Hypermethioninemia		D000592	250850,613752,606664	124283007,43123004	C0268621,C3151058,C1847720
+hyperparathyroidism-jaw-tumor-syndrome	Hyperparathyroidism-jaw tumor syndrome		D049950	145001	702378002	C1704981
+hyperphosphatemic-familial-tumoral-calcinosis	Hyperphosphatemic familial tumoral calcinosis		D054559	617994,617993,211900	860796007,20165001,61778004	C4693864,C4693863,C4692564
+hyperprolinemia	Hyperprolinemia		D000592	239510,239500	59655002	C0268529,C2931835
+hypertension	Hypertension	I10	D000075222	608742,610262,607329,610261,610948,604329,611014,145500,603918	38341003,59621000	C0085580
+hypochondrogenesis	Hypochondrogenesis	Q77.0	D003095,D010009	200610	205483007,254061001	C0542428,C0220685
+hypochondroplasia	Hypochondroplasia	Q77.4	D004392	146000	205468002	C0410529
+hypochromic-microcytic-anemia-with-iron-overload	Hypochromic microcytic anemia with iron overload		D000747	206100	711161006	C3806153
+hypohidrotic-ectodermal-dysplasia	Hypohidrotic ectodermal dysplasia	Q82.4	D053359,D053358,D053360	305100,614941,224900,129490,614940	27025001,7731005,239007005	C0162359,C3887494,C3888065
+hypokalemic-periodic-paralysis	Hypokalemic periodic paralysis	G72.3	D020514	170400,613345	82732003	C2750061,C0238358,C3714580
+hypomagnesemia-with-secondary-hypocalcemia	Hypomagnesemia with secondary hypocalcemia		D006996	602014	711151004	C1865974
+hypomyelination-and-congenital-cataract	Hypomyelination and congenital cataract		D020279	610532	702379005	C1864663
+hypomyelination-with-brainstem-and-spinal-cord-involvement-and-leg-spasticity	Hypomyelination with brainstem and spinal cord involvement and leg spasticity		D056784	615281		C4755254
+hypophosphatasia	Hypophosphatasia		D007014	241510,241500,146300	190859005,360792001,30174008,20756002,55236002	C0020630,C0268412,C0268413,C0220743
+hystrix-like-ichthyosis-with-deafness	Hystrix-like ichthyosis with deafness		D007057	602540	254173004	C1865234
+ichthyosis-with-confetti	Ichthyosis with confetti		D016113	609165	703504006	C1836681
+idiopathic-infantile-hypercalcemia	Idiopathic infantile hypercalcemia		D006934	143880,616963	34225008	C4329374
+idiopathic-inflammatory-myopathy	Idiopathic inflammatory myopathy		D009220	147421,160750	702380008	C0027121,C0238190
+idiopathic-pulmonary-fibrosis	Idiopathic pulmonary fibrosis	J84.112,J84.116,J84.10,J84.117,J84.113,J84.11,J84.111,J84.115,J84.114	D054990	178500	700250006,426437004	C1800706
+imerslund-grasbeck-syndrome	Imerslund-Gräsbeck syndrome		D000749	261100	26333003	C4016819
+immune-dysregulation-polyendocrinopathy-enteropathy-x-linked-syndrome	Immune dysregulation, polyendocrinopathy, enteropathy, X-linked syndrome		D040181	304790	237618001	C0342288
+inclusion-body-myopathy-2	Inclusion body myopathy 2		D018979	605820	702382000	C1853926
+inclusion-body-myopathy-with-early-onset-paget-disease-and-frontotemporal-dementia	Inclusion body myopathy with early-onset Paget disease and frontotemporal dementia		D010001,D057180,D018979	615424,615422,167320	703544004	C1833662
+incontinentia-pigmenti	Incontinentia pigmenti	Q82.3	D007184	308300	367520004	C0021171
+infantile-neuroaxonal-dystrophy	Infantile neuroaxonal dystrophy		D019150	256600	230365004,52713000	C0270724
+infantile-onset-ascending-hereditary-spastic-paralysis	Infantile-onset ascending hereditary spastic paralysis		D015419,D010264	607225	703543005	C2931441,C0037773
+infantile-onset-spinocerebellar-ataxia	Infantile-onset spinocerebellar ataxia		D020754	271245	129609000	C1849096
+inherited-thyroxine-binding-globulin-deficiency	Inherited thyroxine-binding globulin deficiency		D013959	314200	41300001,2241003	C1839141
+intervertebral-disc-disease	Intervertebral disc disease	M50.9,M51.3,M51,M51.8,M50.3	D055959	603932	77547008	C0158252
+intestinal-pseudo-obstruction	Intestinal pseudo-obstruction	K56.0	D007418	243180,277320,243185,609629,300048	55525008,715201005,235825006	C1864996,C1855733,C2746068
+intrahepatic-cholestasis-of-pregnancy	Intrahepatic cholestasis of pregnancy		D002780	147480	235888006	C3549845
+intranuclear-rod-myopathy	Intranuclear rod myopathy		D017696	161800	129621001	C3711389
+intrauterine-growth-restriction-metaphyseal-dysplasia-adrenal-hypoplasia-congenita-and-genital-anomalies	Intrauterine growth restriction, metaphyseal dysplasia, adrenal hypoplasia congenita, and genital anomalies		D000015	614732	702384004	C1846009
+irak-4-deficiency	IRAK-4 deficiency		D007153	607676	699869003	C1843256
+iron-refractory-iron-deficiency-anemia	Iron-refractory iron deficiency anemia		D018798	206200	722005000	C0085576
+isobutyryl-coa-dehydrogenase-deficiency	Isobutyryl-CoA dehydrogenase deficiency		D000592	611283	445274004	C1969809
+isolated-congenital-asplenia	Isolated congenital asplenia	Q89.01	D013158	271400	726708009	C0685889
+isolated-duane-retraction-syndrome	Isolated Duane retraction syndrome	H50.811,H50.812,H50.81	D004370	604356	60318001	C0013261,C0751083,C0994516
+isolated-ectopia-lentis	Isolated ectopia lentis	H27.119,H27.11,H27.112,H27.111,H27.113	D004479	129600,225100	74969002,65814009	C3541518,C3541474
+isolated-growth-hormone-deficiency	Isolated growth hormone deficiency	D80.0,E23.0	D004393	173100,612781,307200,262400	7990002,2109003,18200000,234533006,237687003	C0271567,C2748571,C0472813,C0342573
+isolated-hyperchlorhidrosis	Isolated hyperchlorhidrosis		D014883	143860	709413001	
+isolated-hyperckemia	Isolated hyperCKemia		D009135	123320	432352001	CN043575
+isolated-lissencephaly-sequence	Isolated lissencephaly sequence	Q04.3	D054221	300067,607432,611603	253147000,715780008	C4551968,C1969029,C0431375
+isolated-pierre-robin-sequence	Isolated Pierre Robin sequence		D010855	261800	4602007	C0031900
+isolated-sulfite-oxidase-deficiency	Isolated sulfite oxidase deficiency		D000592	272300	40873003,715980003	
+isovaleric-acidemia	Isovaleric acidemia	E71.110	D000592	243500	87827003	C0268575
+jackson-weiss-syndrome	Jackson-Weiss syndrome		D003398	123150	709105005	C0795998
+jacobsen-syndrome	Jacobsen syndrome		D054868	147791	4325000	C0795841
+jak3-deficient-severe-combined-immunodeficiency	JAK3-deficient severe combined immunodeficiency		D016511	600802	718107000	C1833275
+jervell-and-lange-nielsen-syndrome	Jervell and Lange-Nielsen syndrome	I45.81	D029593	612347,220400	373905003	C4551509,C2676723,C0022387
+joubert-syndrome	Joubert syndrome		D000015	300804,612285,614424,608629,616784,614970,610688,609583,611560,614464,615665,617121,608091,616781,614815,612291,614615,614465,213300,615636,616654,610188,616490,614173,617120,614844	253175003	C0431399
+junctional-epidermolysis-bullosa	Junctional epidermolysis bullosa	Q81.8	D016109	226650,226700	400140006,399971009,33662006,79855003	C0079301,C0268374,C0079683
+juvenile-idiopathic-arthritis	Juvenile idiopathic arthritis	M08.97,M08.952,M08.061,M08.059,M08.91,M08.239,M08.44,M08.031,M08.831,M08.271,M08.072,M08.459,M08.931,M08.261,M08.221,M08.851,M08.42,M08.069,M08.861,M08.88,M08.051,M08.021,M08.049,M08.839,M08.471,M08.011,M08.21,M08.819,M08.251,M08.25,M08.962,M08.421,M08.959,M08.039,M08.412,M08.89,M08.922,M08.249,M08.95,M08.46,M08.019,M08.2,M08.3,M08.029,M08.429,M08.84,M08.20,M08.86,M08.869,M08.921,M08.241,M08.00,M08.24,M08.969,M08.932,M08.99,M08.06,M08.26,M08.062,M08.40,M08.07,M08.83,M08.02,M08.229,M08.911,M08.48,M08.469,M08.262,M08.822,M08.43,M08.411,M08.4,M08.09,M08.939,M08.012,M08.92,M08.96,M08.05,M08.08,M08.269,M08.452,M08.222,M08.03,M08.219,M08.071,M08.451,M08.01,M08.829,M08.879,M08.912,M08.442,M08.82,M08.80,M08.971,M08.272,M08.449,M08.462,M08.811,M08.47,M08.231,M08.85,M08.849,M08.419,M08.441,M08.94,M08.872,M08.232,M08.842,M08.28,M08.041,M08.461,M08.961,M08.812,M08.8,M08.859,M08.862,M08.942,M08.23,M08.929,M08,M08.919,M08.279,M08.951,M08.852,M08.27,M08.98,M08.022,M08.431,M08.479,M08.22,M08.93,M08.821,M08.45,M08.941,M08.979,M08.972,M08.211,M08.252,M08.04,M08.079,M08.052,M08.439,M08.472,M08.87,M08.949,M08.432,M08.9,M08.422,M08.841,M08.042,M08.032,M08.242,M08.832,M08.81,M08.212,M08.259,M08.90,M08.29,M08.0,M08.871,M08.41	D001171	604302	201796004,239796000,410502007	C1858558
+juvenile-myoclonic-epilepsy	Juvenile myoclonic epilepsy	G40.B19,G40.B01,G40.B11,G40.B09	D020190	607628,254770,613060,614280,607682,611136	6204001	C2751603,C2750887,C2750893,C4013473,C0270853
+juvenile-paget-disease	Juvenile Paget disease		D010001	239000	9723006	C0268414
+juvenile-polyposis-syndrome	Juvenile polyposis syndrome	D12.6	D044483	174900	9273005	C0345893
+juvenile-primary-lateral-sclerosis	Juvenile primary lateral sclerosis		D016472	606353	717964007	C1853396
+juvenile-primary-osteoporosis	Juvenile primary osteoporosis		D010024		240156000	C1866079
+kabuki-syndrome	Kabuki syndrome		D000015	147920,300867	313426007	CN030661,C3275495
+kallmann-syndrome	Kallmann syndrome		D017436	308700,610628,308750,244200,147950	93559003	C3552574,C3552343,C1563719,C3550478,C3552553,C1563720,C0162809
+kaufman-oculocerebrofacial-syndrome	Kaufman oculocerebrofacial syndrome		D000015	244450	722056009	C1855663
+kawasaki-disease	Kawasaki disease	M30.3	D009080	611775	75053002	C0026691
+kbg-syndrome	KBG syndrome		D000015	148050	711156009	C0220687
+kcnb1-encephalopathy	KCNB1 encephalopathy		D001927	616056		C4015119
+kcnk9-imprinting-syndrome	KCNK9 imprinting syndrome		D008607	612292		C2676770
+kearns-sayre-syndrome	Kearns-Sayre syndrome	H49.812,H49.811,H49.813,H49.819,H49.81	D007625	530000	25792000	C0022541
+keratitis-ichthyosis-deafness-syndrome	Keratitis-ichthyosis-deafness syndrome		D007634	242150,148210	239059004,403780007	C1275089,C0265336
+keratoconus	Keratoconus	H18.6	D007640	609271,614623,614628,614622,608932,148300,614629,608586	65636009	C1835677
+keratoderma-with-woolly-hair	Keratoderma with woolly hair		D009202,D007645,D006201	615821,601214,610476,616099,605676	52564001	C4015202,C1864850,C4014393,C1832600
+kidney-stones	Kidney stones	N20.0	D007669	167030	95570007	CN580796
+kindler-epidermolysis-bullosa	Kindler epidermolysis bullosa		D004820	173650	238836000	C0406557
+kleefstra-syndrome	Kleefstra syndrome		D025063	610253	724207001	C0795833
+klinefelter-syndrome	Klinefelter syndrome	Q98.1,Q98.4,Q98.0	D007713		405769009,22053006,205700008	C0022735
+klippel-feil-syndrome	Klippel-Feil syndrome	Q76.1	D007714	613702,118100,214300	5601008	C1859209,C1861689,C0022738,C3150967
+klippel-trenaunay-syndrome	Klippel-Trenaunay syndrome		D007715	149000	721105004	C0022739
+kniest-dysplasia	Kniest dysplasia		D003095,D010009	156550	53974002	C0265279
+knobloch-syndrome	Knobloch syndrome		D012164	267750	703542000	C4551775
+koolen-de-vries-syndrome	Koolen-de Vries syndrome		D025063	610443	717338006	C1864871
+krabbe-disease	Krabbe disease	E75.23	D007965	245200	192782005,189979005,41142009	C0023521
+kuskokwim-syndrome	Kuskokwim syndrome		D001176	259450	702447002	C1850168
+l1-syndrome	L1 syndrome		D015419	304100,307000,303350	716996008,838441009,302882002,71779008	C0795953,C0265216,C1839909,CN118845
+lacrimo-auriculo-dento-digital-syndrome	Lacrimo-auriculo-dento-digital syndrome		D019465	149730	23817003	C0265269
+lactate-dehydrogenase-deficiency	Lactate dehydrogenase deficiency		D002239	614128,612933	124141008,237982007,55783001,124116001,124115002	C3279904,C2931743
+lactose-intolerance	Lactose intolerance	E73.0,E73.8,E73.1,E73,E73.9	D007787	223100,223000	38032004,5388008,267425008	C0268181,C0268179
+lafora-progressive-myoclonus-epilepsy	Lafora progressive myoclonus epilepsy		D020192	254780	230425004	C0751783
+laing-distal-myopathy	Laing distal myopathy		D049310	160500	193230001	C4552004
+lama2-related-muscular-dystrophy	LAMA2-related muscular dystrophy		D009136	607855	111503008	C1842898,C1263858
+lamellar-ichthyosis	Lamellar ichthyosis	Q80.2	D017490	601277,242300,604777,606545	254163001,205550003,403777006	C1832550,C3539888,C1858133,C3553029,C0020758
+langerhans-cell-histiocytosis	Langerhans cell histiocytosis	C96.5,J84.82,C96.6,C96.0	D006646	604856	65399007	C0019621
+langer-mesomelic-dysplasia	Langer mesomelic dysplasia		D009139	249700	38494008	C0432230
+laron-syndrome	Laron syndrome	E34.3	D046150	262500	38196001	C0271568
+larsen-syndrome	Larsen syndrome		D010009	150250	63387002	C0175778
+laryngo-onycho-cutaneous-syndrome	Laryngo-onycho-cutaneous syndrome		D016109	245660	722675000	C1328355
+lateral-meningocele-syndrome	Lateral meningocele syndrome		D008588,D000015	130720	253166000	C1851710
+lattice-corneal-dystrophy-type-ii	Lattice corneal dystrophy type II	H18.54	D028226	105120	419087002,419398009	C1622345
+lattice-corneal-dystrophy-type-i	Lattice corneal dystrophy type I	H18.54	D003317	122200	419197009	C1690006
+leber-congenital-amaurosis	Leber congenital amaurosis		D057130	615360,611755,604537,612712,614186,613837,604232,608553,604393,613341,610612,613826,613829,613835,613843,204000,204100,618513	193413001	C1857821,C0339527,C1859844,C2675186,C4013102,C3151202,C1857743,C3280062,C1854260,C1858386,C3715164,C3151192,C1837873,C3151206,C2750063,C1858301,C1858677,C1840284,C2931258
+leber-hereditary-optic-neuropathy	Leber hereditary optic neuropathy	H47.22	D029242	535000,308905	58610003	C0917796
+left-ventricular-noncompaction	Left ventricular noncompaction		D056830	611878,615092,601493,609470,604169,613426,613424,601494,615373,615396	447935001	C1960469,C1858725,C3809288,C1832243,C3715165,C3554496
+legg-calve-perthes-disease	Legg-Calvé-Perthes disease	M91.12,M91.1,M91.10,M91.11	D007873	150600	111255008	C0023234
+legius-syndrome	Legius syndrome		D019080	611431	703541007	C1969623
+leigh-syndrome	Leigh syndrome	G31.82	D007888	161700,256000,220111	29570005	C0023264,CN230159,CN043625,C1857355
+lennox-gastaut-syndrome	Lennox-Gastaut syndrome	G40.811,G40.813,G40.814,G40.812	D065768	606369	230418006	C3807541
+leprosy	Leprosy	A30.3,A30.1,A30.9,A30.5,A30.0	D007918	613223,610988,607572,246300,613407,609888	81004002	C1843632,C1970254,C2750733,C1968668
+leptin-receptor-deficiency	Leptin receptor deficiency		D009767	614963		C3554225
+leri-weill-dyschondrosteosis	Léri-Weill dyschondrosteosis		D009139	127300	17818006	C0265309
+lesch-nyhan-syndrome	Lesch-Nyhan syndrome	E79.1	D007926	300322,300323	124275001,10406007	C0023374
+leukocyte-adhesion-deficiency-type-1	Leukocyte adhesion deficiency type 1		D018370	116920	234582006	C0398738
+leukoencephalopathy-with-brainstem-and-spinal-cord-involvement-and-lactate-elevation	Leukoencephalopathy with brainstem and spinal cord involvement and lactate elevation		D056784	611105	703537008	C1970180
+leukoencephalopathy-with-thalamus-and-brainstem-involvement-and-high-lactate	Leukoencephalopathy with thalamus and brainstem involvement and high lactate		D056784	614924		C4706421
+leukoencephalopathy-with-vanishing-white-matter	Leukoencephalopathy with vanishing white matter		D056784,D020279	603896	447351004	C1858991
+leydig-cell-hypoplasia	Leydig cell hypoplasia		D058490	238320	56212008	C0266432
+liddle-syndrome	Liddle syndrome		D056929	177200	707747007	C0221043
+liebenberg-syndrome	Liebenberg syndrome		D038062	186550		C1861313
+li-fraumeni-syndrome	Li-Fraumeni syndrome	Z15.01	D016864	609265,151623	428850001	C1835398,C0085390,C1836482
+limb-girdle-muscular-dystrophy	Limb-girdle muscular dystrophy		D049288	615356,613530,611307,608807,609115,618129,601287,253601,254110,603511,608099,608423,253600,613818,616052,609308,613157,617232,616094,613158,615352,607155,613723,601954,253700,611588,604286,618135	240056002,240064008,93153005	C0686353
+lipoid-proteinosis	Lipoid proteinosis		D008065	247100	38692000	C0023795
+lissencephaly-with-cerebellar-hypoplasia	Lissencephaly with cerebellar hypoplasia	Q04.3	D054221	257320,611603	715817007,717977003	C1969029,C0796089
+lmna-related-congenital-muscular-dystrophy	LMNA-related congenital muscular dystrophy		D009136	613205		C2750785
+loeys-dietz-syndrome	Loeys-Dietz syndrome		D055947	610168,613795,615582,614816,609192	838364007,446263001	C2674574,C4551955,C3553762,C2697932,C3810012,C3151087
+long-chain-3-hydroxyacyl-coa-dehydrogenase-deficiency	Long-chain 3-hydroxyacyl-CoA dehydrogenase deficiency		D008052	609016	307127004	C3711645
+lowe-syndrome	Lowe syndrome	E72.03	D009800	309000	79385002	C0028860
+lujan-syndrome	Lujan syndrome		D038901	309520	422437002	C0796022
+lung-cancer	Lung cancer	C34.0,C34.90,C34.3,C34.12,C34,C34.00,C34.01,C34.30,C34.91,C34.10,C34.2,C34.02,C34.9,C34.92,C34.1,C34.32,C34.11,C34.31	D008175,D055752,D002289	211980	363358000,830151004	C0684249
+lyme-disease	Lyme disease	A69.2,A69.23,A69.21,A69.20,A69.22	D008193		23502006	
+lymphangioleiomyomatosis	Lymphangioleiomyomatosis	J84.81	D018192	606690	277844007	C0751674
+lymphedema-distichiasis-syndrome	Lymphedema-distichiasis syndrome		D008209	153400	8634009	C0265345
+lynch-syndrome	Lynch syndrome		D003123	120435,114500	716318002	C1333991,C1833477,C1838333,C1333990,C2750471,C2936783
+lysinuric-protein-intolerance	Lysinuric protein intolerance		D020157	222700	71751002,50056009,303852004	C0268647
+lysosomal-acid-lipase-deficiency	Lysosomal acid lipase deficiency		D015223	278000	715923003	C0043208
+mabry-syndrome	Mabry syndrome		D054559	614207,614749,239300	33982008	C1855923,C4551502,C3280153,C3553637
+macrozoospermia	Macrozoospermia		D000072660	243060	236817003	C0403812
+maffucci-syndrome	Maffucci syndrome		D004687	614569	46041001	C0024454
+mainzer-saldino-syndrome	Mainzer-Saldino syndrome		D052177	266920	254092004	C1849437
+majeed-syndrome	Majeed syndrome		D010019	609628	703540008	C1864997
+mal-de-meleda	Mal de Meleda		D007645	248300	239069005	C0025221
+malignant-hyperthermia	Malignant hyperthermia	T88.3	D008305	600467,601888,154276,145600,601887,154275	213026003,405501007	C1866077,C2930980,C1866076,C1838102
+malignant-migrating-partial-seizures-of-infancy	Malignant migrating partial seizures of infancy		D013036	614959	432001000124109	C3554195
+malonyl-coa-decarboxylase-deficiency	Malonyl-CoA decarboxylase deficiency		D008661	248360	124594007	C0342793
+mandibuloacral-dysplasia	Mandibuloacral dysplasia		D008060	608612,248370	109419009	C1837756,C0432291
+mandibulofacial-dysostosis-with-microcephaly	Mandibulofacial dysostosis with microcephaly	Q75.4	D008342	610536	711543008	C1864652
+manitoba-oculotrichoanal-syndrome	Manitoba oculotrichoanal syndrome		D000015	248450	703539006	C1855425
+mannose-binding-lectin-deficiency	Mannose-binding lectin deficiency		D007153	614372	703538003	C3280586
+maple-syrup-urine-disease	Maple syrup urine disease	E71.0	D008375	615135,248600	27718001,31368008,405287008,405288003,54064006	C0024776,C0268568
+marfan-syndrome	Marfan syndrome	Q87.4,Q87.43,Q87.41,Q87.410,Q87.42,Q87.418,Q87.40	D008382	154700	19346006,57201002,234035006	C0024796
+marinesco-sjogren-syndrome	Marinesco-Sjögren syndrome		D013132	248800	80734006	C0024814
+maternally-inherited-diabetes-and-deafness	Maternally inherited diabetes and deafness	E13.69	D003920	520000	237619009	C0342289
+maturity-onset-diabetes-of-the-young	Maturity-onset diabetes of the young		D003920	606391,125850,125851,600496,137920	14052004,717048002,721234004,717182006,609561005	C0342276,C1833382,C0342277,C1838100,C1853297,C2677132,C3150617,C4225299,C1864839,C1853371,C1852093,C4225365,C3150618
+mayer-rokitansky-kuster-hauser-syndrome	Mayer-Rokitansky-Küster-Hauser syndrome		D058489	601076,277000	253828000	C1698581
+mbd5-associated-neurodevelopmental-disorder	MBD5-associated neurodevelopmental disorder		D065886,D025063	156200	719657001	C1969562
+mccune-albright-syndrome	McCune-Albright syndrome	Q78.1	D005359	174800	36517007	C0242292
+mckusick-kaufman-syndrome	McKusick-Kaufman syndrome		D052202,D006330,D017689	236700	702407009	C0948368
+mcleod-neuroacanthocytosis-syndrome	McLeod neuroacanthocytosis syndrome		D054546	300842	724172004	C0398568
+mda5-deficiency	MDA5 deficiency		D007153			
+meckel-syndrome	Meckel syndrome		D000015	603194,607361,614175,249000,614209,612284,611561,613885,611134,267010	29076005	C1969052,C2676790,C1846357,C1864148,C3280036,C3836857,C3280155,C2673885,C1970161,C3714506
+mecp2-duplication-syndrome	MECP2 duplication syndrome		D038901	300260	702816000	C1846058
+mecp2-related-severe-neonatal-encephalopathy	MECP2-related severe neonatal encephalopathy		D001925	300673	711487002	C1968556
+med13l-syndrome	MED13L syndrome		D008607	616789		C4225208
+medium-chain-acyl-coa-dehydrogenase-deficiency	Medium-chain acyl-CoA dehydrogenase deficiency	E71.311	D008052	201450	128596003	C0220710
+medullary-cystic-kidney-disease-type-1	Medullary cystic kidney disease type 1	Q61.5	D007674	174000	726017001	C1868139
+meesmann-corneal-dystrophy	Meesmann corneal dystrophy	H18.52	D053559	122100	1674008	C0339277
+megacystis-microcolon-intestinal-hypoperistalsis-syndrome	Megacystis-microcolon-intestinal hypoperistalsis syndrome		D005767	155310	253781004	C5542316,C5543636,C5543476,C5543513
+megalencephalic-leukoencephalopathy-with-subcortical-cysts	Megalencephalic leukoencephalopathy with subcortical cysts		D020279	604004,613926,613925	703536004	CN034246,C1858854
+megalencephaly-capillary-malformation-syndrome	Megalencephaly-capillary malformation syndrome		D054079,D058627	602501	703370002	C1865285
+megalencephaly-polymicrogyria-polydactyly-hydrocephalus-syndrome	Megalencephaly-polymicrogyria-polydactyly-hydrocephalus syndrome		D065706,D017689,D058627,D006849	615938,615937,603387	722036008	C4012727,C4014742,C4014738
+megdel-syndrome	MEGDEL syndrome	E71.111	D008052	614739	711409002	C4040739
+meier-gorlin-syndrome	Meier-Gorlin syndrome		D004392	613803,224690,613805,613800,613804	703508009	C3151126,C3151113,C3151097,C3151120,C1868684
+melanoma	Melanoma	C43	D008545	615134,608035,615848,609048,613972,613099,614456,155600,612263,155601	830150003,372244006,830195005	C0025202,C0151779,C1512419
+melnick-needles-syndrome	Melnick-Needles syndrome		D010009	309350	13449007	C0025237
+melorheostosis	Melorheostosis		D008557	155950	44697002	C3149631
+menkes-syndrome	Menkes syndrome		D007706	304150,309400	59178007	C0022716
+metachromatic-leukodystrophy	Metachromatic leukodystrophy	E75.25	D007966	250100,249900	68390005,44359008,40802007,396338004,24326000,238031009	C0268262,C0023522
+metatropic-dysplasia	Metatropic dysplasia		D004392	156530	22764001	C0265281
+methemoglobinemia-beta-globin-type	Methemoglobinemia, beta-globin type	D74.0	D008708	141900	267550008	C1840779
+methylmalonic-acidemia	Methylmalonic acidemia	E71.120	D008661	251100,251000,251120,277410,251110	73843004,82245003,42393006,69614003	C1855109,C1855114,C1855102,C0268583,C1855100
+methylmalonic-acidemia-with-homocystinuria	Methylmalonic acidemia with homocystinuria		D000592	614857,277400,277410,277380	4409006	C1848561,C1848578,C1848552,C3553915
+mevalonate-kinase-deficiency	Mevalonate kinase deficiency		D054078	260920,610377	124327008,234538002	C0398691,C1959626
+microcephalic-osteodysplastic-primordial-dwarfism-type-ii	Microcephalic osteodysplastic primordial dwarfism type II		D004392	210720	254103003	C0432246
+microcephaly-capillary-malformation-syndrome	Microcephaly-capillary malformation syndrome		D054079,D008831	614261	703369003	C3280296
+microcephaly-seizures-and-developmental-delay	Microcephaly, seizures, and developmental delay		D065886	613402		C3150667
+microphthalmia	Microphthalmia	Q11.2	D008850	613703,251505,611040,613094,212550,610092,611638,605738,300345,611038,615145,156850,615113,613517,610093,613704,251600,156900	15987151000119103,61142002	C0026010
+microphthalmia-with-linear-skin-defects-syndrome	Microphthalmia with linear skin defects syndrome		D008850	309801	721879006	C0796070
+microvillus-inclusion-disease	Microvillus inclusion disease		D008286	251850	235729009	C0341306
+migraine	Migraine	G43	D020326,D020325	607498,609179,607508,611706,609570,157300,609670,610208,607516,300125,610209,613656,607501	37796009	C3887485
+miller-dieker-syndrome	Miller-Dieker syndrome		D054221	247200	253148005	C0265219
+miller-syndrome	Miller syndrome		D003394	263750	66038001	C0265257
+milroy-disease	Milroy disease	Q82.0	D008209	153100	399889006	C1704423
+mitochondrial-complex-i-deficiency	Mitochondrial complex I deficiency		D028361	252010	725046003,237988006	
+mitochondrial-complex-iii-deficiency	Mitochondrial complex III deficiency		D028361	615159,615160,615453,615157,615158,124000	709414007	C3554605,C3554606,C3554608,C3541471,C4014440,C3554607,C3809553
+mitochondrial-complex-v-deficiency	Mitochondrial complex V deficiency		D028361	614053,615228,614052,604273	237992004	C3808899
+mitochondrial-encephalomyopathy-lactic-acidosis-and-stroke-like-episodes	Mitochondrial encephalomyopathy, lactic acidosis, and stroke-like episodes	E88.41	D017241	540000	39925003	C0162671
+mitochondrial-membrane-protein-associated-neurodegeneration	Mitochondrial membrane protein-associated neurodegeneration		D019150	614298	709415008	C3280371
+mitochondrial-neurogastrointestinal-encephalopathy-disease	Mitochondrial neurogastrointestinal encephalopathy disease	E88.49	D028361	613662,612075,603041	124273008	C3150914,C2749861,C4551995
+mitochondrial-trifunctional-protein-deficiency	Mitochondrial trifunctional protein deficiency		D008052	609015	237999008	C1969443
+miyoshi-myopathy	Miyoshi myopathy		D049310	613319,254130	111506000	C4551973,C2750076
+mn1-c-terminal-truncation-syndrome	MN1 C-terminal truncation syndrome		D000015	618774		C3551915
+molybdenum-cofactor-deficiency	Molybdenum cofactor deficiency		D020739	252150,615501,252160	29692004	C1854990,C1854989,C1854988,C0268119
+monilethrix	Monilethrix		D056734	158000	69488000	C0546966
+monoamine-oxidase-a-deficiency	Monoamine oxidase A deficiency		D040181,D008607	300615	718210003	C0796275
+mosaic-variegated-aneuploidy-syndrome	Mosaic variegated aneuploidy syndrome		D000782	614114,257300	700056005	C1850343,C3279843
+mowat-wilson-syndrome	Mowat-Wilson syndrome		D006627,D000015	235730	703535000	C1856113
+moyamoya-disease	Moyamoya disease	I67.5	D009072	608796,607151,252350,614042	69116000	C3279690,C0026654,C1846689
+mpv17-related-hepatocerebral-mitochondrial-dna-depletion-syndrome	MPV17-related hepatocerebral mitochondrial DNA depletion syndrome		D028361	256810	237995002	C1850406
+mucolipidosis-ii-alpha-beta	Mucolipidosis II alpha/beta	E77.0	D009081	252500	70199000	C2673377
+mucolipidosis-iii-alpha-beta	Mucolipidosis III alpha/beta	E77.0	D009081	252600	65764006	C0033788
+mucolipidosis-iii-gamma	Mucolipidosis III gamma	E77.0	D009081	252605	65764006	C1854896
+mucolipidosis-type-iv	Mucolipidosis type IV	E75.11	D009081	252650	725296006	C0238286
+mucopolysaccharidosis-type-iii	Mucopolysaccharidosis type III	E76.22	D009084	252900,252920,252930,252940	75238000,59990008,88393000,41572006,15892005	C0086650,C0086649,C0086647,C0086648
+mucopolysaccharidosis-type-ii	Mucopolysaccharidosis type II	E76.1	D016532	309900	5667009,70737009,73146005	C0026705
+mucopolysaccharidosis-type-i	Mucopolysaccharidosis type I	E76.02,E76.0,E76.03,E76.01	D008059	607014,607016,607015	26745009,75610003,73123008	C0023786
+mucopolysaccharidosis-type-iv	Mucopolysaccharidosis type IV	E76.219,E76.210,E76.211,E76.21	D009085	253010,253000	7259005,130197005,378007,238044004	C0086652,C0086651,C0026707
+mucopolysaccharidosis-type-vii	Mucopolysaccharidosis type VII		D016538	253220	124470009,43916004	C0085132
+mucopolysaccharidosis-type-vi	Mucopolysaccharidosis type VI		D009087	253200	52677002	C0026709
+muenke-syndrome	Muenke syndrome		D003398	602849	440350001	C1864436
+mullerian-aplasia-and-hyperandrogenism	Müllerian aplasia and hyperandrogenism		D058489	158330	699275001	C2675014
+multicentric-osteolysis-nodulosis-and-arthropathy	Multicentric osteolysis, nodulosis, and arthropathy		D010014	259600	254151006,254152004	C1850155
+multiminicore-disease	Multiminicore disease		D020512	255320,602771	55133004	C1850674
+multiple-cutaneous-and-mucosal-venous-malformations	Multiple cutaneous and mucosal venous malformations		D017445	600195	699301008	C1838437
+multiple-endocrine-neoplasia	Multiple endocrine neoplasia	Z15.81,E31.20,Z83.41,E31.21,E31.2,E31.22,E31.23	D009377	171400,131100,155240,162300,610755	61808009,46724008,61530001,30664006	C0025269,C0025268,C1833921,C0025267,C1970712
+multiple-epiphyseal-dysplasia	Multiple epiphyseal dysplasia		D010009	120210,132400,600969,226900,607078,600204	59708000,313339007	C1838429,C1847593,C1832998,C1846843,C1838280,C2675767
+multiple-mitochondrial-dysfunctions-syndrome	Multiple mitochondrial dysfunctions syndrome		D028361	615330,614299,605711	720827002	C3809165,C3280378,C3276432
+multiple-myeloma	Multiple myeloma	C90.02,C90.00,C90.01,C90.0	D009101	254500	109989006	C0026764
+multiple-pterygium-syndrome	Multiple pterygium syndrome		D012873	265000,253290	205819008,80773006,60192008	C1854678,C0265261
+multiple-sclerosis	Multiple sclerosis	G35	D009103	126200	192928003,24700007	C1868685
+multiple-sulfatase-deficiency	Multiple sulfatase deficiency		D052517	272200	54898003	C0268263
+multiple-system-atrophy	Multiple system atrophy	G90.3	D019578	146500	230297002,16576004	C3714927
+myd88-deficiency	MyD88 deficiency		D007153	612260	718232007	C2677092
+myh9-related-disorder	MYH9-related disorder	D72.0	D013921	155100	234485006,234484005,236422008	C5200934
+myhre-syndrome	Myhre syndrome		D000015	139210	699316006	C0796081
+myoclonic-epilepsy-myopathy-sensory-ataxia	Myoclonic epilepsy myopathy sensory ataxia		D028361	607459	699328003	C1843852
+myoclonic-epilepsy-with-ragged-red-fibers	Myoclonic epilepsy with ragged-red fibers	E88.42	D017243	545000	68448003,57254004,230426003	C0162672
+myoclonus-dystonia	Myoclonus-dystonia		D009207	159900	439732004	C1834570
+myofibrillar-myopathy	Myofibrillar myopathy		D020914	601419,608810,609524,609452,609200,612954	699269005	C1832370,C2751831,C2678065,C1836050,C3714934,C1837317,C4721886
+myopathy-with-deficiency-of-iron-sulfur-cluster-assembly-enzyme	Myopathy with deficiency of iron-sulfur cluster assembly enzyme		D009135	255125	699268002	C1850718
+myosin-storage-myopathy	Myosin storage myopathy		D009135	608358	699267007	C1842160
+myostatin-related-muscle-hypertrophy	Myostatin-related muscle hypertrophy		D009135	601788	699185005	C2931112
+myotonia-congenita	Myotonia congenita	G71.12	D009224	255700,160800	20305008,726051002,57938005	C0751360,C2936781,C0027127
+myotonic-dystrophy	Myotonic dystrophy	G71.11	D009223	160900,602668	240104008,77956009,195031006	C2931689,C0027126
+n-acetylglutamate-synthase-deficiency	N-acetylglutamate synthase deficiency	E72.29	D056806	237310	57119000	C0268543
+naegeli-franceschetti-jadassohn-syndrome-dermatopathia-pigmentosa-reticularis	Naegeli-Franceschetti-Jadassohn syndrome/dermatopathia pigmentosa reticularis		D004476	161000,125595	239084001,239088003	C0343111,C0406778
+nager-syndrome	Nager syndrome		D003394	154400	35520007	C0265245
+nail-patella-syndrome	Nail-patella syndrome		D009261	161200,137750	22199006	C0027341
+nakajo-nishimura-syndrome	Nakajo-Nishimura syndrome		D056660	256040	702449004	C4746851
+narcolepsy	Narcolepsy	G47.4,G47.421,G47.419,G47.42,G47.411,G47.41,G47.429	D009290	612417,609039,614223,161400,614250,612851,605841	193042000,60380001	C2676275,C1834372,C1853901,C0751362,C3280204,C3280266,C1836907,C2748508
+nearsightedness	Nearsightedness	H52.12,H52.13,H52.10,H52.11,H52.1	D009216	609257,300613,609259,610320,608474,609258,614166,160700,310460,612554,608367,603221,613969,609995,608908,609256,255500,612717,609994	57190000	C0027092
+nemaline-myopathy	Nemaline myopathy	G71.2	D017696	616165,615731,609285,161800,256030,609273,610687,605355,615348,609284	75072002	C4015360,C1854380,C1836448,C1853154,C3711389,C1836472,C0206157,C3809209,C1850569,C3810384,C1836447
+nephrogenic-diabetes-insipidus	Nephrogenic diabetes insipidus	N25.1	D018500	125800,304800	61165007,111395007,81475007	C0162283,C1563706,C1563705
+nephronophthisis	Nephronophthisis		D052177	613820,614845,602088,613550,614844,606966,614377,611498,256100,613824,615382,615862,604387	204958008	C3539071,C3151186,C0687120,C1969092,C3890591,C3150796,C3151188,C1865872,C3809320,C1855681,C1847013,C3541853,C1858392
+netherton-syndrome	Netherton syndrome		D056770	256500	312514006	C0265962
+neuroblastoma	Neuroblastoma		D009447	256700,613013,613014	432328008,87364003	C2751681,C2751682
+neurodevelopmental-disorder-with-or-without-anomalies-of-the-brain-eye-or-heart	Neurodevelopmental disorder with or without anomalies of the brain, eye, or heart		D008607,D001927	616975		C4310772
+neuroferritinopathy	Neuroferritinopathy		D001796	606159	699299001	C1853578
+neurofibromatosis-type-1	Neurofibromatosis type 1	Q85.01,Q85.0,Q85.00	D009456	162200	92824003	C0027831
+neurofibromatosis-type-2	Neurofibromatosis type 2	Q85.03,Q85.02,Q85.0,Q85.00	D016518	101000	92503002	C0027832
+neurohypophyseal-diabetes-insipidus	Neurohypophyseal diabetes insipidus	E23.2	D020790	125700	45369008	C0687720
+neuropathy-ataxia-and-retinitis-pigmentosa	Neuropathy, ataxia, and retinitis pigmentosa	E88.49	D028361	551500	237984008	C1328349
+neutral-lipid-storage-disease-with-myopathy	Neutral lipid storage disease with myopathy		D008052	610717	699315005	C1853136
+ngly1-congenital-disorder-of-deglycosylation	NGLY1-congenital disorder of deglycosylation		D002239	615273		C3808991
+nicolaides-baraitser-syndrome	Nicolaides-Baraitser syndrome		D008607,D000015	601358	401046009	C1303073
+niemann-pick-disease	Niemann-Pick disease	E75.240,E75.249,E75.248,E75.24,E75.242,E75.241,E75.243	D009542	257200,607616,257220,607625	18927009,39390005,66751000,58459009,73399005,52165006	C0268243,C2675646,C0220756,C0268242,C0268247,C3179455,C1843366,C0028064
+nijmegen-breakage-syndrome	Nijmegen breakage syndrome		D049932	251260	234638009	C0398791
+non-alcoholic-fatty-liver-disease	Non-alcoholic fatty liver disease	K75.81	D065626	613282,613387	197315008	C3150651,C2750440
+nonbullous-congenital-ichthyosiform-erythroderma	Nonbullous congenital ichthyosiform erythroderma		D016113	601277,612281,617320,604777,242100,606545,615023,615024	267372009	C3554355,C1832550,C3539888,C2677065,C4310621,C3888093,C1858133,C3554349
+nonketotic-hyperglycinemia	Nonketotic hyperglycinemia	E72.51	D020158	605899	51097006,67845009,237939006,63329001,303092001	C0751748
+nonsyndromic-congenital-nail-disorder-10	Nonsyndromic congenital nail disorder 10	Q84.5,L60.1	D054039	161050	88103004,75789001	C0406443
+nonsyndromic-hearing-loss	Nonsyndromic hearing loss	H91.8X1,H90.0,H91.8,H91.8X2,H91.91,H90.1,H91.93,H91.92,H90.2,H90.8,H91.9,H91.8X3,H90.3,H90.72,H90.11,H90.71,H90.12,H90.6,H90.4,H90.42,H90.5,H90.41,H90,H91.90,H91.8X,H91.8X9,H90.7	D003638,D034381	609006,601868,607239,602459,609823,300030,300066,610265,603720,607084,600316,603010,603098,607197,304500,605192,220290,601386,601544,607683,600994,602092,604060,600060,606705,601316,601317,606346,600974,600101,608394,580000,601369,604717,601543,300914,603629,304400,607821,600652,600965,601412,601071,300614,607841	8531006,48758008,343087000,60700002,95820000,95821001,44057004	CN043651,C0236038,CN043648
+nonsyndromic-holoprosencephaly	Nonsyndromic holoprosencephaly	Q04.2	D016142	236100,609637,609408,142946,142945,610829,605934,610828,157170	253138008,253137003,30915001,253136007	C0079541
+nonsyndromic-paraganglioma	Nonsyndromic paraganglioma		D010235	171300	716857003	C0031511
+noonan-syndrome	Noonan syndrome	Q87.1	D009634	605275,616564,616559,163950,613224,611553,609942,615355,610733,613706	205824006	C3150970,C1854469,C4225282,C1969057,C4551602,C1853120,C4225280,C2750732,C3809233,C0028326,C1860991
+noonan-syndrome-with-multiple-lentigines	Noonan syndrome with multiple lentigines		D044542	151100,611554,613707	111306001,45167004	C3150971,C4551484,C1969056,C0175704
+norrie-disease	Norrie disease		D015785	310600	15228007	C0266526
+north-american-indian-childhood-cirrhosis	North American Indian childhood cirrhosis		D008103	604901	699189004	C1858051
+obsessive-compulsive-disorder	Obsessive-compulsive disorder	F42.9,F42,F42.4,F42.3,F42.8,F42.2	D009771	164230	191736004	C0028768
+ochoa-syndrome	Ochoa syndrome		D000015	236730	236533008	C0403555
+ocular-albinism	Ocular albinism	E70.311,E70.319,E70.318,E70.310,E70.31	D016117	606952,300650,300500	26399002,78642008	C0268505,C1845069,C0342684
+oculocutaneous-albinism	Oculocutaneous albinism	E70.320,E70.329,E70.321,E70.32,E70.328	D016115	203100,113750,615312,615179,606952,606574,203290,203200	6483008,63844009,26336006,63450009,11160000	C0342683,C4551504,C3888401,C1847024,C3808786,C1847836,C0078918,C0268495,C0268494
+oculodentodigital-dysplasia	Oculodentodigital dysplasia		D004476	164200	254138001,38215007,254139009	C0812437
+oculofaciocardiodental-syndrome	Oculofaciocardiodental syndrome		D008850,D015785	300166	699300009	C1846265
+oculopharyngeal-muscular-dystrophy	Oculopharyngeal muscular dystrophy	G71.0	D039141	164300	77097004	C0270952
+ohdo-syndrome-maat-kievit-brunner-type	Ohdo syndrome, Maat-Kievit-Brunner type		D000015	300895	699297004	C3698541
+ohdo-syndrome-say-barber-biesecker-young-simpson-variant	Ohdo syndrome, Say-Barber-Biesecker-Young-Simpson variant		D000015	603736	699298009	C1863557
+ollier-disease	Ollier disease	Q78.4	D004687	166000	268274005	C0014084
+omenn-syndrome	Omenn syndrome	D81.2	D016511	603554	307650006,722067005	C2700553
+ophthalmo-acromelic-syndrome	Ophthalmo-acromelic syndrome		D000853	206920	703403003	C0599973
+opioid-addiction	Opioid addiction	F11.21,F11.222,F11.229,F11.281,F11.22,F11.221,F11.259,F11.24,F11.20,F11.251,F11.28,F11.23,F11.282,F11.288,F11.29,F11.220,F11.2,F11.25,F11.250	D009293	610064	75544000,288861000119108	C1864733
+opitz-g-bbb-syndrome	Opitz G/BBB syndrome		D040181,D004062	145420,300000	81771002	C2936904,CN032444,CN263119
+optic-atrophy-type-1	Optic atrophy type 1	H47.22,H47.212,H47.211,H47.21,H47.213,H47.219	D029241	165500	2065009,838307002	C0338508
+oral-facial-digital-syndrome	Oral-facial-digital syndrome		D009958	300484,165590,258860,277170,174300,608518,612913,258850,311200,252100,258865	52868006	C0796101,C0406726,C0406727,C1510460,C1868118,C0029294,C2745997
+ornithine-transcarbamylase-deficiency	Ornithine transcarbamylase deficiency	E72.29	D020163	311250	80908008	C0268542
+ornithine-translocase-deficiency	Ornithine translocase deficiency	E72.4	D056806	238970	30287008	C0268540
+osteoarthritis	Osteoarthritis	M15.0,M15.4,M15	D010003	610839,140600,607850,612400,612401,165720	396275006	C3887876
+osteogenesis-imperfecta	Osteogenesis imperfecta	Q78.0	D010013	613982,615220,610682,166210,617952,166220,166200,616229,616507,610967,613849,610968,259420,613848,610915,615066,301014,259440,614856	254110009,205497004,385483009,86470003,205496008,78314001,385482004	C1853162,C3553887,C3279564,C3151211,C0268362,C0268363,C1850169,C3151433,C4746956,C3808844,C4693736,C1970458,C3554428,C3151218,C4015610,C0029434,C2931093,C0023931,C4225301
+osteoglophonic-dysplasia	Osteoglophonic dysplasia		D004392	166250	254144002	C0432283
+osteopetrosis	Osteopetrosis	Q78.2	D010022	612301,166600,259700,611490,259720,259710,611497,259730,600329	254122007,1926006,254121000	C1850127,C1843330,C1850126,C1969093,C1968603,C0345407,C2676766,C3179239,C1969106
+osteoporosis-pseudoglioma-syndrome	Osteoporosis-pseudoglioma syndrome		D010024	259770	254112001	C0432252
+otopalatodigital-syndrome-type-1	Otopalatodigital syndrome type 1		D010009	311300	54036001	C0265251
+otopalatodigital-syndrome-type-2	Otopalatodigital syndrome type 2		D010009	304120	42432003	C1844696
+otospondylomegaepiphyseal-dysplasia	Otospondylomegaepiphyseal dysplasia		D003095	215150	254060000	C5551484,C1848488
+otulipenia	Otulipenia		D056660	617099		C4310614
+ovarian-cancer	Ovarian cancer	C56,C56.9,C56.1,C56.2	D010051	612555,614291,167000,613399,604370,607893	363443007	C1140680
+pachyonychia-congenita	Pachyonychia congenita		D053549	167210,615726,167200,615728	39427000	C1721007,C0265334,C3714949,C1706595
+pacs1-syndrome	PACS1 syndrome		D008607,D007805	615009		C3554343
+paget-disease-of-bone	Paget disease of bone	M88.869,M88.85,M88.819,M88.842,M88.81,M88.879,M88.86,M88.8,M88.0,M88.841,M88.862,M88.811,M88.831,M88.829,M88.851,M88.1,M88.859,M88.852,M88.849,M88.871,M88.812,M88.872,M88.9,M88.839,M88.83,M88.861,M88.832,M88.88,M88,M88.822,M88.87,M88.89,M88.821,M88.82,M88.84	D010001	602080,167250,239000,606263	2089002	C0268414,C0029401,C4085250,C4085251,C4085252
+pallister-hall-syndrome	Pallister-Hall syndrome		D054975	146510	56677004	C0265220
+pallister-killian-mosaic-syndrome	Pallister-Killian mosaic syndrome		D025063	601803	9527009	C0265449
+palmoplantar-keratoderma-with-deafness	Palmoplantar keratoderma with deafness		D007645	148350	722203001	C1835672
+pantothenate-kinase-associated-neurodegeneration	Pantothenate kinase-associated neurodegeneration	G23.0	D006211	234200,607236	2992000	C0018523
+paramyotonia-congenita	Paramyotonia congenita		D020967	168300	41574007	C0221055
+parathyroid-cancer	Parathyroid cancer	C75.0	D010282	608266	363481002	C0687150
+parkes-weber-syndrome	Parkes Weber syndrome		D054079	608354	234143003	C5574870
+parkinsons-disease	Parkinson's disease	G20	D010300	602404,614203,607060,300557,613643,610297,613164,556500,605543,168600,612953,614251,605909,260300,606852,168601,606324,600116,607688	49049000	C3160718,C1838867,C4083045,C1868595,C2751012,C1847360,C3280133,C1868675,C1853202,C2751842,C1846862,C3280271,C3150899,C1854182,C1850100,C1845165,C1865581,C1853445,C1853833
+paroxysmal-extreme-pain-disorder	Paroxysmal extreme pain disorder		D010148	167400	699190008	C1833661
+paroxysmal-nocturnal-hemoglobinuria	Paroxysmal nocturnal hemoglobinuria	D59.5	D006457	311770	1963002	C0024790
+partington-syndrome	Partington syndrome		D038901	309510	702412005	C0796250
+pdgfra-associated-chronic-eosinophilic-leukemia	PDGFRA-associated chronic eosinophilic leukemia		D017681	607685	128835008,188733003	C0206141
+pdgfrb-associated-chronic-eosinophilic-leukemia	PDGFRB-associated chronic eosinophilic leukemia		D017681	131440	190055003,128835008,188733003,413836008	C1851585
+pearson-syndrome	Pearson syndrome		D028361	557000	237985009	C0342784
+peeling-skin-syndrome-2	Peeling skin syndrome 2		D003873	609796	709416009	C1853354
+pelizaeus-merzbacher-disease	Pelizaeus-Merzbacher disease		D020371	312080	64855000	C0205711
+pelizaeus-merzbacher-like-disease-type-1	Pelizaeus-Merzbacher-like disease type 1		D020279	608804	870287007,717042001	C1837355
+pendred-syndrome	Pendred syndrome	E07.1	D006044,D006319	274600	70348004	C0271829
+periventricular-heterotopia	Periventricular heterotopia		D054091	608097,608098,617201,300049	253150002	C2678104
+permanent-neonatal-diabetes-mellitus	Permanent neonatal diabetes mellitus	P70.2	D003920	260370,606176	609565001	C1833104,C3891828
+peroxisomal-acyl-coa-oxidase-deficiency	Peroxisomal acyl-CoA oxidase deficiency		D018901,D008052	264470	238069004	C1849678
+perrault-syndrome	Perrault syndrome		D023961,D006319	614926,615300,233400,614129,616138	93466004	C3809105,C0685838,C4015307,C3554105
+perry-syndrome	Perry syndrome		D020734	168605	699184009	C1868594
+persistent-mullerian-duct-syndrome	Persistent Müllerian duct syndrome		D058490	261550	702358005	C1849930
+peters-anomaly	Peters anomaly	Q13.4	D003318	604229	204153003	C4310623,C0344559,C1866560,C1842031
+peters-plus-syndrome	Peters plus syndrome		D015785	261540	449817000	C0796012
+peutz-jeghers-syndrome	Peutz-Jeghers syndrome	Q85.8	D010580	175200	54411001	C0031269
+pfeiffer-syndrome	Pfeiffer syndrome		D000168	101600	70410008	C0220658
+pgm3-congenital-disorder-of-glycosylation	PGM3-congenital disorder of glycosylation		D018981	615816		C4014371
+phenylketonuria	Phenylketonuria	E70.0	D010661	261600	7573000,60590005,297225000	C0751434
+phosphoglycerate-dehydrogenase-deficiency	Phosphoglycerate dehydrogenase deficiency		D000592	601815	303098002	C1866174
+phosphoglycerate-kinase-deficiency	Phosphoglycerate kinase deficiency		D008661	300653	124335006	C1970848,C0684324
+phosphoglycerate-mutase-deficiency	Phosphoglycerate mutase deficiency		D008661	261670	37666005,124675005	C0268149
+phosphoribosylpyrophosphate-synthetase-superactivity	Phosphoribosylpyrophosphate synthetase superactivity		D033461	300661	723454008	C1970827
+piebaldism	Piebaldism		D016116	172800	718122005	C0080024
+pilomatricoma	Pilomatricoma		D018296	132600	44155009,274901004	C0206711
+pitt-hopkins-syndrome	Pitt-Hopkins syndrome		D008607	610954	702344008	C1970431
+platyspondylic-lethal-skeletal-dysplasia-torrance-type	Platyspondylic lethal skeletal dysplasia, Torrance type		D003095,D010009	151210	254047006	C1835437
+plcg2-associated-antibody-deficiency-and-immune-dysregulation	PLCG2-associated antibody deficiency and immune dysregulation		D014581,D007154	614468		C3280914
+pmm2-congenital-disorder-of-glycosylation	PMM2-congenital disorder of glycosylation		D018981	212065	459063003	C0349653
+poikiloderma-with-neutropenia	Poikiloderma with neutropenia		D012873	604173		C1858723
+pol-iii-related-leukodystrophy	Pol III-related leukodystrophy		D020279	607694,614381	721846006,712637001,722064003	CN168056
+polycystic-kidney-disease	Polycystic kidney disease	Q61.3,Z82.71,Q61.2,Q61.19,Q61.1,Q61.11	D007690	613095,263200,173900,600666	28728008,28770003	C0085548,C2751306,C3887964,C0085413,C3149841
+polycystic-lipomembranous-osteodysplasia-with-sclerosing-leukoencephalopathy	Polycystic lipomembranous osteodysplasia with sclerosing leukoencephalopathy		D019636	221770	702347001	C4721893
+polycystic-ovary-syndrome	Polycystic ovary syndrome	E28.2	D011085	184700	830049001,830048009,830054005,69878008,830053004,830052009,830047004	C0032460
+polycythemia-vera	Polycythemia vera	D45	D011087	263300	127066000,109992005,414127000,871540009,128841001	C0032463
+polymicrogyria	Polymicrogyria		D065706	300388,606854,612691,610031	715905006,4945003,438583008,722036008	C3552236,C4013648,C1847352
+pompe-disease	Pompe disease	E74.02	D006009	232300	124462004,274864009	C0751173,C0017921
+pontocerebellar-hypoplasia	Pontocerebellar hypoplasia		D002526	611523,607596,612390,615803,610204,613811,614969,614961,277470,612389,608027,615851,614678,225753,615809	45163000,373666002	C1261175
+popliteal-pterygium-syndrome	Popliteal pterygium syndrome		D000015	119500	66783006	C0265259
+porphyria	Porphyria	E80.29,E80.2,E80.1,E80.21,E80.20,E80.0	D011164	176000,177000,300752,263700,176200,121300,125270,176100	418470004,58275005,22935002,276265003,276263005,44574006,234422006,276262000,51022005,84816006,7425008,238056003	C0268323,C0162565,C2677889,C0162530,C0162531,C0162532,C0032708,C4692546
+potassium-aggravated-myotonia	Potassium-aggravated myotonia		D020967	608390	702355008	C2931826
+potocki-lupski-syndrome	Potocki-Lupski syndrome		D002658,D058674,D008607	610883	734016004	C2931246
+potocki-shaffer-syndrome	Potocki-Shaffer syndrome		D025063	601224	702346005	C1832588
+ppm-x-syndrome	PPM-X syndrome		D038901	300055	702356009	C0035372
+ppp2r5d-related-intellectual-disability	PPP2R5D-related intellectual disability		D008607	616355		C4225354
+prader-willi-syndrome	Prader-Willi syndrome		D011218	176270	89392001	C0032897
+prekallikrein-deficiency	Prekallikrein deficiency		D001778	612423	48976006	C0272339
+prickle1-related-progressive-myoclonus-epilepsy-with-ataxia	PRICKLE1-related progressive myoclonus epilepsy with ataxia		D020191	612437	702326000	C2676254
+primary-carnitine-deficiency	Primary carnitine deficiency	E71.41	D008052	212140	21764004	C0342788
+primary-ciliary-dyskinesia	Primary ciliary dyskinesia		D002925	612518,608646,612650,610852,608647,612649,613193,611884,612274,612444,613807,244400,613808,608644,606763	42402006,86204009	C0008780,C2677085,C3542550,C2678473,C3151136,C1837616,C1970506,C2675228,C2675229,C1847554,C2675867,C3151137,C2676235,C3151460,C4551906,C2750790,C1837615,C1837618
+primary-coenzyme-q10-deficiency	Primary coenzyme Q10 deficiency		D017237	607426,615573,612016,616733,614652,614651,614654,614650,616276	725394006,724575009	
+primary-familial-brain-calcification	Primary familial brain calcification		D001480	615007,213600,616413,618317,615483	110997000	C3554321,C4225335,C4551624,C3809645
+primary-hyperoxaluria	Primary hyperoxaluria	E72.53	D006960	613616,259900,260000	373607009,65520001,40951006,17901006	C3150878,C0268164,C0020501,C0020500,C0268165
+primary-localized-cutaneous-amyloidosis	Primary localized cutaneous amyloidosis		D000686	613955,105250	733729003	C4551501,C3151404
+primary-macronodular-adrenal-hyperplasia	Primary macronodular adrenal hyperplasia		D003480	615954,219080	237778003	C4014803
+primary-myelofibrosis	Primary myelofibrosis		D055728	254450	52967002,443230004,128843003,307651005	C0001815
+primary-spontaneous-pneumothorax	Primary spontaneous pneumothorax	J93.11	D011030	173600	328561000119107	C1868193
+prion-disease	Prion disease	A81.83,A81.0,A81.81,A81.00,A81.09,A81.01,A81.82	D017096	600072,245300,123400,137440	304603007,792004,67155006,840452004,20484008	C0162534,C0022336,C0206042,C1855588,C0017495
+progressive-external-ophthalmoplegia	Progressive external ophthalmoplegia	H49.43,H49.41,H49.42,H49.4,H49.40	D017246	609286,157640,609283,258450	46252003	C0162674,C1834846,C1836460,C1836439
+progressive-familial-heart-block	Progressive familial heart block	Q24.6	D006327	604559,113900,140400	698249005	C1879286,C1970298
+progressive-familial-intrahepatic-cholestasis	Progressive familial intrahepatic cholestasis		D002780	211600,601847,602347	74162007	C3489789,C1865643,C0268312
+progressive-osseous-heteroplasia	Progressive osseous heteroplasia	M61.132,M61.179,M61.17,M61.151,M61.11,M61.122,M61.162,M61.143,M61.129,M61.172,M61.169,M61.18,M61.146,M61.142,M61.13,M61.141,M61.121,M61.119,M61.144,M61.19,M61.161,M61.159,M61.1,M61.15,M61.177,M61.174,M61.131,M61.173,M61.175,M61.145,M61.112,M61.111,M61.171,M61.176,M61.10,M61.16,M61.152,M61.12,M61.139,M61.14,M61.178	D009999	166350	719271000	C0334041
+progressive-pseudorheumatoid-dysplasia	Progressive pseudorheumatoid dysplasia		D010009	208230	254065005	C0432215
+progressive-supranuclear-palsy	Progressive supranuclear palsy	G23.1	D013494	610898,609454,601104	28978003,192976002	C4551863
+prolidase-deficiency	Prolidase deficiency		D056732	170100	360969006,410055005,360994007	C0268532
+proopiomelanocortin-deficiency	Proopiomelanocortin deficiency		D009767	609734	702949005	C1857854
+propionic-acidemia	Propionic acidemia	E71.121	D056693	606054	399149003,124718009,69080001,399087009	
+prostate-cancer	Prostate cancer	C61,D07.5	D011471	611959,300704,615452,608656,609558,611955,604845,610997,611100,601518,608658,611928,609299,610321,605097,603688,611958,300147,614731,602759,611868,609717,607592,176807	399068003	C3539120,C4722327,C1863600,C1970250,C2677821,C2931456
+protein-c-deficiency	Protein C deficiency		D020151	176860,612304	76407009,439274008,441188004,441101007	C2674321
+protein-s-deficiency	Protein S deficiency		D018455	612336	439702007,1563006,441189007,440988005	C3278211
+proteus-syndrome	Proteus syndrome		D016715	176920	23150001	C0085261
+prothrombin-deficiency	Prothrombin deficiency	D68.2	D007020	613679	73975000	C0272317
+prothrombin-thrombophilia	Prothrombin thrombophilia	D68.52	D019851	176930,188050	441421001,441420000,440989002	C0272317
+proximal-18q-deletion-syndrome	Proximal 18q deletion syndrome		D025063	601808		C0432443
+pseudoachondroplasia	Pseudoachondroplasia		D004392	177170	22567005	C0410538
+pseudocholinesterase-deficiency	Pseudocholinesterase deficiency		D008661	177400	360607009,360589003,191397007,418059000	C1283400
+pseudohypoaldosteronism-type-1	Pseudohypoaldosteronism type 1		D011546	177735,264350	43941006	C1449842,C5774176
+pseudohypoaldosteronism-type-2	Pseudohypoaldosteronism type 2		D011546	145260,614495,614496,614491,614492	15689008	C1840389
+pseudoxanthoma-elasticum	Pseudoxanthoma elasticum		D011561	264800,177850	252246005,72744008	C0033847
+psoriatic-arthritis	Psoriatic arthritis	L40.52,L40.59,L40.50,L40.54,L40.51,L40.53,L40.5	D015535	607507	33339001	C1835223
+pulmonary-alveolar-microlithiasis	Pulmonary alveolar microlithiasis	J84.02	D017563	265100	87153008	C0155912
+pulmonary-arterial-hypertension	Pulmonary arterial hypertension	I27.0,I27.21	D065627	615344,615343,615342,178600	78862003,697897003,233944003,233943009	C3809192,C4552070,C3809198,C3888002
+pulmonary-veno-occlusive-disease	Pulmonary veno-occlusive disease		D011668	265450,234810	89420002	C3887658
+pura-syndrome	PURA syndrome		D065886	616158		C4015357
+purine-nucleoside-phosphorylase-deficiency	Purine nucleoside phosphorylase deficiency	D81.5	D016511	613179	60743005	C0268125
+pyle-disease	Pyle disease	Q78.5	D010009	265900	27837003	C0265294
+pyridoxal-5-phosphate-dependent-epilepsy	Pyridoxal 5'-phosphate-dependent epilepsy		D004827	610090	124174008	C1864723
+pyridoxine-dependent-epilepsy	Pyridoxine-dependent epilepsy		D012640	266100	734434007	C1849508
+pyruvate-carboxylase-deficiency	Pyruvate carboxylase deficiency	E74.4	D015324	266150	87694001	C0034341
+pyruvate-dehydrogenase-deficiency	Pyruvate dehydrogenase deficiency		D015325	312170,614111,608782,245349,245348	46683007	C1855553,C0034345,C1855565,C3279841,C1837429,C1839413
+pyruvate-kinase-deficiency	Pyruvate kinase deficiency	D55.2	D000745	266200	124331002	C0340968
+rab18-deficiency	RAB18 deficiency		D000015	212720,614222,615663,600118,614225	722380003	C0796037,C5442005
+rabson-mendenhall-syndrome	Rabson-Mendenhall syndrome		D056731	262190	33559001	C0271695
+rapadilino-syndrome	RAPADILINO syndrome		D001848	266280	702413000	C1849453
+rapid-onset-dystonia-parkinsonism	Rapid-onset dystonia parkinsonism		D020821	128235	702323008	C1868681
+recombinant-8-syndrome	Recombinant 8 syndrome		D025063	179613	718189004	
+recurrent-hydatidiform-mole	Recurrent hydatidiform mole	O01.0	D006828	231090,614293	237249000	C3280352,C3463897
+refsum-disease	Refsum disease	G60.1	D012035	266500	25362006	C0034960
+renal-coloboma-syndrome	Renal coloboma syndrome		D003103,D007674	120330	446449009	C1852759
+renal-hypouricemia	Renal hypouricemia		D015499	220150,612076	236478009	C2677549,C0473219
+renal-tubular-acidosis-with-deafness	Renal tubular acidosis with deafness		D000141	267300	236532003	C0403554
+renal-tubular-dysgenesis	Renal tubular dysgenesis		D007674	267430	702397002	C0266313
+renpenning-syndrome	Renpenning syndrome		D038901	309500	699669001	C0796135
+ren-related-kidney-disease	REN-related kidney disease		D007674	613092	46785007	C2751310
+restless-legs-syndrome	Restless legs syndrome	G25.81	D012148	102300,610438,608831,611185,611242,615197,612853,610439	32914008	
+retinal-arterial-macroaneurysm-with-supravalvular-pulmonic-stenosis	Retinal arterial macroaneurysm with supravalvular pulmonic stenosis	H35.09	D015785	614224		C3280205
+retinitis-pigmentosa	Retinitis pigmentosa	H35.52	D012174	268000	80328002,28835009	C0035334
+retinoblastoma	Retinoblastoma	C69.20,C69.2,C69.22,C69.21	D012175	180200	370967009	C0035335
+rett-syndrome	Rett syndrome	F84.2	D015518	312750	68618008	C0035372
+rhabdoid-tumor-predisposition-syndrome	Rhabdoid tumor predisposition syndrome		D009386	609322,613325		C1836327,C2750074
+rheumatoid-arthritis	Rheumatoid arthritis	M05.022,M05.45,M05.179,M05.651,M05.349,M05.121,M06.83,M05.46,M05.812,M06.839,M05.739,M06.84,M05.551,M05.461,M05.579,M05.112,M05.749,M05.049,M06.07,M05.512,M05.62,M05.31,M05.89,M05.37,M05.362,M05.67,M05.26,M05.572,M06.09,M08.029,M05.01,M05.721,M05.81,M05.731,M05.161,M05.73,M08.062,M05.54,M05.131,M05.24,M05.861,M05.259,M05.44,M08.09,M05.151,M05.431,M05.621,M05.33,M05.752,M05.63,M05.062,M08.03,M06.822,M06.849,M05.3,M05.851,M05.742,M05.079,M05.61,M05.49,M06.86,M05.51,M05.539,M05.87,M05.03,M05.77,M05.562,M05.832,M06.079,M05.412,M06.069,M05.831,M05.00,M06.021,M05.662,M06.831,M05.042,M05.419,M05.119,M05.55,M05.852,M05.43,M05.04,M05.2,M05.312,M08.032,M05.221,M05.07,M05.631,M05.16,M05.57,M05.612,M05.332,M05.071,M05.42,M06.06,M05.452,M05.06,M08.059,M05.341,M05.671,M05.239,M05.839,M05.76,M05.469,M05.069,M05.641,M05.011,M06.87,M05.449,M05.74,M08.021,M06.879,M05.141,M06.862,M05.15,M06.071,M05.122,M05.659,M06.811,M08.039,M06.80,M05.261,M06.051,M05.47,M05.732,M06.871,M05.64,M05.149,M06.89,M08.06,M05.479,M05.85,M05.769,M05.041,M05.522,M05.869,M05.421,M05.061,M05.171,M05.5,M05.321,M05.262,M06.819,M06.042,M05.021,M05.231,M05.41,M05.05,M06.012,M05.66,M08.01,M05.072,M05.722,M06.841,M05.029,M06.02,M05.729,M05.561,M06.832,M05.371,M05.86,M05.611,M05.25,M05.771,M05.819,M05.11,M06.05,M05.53,M05.471,M05.622,M05.50,M06.842,M05.9,M05.14,M05.212,M06.032,M08.04,M05.519,M08.079,M05.441,M05.051,M06.81,M05.172,M06.8,M05.642,M05.329,M05.4,M05.241,M05.541,M06.869,M05.379,M06.061,M08.069,M05.219,M06.812,M08.049,M05.09,M05.142,M08.011,M05.229,M05.56,M05.111,M05.879,M06.01,M05.841,M05.70,M06.04,M06.049,M05.032,M05.571,M08.019,M05.772,M05.531,M05.629,M05.252,M05.29,M05.521,M05.821,M05.279,M05.322,M05.352,M05.712,M05.1,M06.062,M08.07,M05.169,M06.019,M06.08,M05.0,M05.429,M05.272,M05.679,M05.372,M06.03,M05.339,M05.432,M05.7,M05.529,M06.859,M05.559,M05.22,M05.232,M05.52,M05.751,M05.82,M05.822,M05.762,M05.249,M05.222,M05.059,M05.639,M05.849,M05.20,M06.821,M05.75,M05.052,M05.632,M05.459,M06.829,M05.13,M05.319,M05.439,M05.39,M05.669,M06.872,M05.36,M05.842,M06.9,M05.619,M05.649,M05.159,M05.351,M06.039,M05.132,M05.711,M05.872,M08.0,M05.672,M08.061,M05.511,M05.342,M05.10,M05.65,M08.031,M08.072,M06.052,M05.012,M05.32,M08.051,M05.331,M05.859,M05.039,M05.451,M06.00,M06,M05.871,M05.442,M06.82,M05.369,M05.359,M05.60,M05.811,M05.411,M05.569,M05.549,M06.041,M05.269,M05.71,M05.542,M08.00,M06.011,M06.0,M05.661,M08.02,M05.23,M06.072,M05.251,M05.422,M05.21,M05.271,M05.8,M08.012,M08.05,M08.08,M05.532,M06.031,M05.031,M05,M06.059,M05.162,M05.84,M05.72,M05.862,M08.071,M05.779,M05.35,M06.022,M05.27,M05.462,M05.152,M05.17,M05.83,M05.69,M05.139,M05.59,M05.79,M05.19,M05.12,M06.852,M06.85,M06.851,M06.029,M06.861,M08.041,M05.40,M05.761,M05.30,M05.829,M05.129,M06.88,M05.80,M05.02,M05.552,M05.311,M08.022,M05.242,M05.211,M05.741,M05.6,M08.052,M05.34,M08.042,M05.472,M05.652,M05.719,M05.019,M05.759,M05.361	D001172	180300	69896004	C0003873
+rhizomelic-chondrodysplasia-punctata	Rhizomelic chondrodysplasia punctata	E71.540	D018902	600121,215100,222765	56692003	C1857242,C1859133,C1838612
+riboflavin-transporter-deficiency-neuronopathy	Riboflavin transporter deficiency neuronopathy		D010244	211530	699866005	C0796274
+rigid-spine-muscular-dystrophy	Rigid spine muscular dystrophy		D009136	602771		C0410180
+ring-chromosome-14-syndrome	Ring chromosome 14 syndrome		D012303	616606	702345009	C2930916
+ring-chromosome-20-syndrome	Ring chromosome 20 syndrome		D012303		23686004	C0265482
+rippling-muscle-disease	Rippling muscle disease		D020967	606072,600332	709281006	C1832560
+rnase-t2-deficient-leukoencephalopathy	RNAse T2-deficient leukoencephalopathy		D020279	612951	720825005	C2751843
+roberts-syndrome	Roberts syndrome		D000015	268300	48718006	C0392475
+robinow-syndrome	Robinow syndrome		D000015	268310,616331,616894,180700	76520005	C5193143,C4551475,C5399974
+romano-ward-syndrome	Romano-Ward syndrome	I45.81	D029597	192500,613688,603830	20852007	C0023976
+rosacea	Rosacea	L71,L71.8,L71.9	D012393		398909004	
+rothmund-thomson-syndrome	Rothmund-Thomson syndrome		D011038	268400	69093006	C0032339
+rotor-syndrome	Rotor syndrome		D006933	237450	32891000	C0220991
+rrm2b-related-mitochondrial-dna-depletion-syndrome-encephalomyopathic-form-with-renal-tubulopathy	RRM2B-related mitochondrial DNA depletion syndrome, encephalomyopathic form with renal tubulopathy		D017237	612075		
+rubinstein-taybi-syndrome	Rubinstein-Taybi syndrome		D012415	613684,180849	45582004	C4551859,C3150941
+russell-silver-syndrome	Russell-Silver syndrome		D056730	180860	15069006	C0175693
+saddan	SADDAN		D000130	616482	699870002	C2674173
+saethre-chotzen-syndrome	Saethre-Chotzen syndrome		D000168	180750,101400	83015004	C1867146,C0175699
+sandhoff-disease	Sandhoff disease	E75.01	D012497	268800	23849003	C0036161
+satb2-associated-syndrome	SATB2-associated syndrome		D008607	612313		C2676739
+saul-wilson-syndrome	Saul-Wilson syndrome		D004392	618150	723404002	C1300285
+scalp-ear-nipple-syndrome	Scalp-ear-nipple syndrome		D004476	181270	721888002	C1867020
+schimke-immuno-osseous-dysplasia	Schimke immuno-osseous dysplasia		D007153,D010009	242900	723995003	C0877024
+schindler-disease	Schindler disease		D016464	609241,609242	238048001	C1836522,C1836544
+schinzel-giedion-syndrome	Schinzel-Giedion syndrome		D000015	269150	18899000	C0265227
+schizoaffective-disorder	Schizoaffective disorder	F25.8,F25.0,F25.9,F25.1	D011618	181500	68890003	
+schizophrenia	Schizophrenia	F20	D012559	181500	58214004	C0036341
+schwannomatosis	Schwannomatosis	Q85.03	D009442,D012878,D017253	162091,615670	142071000119101,254240003	C1335929,C3810283
+schwartz-jampel-syndrome	Schwartz-Jampel syndrome	G71.13	D010009	255800	29145002	C4551479
+scn8a-related-epilepsy-with-encephalopathy	SCN8A-related epilepsy with encephalopathy		D001925,D004831	614558	431071000124107	C3281191
+seasonal-affective-disorder	Seasonal affective disorder		D016574	608516	247803002	
+senior-loken-syndrome	Senior-Løken syndrome		D057130,D052177	613615,606995,266900,606996,609254,610189	236531005	C1846979,C1857779,C1846980,C1836517,C4551559,C3150877
+sensorineural-deafness-and-male-infertility	Sensorineural deafness and male infertility		D007248	611102	700489002	C1970187
+sepiapterin-reductase-deficiency	Sepiapterin reductase deficiency		D004421	612716	45116002	C0268468
+septo-optic-dysplasia	Septo-optic dysplasia	Q04.4	D025962	182230	7611002	C0338503
+setbp1-haploinsufficiency-disorder	SETBP1 haploinsufficiency disorder		D008607,D007805	616078		C4015141
+severe-congenital-neutropenia	Severe congenital neutropenia	D70.0	D009503	202700,617014,300299,610738,616022,613107,612541,615285	718882006,89655007	C1853118
+sheldon-hall-syndrome	Sheldon-Hall syndrome	Q74.3	D001176	601680	715216008	
+shingles	Shingles	B02.23,B02.3,B02.0,B02.22,B02.33,B02.39,B02,B02.31,B02.8,B02.29,B02.7,B02.34,B02.32,B02.24,B02.30,B02.21,B02.1,B02.9,B02.2	D006562		4740000	
+short-branched-chain-acyl-coa-dehydrogenase-deficiency	Short/branched chain acyl-CoA dehydrogenase deficiency		D000592	610006	444838008	C1864912
+short-chain-acyl-coa-dehydrogenase-deficiency	Short-chain acyl-CoA dehydrogenase deficiency	E71.312	D008052	201470	237998000,124166007	C0342783
+short-qt-syndrome	Short QT syndrome		D001145	609622,609621,609620	698272007	C1865020,C1865018,C1865019
+short-stature-hyperextensibility-hernia-ocular-depression-rieger-anomaly-and-teething-delay	Short stature, hyperextensibility, hernia, ocular depression, Rieger anomaly, and teething delay		D006130	269880	237608006	C0878684
+shprintzen-goldberg-syndrome	Shprintzen-Goldberg syndrome		D003398	182212	719069008	C1321551
+shwachman-diamond-syndrome	Shwachman-Diamond syndrome		D010188,D001855	260400	89454001	C4692625
+sialic-acid-storage-disease	Sialic acid storage disease		D029461	269920,604369	34566007,87074006,238051008	C1096903,C1096902
+sialidosis	Sialidosis		D009081	256550	38795005,124461006	C0023806,C4282398
+sialuria	Sialuria		D008661	269921	238051008	C0342853
+sickle-cell-disease	Sickle cell disease	D57.212,D57.2,D57.811,D57.819,D57.8,D57.219,D57,D57.0,D57.419,D57.02,D57.41,D57.21,D57.40,D57.3,D57.00,D57.812,D57.80,D57.411,D57.412,D57.4,D57.81,D57.20,D57.211,D57.1,D57.01	D000755	603903	417357006,127045008,416180004,127041004,417425009	C0002895
+sick-sinus-syndrome	Sick sinus syndrome	I49.5	D012804	614090,163800,608567	36083008,60423000,233913007	C3279791,C1834144,C1837845
+silver-syndrome	Silver syndrome	G11.4	D015419	270685	39912006,230261006	C0037773,C2931276
+simpson-golabi-behmel-syndrome	Simpson-Golabi-Behmel syndrome		D005877,D000015	300209,312870	439143004	C0796154,C1846175
+sitosterolemia	Sitosterolemia		D008052	210250	65419005,238104009	C0342907
+sjogren-larsson-syndrome	Sjögren-Larsson syndrome		D016111	270200	111303009	C0037231
+slc35a2-congenital-disorder-of-glycosylation	SLC35A2-congenital disorder of glycosylation		D018981	300896		C3806688
+slc4a1-associated-distal-renal-tubular-acidosis	SLC4A1-associated distal renal tubular acidosis		D000141	179800,611590	236461000	CN280572
+small-fiber-neuropathy	Small fiber neuropathy		D000071075	133020	709489006	C3276706
+smith-kingsmore-syndrome	Smith-Kingsmore syndrome		D008607	616638		C4225259
+smith-lemli-opitz-syndrome	Smith-Lemli-Opitz syndrome	E78.72	D019082	270400	43929004	C0175694
+smith-magenis-syndrome	Smith-Magenis syndrome		D058496	182290	401315004	C0795864
+snijders-blok-campeau-syndrome	Snijders Blok-Campeau syndrome		D001072,D008607	618205		
+snyder-robinson-syndrome	Snyder-Robinson syndrome		D002658,D038901	309583	702416008	C0796160
+sost-related-sclerosing-bone-dysplasia	SOST-related sclerosing bone dysplasia		D015576	239100,269500	59763006,17568006	C0432272
+sotos-syndrome	Sotos syndrome	E22.0	D058495	117550	75968004	C0175695
+sox2-anophthalmia-syndrome	SOX2 anophthalmia syndrome		D000853	206900	698851003	C1859773
+spastic-paraplegia-type-11	Spastic paraplegia type 11	G11.4	D015419,D010264	604360	715491000	C1858479,C0037773
+spastic-paraplegia-type-15	Spastic paraplegia type 15	G11.4	D015419	270700	709417000	C1849128,C0037773
+spastic-paraplegia-type-2	Spastic paraplegia type 2	G11.4	D015419,D010264	312920	723622007	C1839264,C0037773
+spastic-paraplegia-type-31	Spastic paraplegia type 31	G11.4	D015419	610250	230260007	C1853247,C0037773
+spastic-paraplegia-type-3a	Spastic paraplegia type 3A	G11.4	D015419	182600	39912006	C2931355,C0037773
+spastic-paraplegia-type-49	Spastic paraplegia type 49		D015419,D009477	615031		C3542549,C0037773
+spastic-paraplegia-type-4	Spastic paraplegia type 4	G11.4	D015419,D010264	182601	230260007	C1866855,C0037773
+spastic-paraplegia-type-5a	Spastic paraplegia type 5A	G11.4	D015419	270800	39912006	C0037773,C1849115
+spastic-paraplegia-type-7	Spastic paraplegia type 7	G11.4	D015419,D010264	607259	715776003	C1846564,C0037773
+spastic-paraplegia-type-8	Spastic paraplegia type 8	G11.4	D015419,D010264	603563	230260007	C1863704,C0037773
+spina-bifida	Spina bifida	Q05,Q07.03,Q05.9,Q05.8,Q07.01,Q05.3,Q05.5,Q05.1,Q05.6,Q76.0,Q05.7,Q05.2,Q05.4,Q05.0	D016135	601634,182940	67531005,61819007	C0027794,C1866558
+spinal-and-bulbar-muscular-atrophy	Spinal and bulbar muscular atrophy		D055534	313200	230253001	C1839259
+spinal-muscular-atrophy	Spinal muscular atrophy	G12.0,G12.1	D009134	271150,253300,253550,253400	5262007,128212001,54280009,85505000,64383006	C0043116,C1838230,C0393538,C0152109
+spinal-muscular-atrophy-with-lower-extremity-predominance	Spinal muscular atrophy with lower extremity predominance		D014897	158600,615290	5262007	C1834690
+spinal-muscular-atrophy-with-progressive-myoclonic-epilepsy	Spinal muscular atrophy with progressive myoclonic epilepsy		D009134,D020191	159950	703524005	C1834569
+spinal-muscular-atrophy-with-respiratory-distress-type-1	Spinal muscular atrophy with respiratory distress type 1		D014897	604320	711483003	C1858517
+spinocerebellar-ataxia-type-1	Spinocerebellar ataxia type 1		D020754	164400	715748006	C0752120
+spinocerebellar-ataxia-type-2	Spinocerebellar ataxia type 2		D020754	183090	715751004	C0752121
+spinocerebellar-ataxia-type-36	Spinocerebellar ataxia type 36		D020754	614153	711158005	C3472711
+spinocerebellar-ataxia-type-3	Spinocerebellar ataxia type 3		D017827	109150	91952008	C0024408
+spinocerebellar-ataxia-type-6	Spinocerebellar ataxia type 6		D020754	183086	715752006	C0752124
+spondylocarpotarsal-synostosis-syndrome	Spondylocarpotarsal synostosis syndrome		D010009	272460	702351004	C1848934
+spondylocostal-dysostosis	Spondylocostal dysostosis		D004413	613686,609813,122600,277300,608681,616566	61367005	C1853296,C1837549,C4083048,C4225279,CN032975,C0265343,C3150942
+spondyloenchondrodysplasia-with-immune-dysregulation	Spondyloenchondrodysplasia with immune dysregulation		D007153,D010009	607944	703523004	C1842763
+spondyloepimetaphyseal-dysplasia-strudwick-type	Spondyloepimetaphyseal dysplasia, Strudwick type		D003095,D010009	184250	702350003	C0700635
+spondyloepiphyseal-dysplasia-congenita	Spondyloepiphyseal dysplasia congenita	Q77.7	D010009	183900	278713008	C2745959
+spondyloperipheral-dysplasia	Spondyloperipheral dysplasia		D003095,D010009	271700	702339001	C0796173
+spondylothoracic-dysostosis	Spondylothoracic dysostosis		D004413	277300,608681	61367005	C0265343
+sporadic-hemiplegic-migraine	Sporadic hemiplegic migraine	G43.401,G43.419,G43.411,G43.409,G43.40,G43.41,G43.4	D020325	602481	230464001	
+srd5a3-congenital-disorder-of-glycosylation	SRD5A3-congenital disorder of glycosylation		D018981	612379		C4317224
+stac3-disorder	STAC3 disorder		D009135	255995	723439002	C1850625
+stargardt-macular-degeneration	Stargardt macular degeneration	H35.53	D008268	600110,248200	70099003,47673003	C1838644,C1855465
+steatocystoma-multiplex	Steatocystoma multiplex	L72.2	D062685	184500	109433009	C0259771
+stevens-johnson-syndrome-toxic-epidermal-necrolysis	Stevens-Johnson syndrome/toxic epidermal necrolysis	L51.3,L51.1	D013262	608579	73442001,124911000119100	
+stickler-syndrome	Stickler syndrome		D003095	184840,614134,108300,604841,609508,154780,614284	33410002,78675000	C2020284,C3279941,C1858084,C1848488,C0265253,C3280342,C0265235
+sting-associated-vasculopathy-with-onset-in-infancy	STING-associated vasculopathy with onset in infancy		D056660	615934	711164003	C4014722
+stormorken-syndrome	Stormorken syndrome		D013921,D000015	185070	711407000	C1861451
+sturge-weber-syndrome	Sturge-Weber syndrome	Q85.8	D013341	185300	19886006	C0038505
+stuve-wiedemann-syndrome	Stüve-Wiedemann syndrome		D010009	601559	254097005	C0796176
+stxbp1-encephalopathy	STXBP1 encephalopathy		D001925,D004831	612164	230429005	C2677326
+subcortical-band-heterotopia	Subcortical band heterotopia		D054221	300067,607432		C1848201
+succinate-coa-ligase-deficiency	Succinate-CoA ligase deficiency		D028361	245400,612073	445275003	C2749864,C3151476
+succinic-semialdehyde-dehydrogenase-deficiency	Succinic semialdehyde dehydrogenase deficiency		D020739	271980	49748000	C0268631
+succinyl-coa3-ketoacid-coa-transferase-deficiency	Succinyl-CoA:3-ketoacid CoA transferase deficiency		D007662	245050	124366000,238004006	C0342792
+sudden-infant-death-with-dysgenesis-of-the-testes-syndrome	Sudden infant death with dysgenesis of the testes syndrome		D013398,D006061	608800	711157000	C1837371
+supravalvular-aortic-stenosis	Supravalvular aortic stenosis	Q25.3	D021921	185500	268185002	C0003499
+surfactant-dysfunction	Surfactant dysfunction	J84.83	D017563	265120,610913,614370,300770	328641000119109	C1968602,C1970470,C3280574,C2677877
+swyer-syndrome	Swyer syndrome	Q97.3	D006061	612965,613762,154230,233420,400044,616067,613080,300018	95218005	CN043561,C2936694
+syngap1-related-intellectual-disability	SYNGAP1-related intellectual disability		D008607	612621		C2675473
+systemic-lupus-erythematosus	Systemic lupus erythematosus	M32	D008180	609939,607965,609903,610927,607279,612254,601744,614420,607967,605480,605218,610065,612251,300809,612253,610066,152700,608437,613145,612378,607966	55464009	C3280742,C1854577,C1970455,C1835919,C2677097,C1866373
+systemic-mastocytosis	Systemic mastocytosis	D47.02	D034721	154800	397016004	C0221013
+systemic-scleroderma	Systemic scleroderma	M34.8,M34.1,M34,M34.0,M34.81,M34.83,M34.9,M34.89,M34.82	D012595	181750	89155008	
+tangier-disease	Tangier disease		D013631	205400	838348004,723579009,15346004	C0039292
+tarsal-carpal-coalition-syndrome	Tarsal-carpal coalition syndrome		D013580	186570	702312009	C1861305
+tay-sachs-disease	Tay-Sachs disease	E75.02	D013661	272800	111385000	C0039373
+t-cell-immunodeficiency-congenital-alopecia-and-nail-dystrophy	T-cell immunodeficiency, congenital alopecia, and nail dystrophy		D016511	601705	720345008	C1866426
+terminal-osseous-dysplasia	Terminal osseous dysplasia		D010009	300244		C1846129
+tetra-amelia-syndrome	Tetra-amelia syndrome	Q73.0	D004480,D000015	618021,273395	702313004	C4747923,C4012268
+tetrahydrobiopterin-deficiency	Tetrahydrobiopterin deficiency	E70.1	D010661	264070,261630,233910,261640	237914002,68724006,45116002,23447005,58256000,276261007	C1849700,C0268467,C0878676,C0268465
+tetrasomy-18p	Tetrasomy 18p		D025063	614290	698849002	C0795868
+thanatophoric-dysplasia	Thanatophoric dysplasia	Q77.1	D013796	187601,187600	29352008,389158007	C1300257,C1868678
+thiamine-responsive-megaloblastic-anemia-syndrome	Thiamine-responsive megaloblastic anemia syndrome		D000749	249270	237617006	C0342287
+thiopurine-s-methyltransferase-deficiency	Thiopurine S-methyltransferase deficiency		D011686,D004342	610460		C0342801
+thrombocytopenia-absent-radius-syndrome	Thrombocytopenia-absent radius syndrome		D038062	274000	85589009	C0175703
+thrombotic-thrombocytopenic-purpura	Thrombotic thrombocytopenic purpura	D69.42	D011697	274150	78129009,373420004	C1268935
+tibial-muscular-dystrophy	Tibial muscular dystrophy		D049310	600334	698846009	C1838244
+tietz-syndrome	Tietz syndrome		D017496	103500	403805009	C0391816
+timothy-syndrome	Timothy syndrome		D008133,D013576,D000015	601005	719907006,699256006	C1832916
+tk2-related-mitochondrial-dna-depletion-syndrome-myopathic-form	TK2-related mitochondrial DNA depletion syndrome, myopathic form		D017240	609560	703527003	C3149750
+tourette-syndrome	Tourette syndrome	F95.2	D005879	137580	5158005	C0040517
+townes-brocks-syndrome	Townes-Brocks Syndrome		D001006,D000015	617466,107480	24750000	C4551481
+transcobalamin-deficiency	Transcobalamin deficiency	D51.2	D008661	275350	237934001	C0342701
+transthyretin-amyloidosis	Transthyretin amyloidosis	E85.82	D028227	105210	398229007,4463009	C2751492
+treacher-collins-syndrome	Treacher Collins syndrome	Q75.4	D008342	154500,613717,248390	82203000	C0242387
+trichohepatoenteric-syndrome	Trichohepatoenteric syndrome		D003968	614602,222470	703406006	C3281289,C1857276
+trichorhinophalangeal-syndrome-type-ii	Trichorhinophalangeal syndrome type II		D015826	150230	41069008	C0023003
+trichorhinophalangeal-syndrome-type-i	Trichorhinophalangeal syndrome type I		D015826	190350	254091006	C0432233
+trichothiodystrophy	Trichothiodystrophy		D054463	601675,234050	403796005,723551003	C5231403,C4017171,C1313961,C1866504,C5562057,C5562058,C4310785,C4225344,C4225420
+trimethylaminuria	Trimethylaminuria	E72.52	D008661	602079	237959005	C0342739
+triosephosphate-isomerase-deficiency	Triosephosphate isomerase deficiency	D55.2	D002239	615512	44641000	C1860808
+triple-a-syndrome	Triple A syndrome		D000309,D007766,D004931	231550	45414006	C0271742
+trisomy-13	Trisomy 13	Q91.6,Q91.7,Q91.5,Q91.4	D000073839		737540008,254268004,21111006	C0152095
+trisomy-18	Trisomy 18	Q91.1,Q91.5,Q91.2,Q91.7,Q91,Q91.4,Q91.6,Q91.0,Q91.3	D000073842		51500006,737541007,254266000	C0152096
+trisomy-x	Trisomy X	Q97.0	D025064		35111009	C0221033
+trnt1-deficiency	TRNT1 deficiency		D000756,D012174	616084,616959		C4310776,C4015172
+troyer-syndrome	Troyer syndrome	G11.4	D015419,D010264	275900	230264003	C0393559,C0037773
+tubb4a-related-leukodystrophy	TUBB4A-related leukodystrophy		D020279	612438		C2676244
+tuberous-sclerosis-complex	Tuberous sclerosis complex	Q85.1	D014402	613254,191100	36025004,7199000	C1854465,C1860707
+tubular-aggregate-myopathy	Tubular aggregate myopathy		D020914	160565	240087000	C4011726
+tumor-necrosis-factor-receptor-associated-periodic-syndrome	Tumor necrosis factor receptor-associated periodic syndrome		D056660	142680	403833009	C1275126
+turner-syndrome	Turner syndrome	Q96.1,Q96,Q96.0,Q96.3,Q96.2,Q96.4,Q96.8,Q96.9	D014424		38804009	C0041408
+type-1-diabetes	Type 1 diabetes	E10,E10.339,E10.610,E10.63,E10.321,E10.341,E10.36,E10.39,E10.622,E10.630,E10.43,E10.11,E10.359,E10.8,E10.65,E10.49,E10.10,E10.621,E10.311,E10.6,E10.62,E10.40,O24.01,E10.9,E10.69,E10.59,E10.641,E10.4,E10.5,E10.31,E10.52,E10.44,E10.64,E10.29,E10.329,E10.349,E10.22,E10.51,E10.351,E10.331,E10.638,O24.012,E10.21,E10.61,E10.618,O24.011,E10.3,E10.628,E10.41,E10.42,O24.019,E10.34,E10.649,O24.013,E10.1,E10.33,E10.620,E10.32,E10.35,E10.2,E10.319	D003922	600321,600318,601941,610155,612522,603266,222100,601388,601666,600319,601942,600320,601208,600883,612520,612622,300136,125852,601318,612521,605598,613006	46635009,870528001	C0011854,C1838260,C1852092,C2675864,C1866040,C1832392
+type-a-insulin-resistance-syndrome	Type A insulin resistance syndrome		D000052,D007333	610549	237651005,24203005	C0342278
+tyrosine-hydroxylase-deficiency	Tyrosine hydroxylase deficiency		D020734	605407	715827001	CN263399,C2673535
+tyrosinemia	Tyrosinemia	E70.21	D020176	276600,276710,276700	190694001,56595005,410056006,413356003,415764005,124536006,75387001,52452006,124287008,271847005,4887000,27373000	C0268623,C0268487,C0268490
+ulcerative-colitis	Ulcerative colitis	K51.5,K51.019,K51.01,K51.312,K51.318,K51.913,K51.518,K51.313,K51.90,K51.314,K51.219,K51.511,K51.20,K51.218,K51.50,K51.91,K51.819,K51.0,K51.214,K51.014,K51.9,K51.011,K51.818,K51.211,K51.814,K51.51,K51.914,K51.919,K51.213,K51.013,K51.018,K51.811,K51.514,K51.2,K51,K51.3,K51.911,K51.81,K51.212,K51.30,K51.31,K51.319,K51.8,K51.813,K51.912,K51.918,K51.21,K51.012,K51.00,K51.311,K51.512,K51.812,K51.80,K51.519,K51.513	D003093	266600	64766004	C0009319
+unc80-deficiency	UNC80 deficiency		D053447,D001927	616801		C4225203
+uncombable-hair-syndrome	Uncombable hair syndrome		D006201	191480,617252,617251	254230001	
+unverricht-lundborg-disease	Unverricht-Lundborg disease		D020194	254800	230423006	C0751785
+uromodulin-associated-kidney-disease	Uromodulin-associated kidney disease		D007674	162000	46785007,723373006	C4551496
+usher-syndrome	Usher syndrome		D052245	611383,602083,276901,601067,276900,606943,614869,276904,276902,612632,605472,614504,602097,614990	232057003,73119000,57838006	C1848604,C1865865,C3148929,C3539124,C0339534,C3281066,C1865885,C1847089,C1848634,C2675458,C1568248,C2931206,C2931213,C1568247,C0271097,C1832845,C3553944,CN121478,C1568249
+uv-sensitive-syndrome	UV-sensitive syndrome		D010787	614621,600630,614640	698253007	C3553328,C3553298,C3551173
+van-der-woude-syndrome	Van der Woude syndrome		D019465	119300	79261008	C4551864
+very-long-chain-acyl-coa-dehydrogenase-deficiency	Very long-chain acyl-CoA dehydrogenase deficiency	E71.310	D008052	201475	237997005	C3887523
+vexas-syndrome	VEXAS syndrome			301054		
+vibratory-urticaria	Vibratory urticaria	L50.4	D014581,D000799	125630	51247001	
+vici-syndrome	Vici syndrome		D007153,D000015	242840	719824001	C1855772
+vitamin-d-dependent-rickets	Vitamin D-dependent rickets	E83.32	D012279	277440,600785,600081,264700	68295002	C0342646,C0268689
+vitelliform-macular-dystrophy	Vitelliform macular dystrophy		D057826	608161,153700	90036004	C0339510,C1842914
+vitiligo	Vitiligo	H02.734,L80,H02.736,H02.731,H02.733,H02.73,H02.732,H02.735,H02.739	D014820	193200,606579	56727007	
+vldlr-associated-cerebellar-hypoplasia	VLDLR-associated cerebellar hypoplasia		D002524	224050	230782004	C0394006
+vohwinkel-syndrome	Vohwinkel syndrome		D007645	124500,604117	24559001	C0265964,C1858805
+von-hippel-lindau-syndrome	Von Hippel-Lindau syndrome	Q85.8	D006623	193300	46659004	C0019562
+von-willebrand-disease	Von Willebrand disease	D68.0	D014842	277480,613554,193400	359700009,359732009,359721009,860725002,234448003,359704000,12501008,359717002,87397002,128105004,128106003,24663001,234446004,359729006,35066007,359714009,359725000,128113003,234450006,19520006,128107007,234447008,359711001,128114009,128108002,52137009,1908008,359709005,71723006	C0042974
+waardenburg-syndrome	Waardenburg syndrome		D014849	613265,600193,277580,613266,606662,193510,611584,148820,193500	47434006	C1847722,C1860339,C1848519,C2750452,C1847800,C1837203,C2700405,C1838447,C2750457
+wagner-syndrome	Wagner syndrome		D012162	143200	232064001	C1840452
+wagr-syndrome	WAGR syndrome		D017624	194072,612469	4135001	C2675904,C0206115
+waldenstrom-macroglobulinemia	Waldenström macroglobulinemia	C88.0	D008258	153600	190818004	C1835192
+walker-warburg-syndrome	Walker-Warburg syndrome		D058494	616538,615287,614643,253800,615181,236670,615249,613154,614830,613150,613153,615041	111504002	C0265221
+warfarin-resistance	Warfarin resistance		D004305	122700	871777003,293344008	C0750384
+warfarin-sensitivity	Warfarin sensitivity		D004305	122700	871777003,726543008	C0750384
+warsaw-breakage-syndrome	Warsaw breakage syndrome		D049914	613398	702829000	C3150658
+weaver-syndrome	Weaver syndrome		D000015	277590	63119004	C0265210
+weill-marchesani-syndrome	Weill-Marchesani syndrome		D056846	277600,608328	2884008	C1869115,C0265313,C4552002
+weissenbacher-zweymuller-syndrome	Weissenbacher-Zweymüller syndrome		D003095	184840	699313003	C1848488
+werner-syndrome	Werner syndrome		D014898	277700	51626007	C0043119
+weyers-acrofacial-dysostosis	Weyers acrofacial dysostosis		D004413	193530	277807007	C0457013
+white-sponge-nevus	White sponge nevus		D053529	615785,193900	389203001	C4014321,C4011926
+white-sutton-syndrome	White-Sutton syndrome		D008607	616364		C4225351
+wiedemann-rautenstrauch-syndrome	Wiedemann-Rautenstrauch syndrome		D011371	264090	238874008	C0406586
+williams-syndrome	Williams syndrome		D018980	194050	63247009	C0175702
+wilms-tumor	Wilms tumor	Z85.528	D009396	194071,194070,194090,601363,601583,616806	25081006,302849000	C3887743,CN033288,C1832099,C1832426,C3891301
+wilson-disease	Wilson disease	E83.01	D006527	277900	88518009	C0019202
+winchester-syndrome	Winchester syndrome		D010014	277950	254151006	C0432289
+wiskott-aldrich-syndrome	Wiskott-Aldrich syndrome	D82.0	D014923	301000	36070007	C0043194
+wolff-parkinson-white-syndrome	Wolff-Parkinson-White syndrome	I45.6	D014927	194200	74390002	C0043202
+wolf-hirschhorn-syndrome	Wolf-Hirschhorn syndrome	Q93.3	D054877	194190	17122004	C1956097
+wolfram-syndrome	Wolfram syndrome		D014929	222300,604928	70694009	C1858028,C0043207
+woodhouse-sakati-syndrome	Woodhouse-Sakati syndrome		D001480,D007006	241080	237616002	C0342286
+xeroderma-pigmentosum	Xeroderma pigmentosum	Q82.1	D014983	278780,278700,278750,278760,278720,610651,278740,278730	68637004,42530008,1073003,36454001,25784009,44600005,414673004	C2752147,C0268141,C0268136,C1848410,C1848411,C0043346,C0268138,CN119607,C0268135,C0268140
+xia-gibbs-syndrome	Xia-Gibbs syndrome		D008607	615829		C4014419
+x-linked-acrogigantism	X-linked acrogigantism		D005877	300942		C3891556
+x-linked-adrenal-hypoplasia-congenita	X-linked adrenal hypoplasia congenita		D000307	300200	237764004	C0342482
+x-linked-adrenoleukodystrophy	X-linked adrenoleukodystrophy	E71.528,E71.521,E71.520,E71.52,E71.529,E71.522	D000326	300100	65389002,366951000119109,367041000119108	C0162309
+x-linked-agammaglobulinemia	X-linked agammaglobulinemia	D80.0	D000361	300755	65880007	C0221026
+x-linked-cardiac-valvular-dysplasia	X-linked cardiac valvular dysplasia		D016127	314400	5203004	
+x-linked-chondrodysplasia-punctata-1	X-linked chondrodysplasia punctata 1	Q77.3	D002806	302950	254082007	C1844853
+x-linked-chondrodysplasia-punctata-2	X-linked chondrodysplasia punctata 2	Q77.3	D002806	302960	398719004	C0282102
+x-linked-congenital-stationary-night-blindness	X-linked congenital stationary night blindness	H53.63	D009755	300071,310500	232061009	C3495587,C0339535,C1848172
+x-linked-creatine-deficiency	X-linked creatine deficiency		D020739	300352	698290008	C1845862
+x-linked-dilated-cardiomyopathy	X-linked dilated cardiomyopathy	I42.0	D002311	302045	702424003	C3668940
+x-linked-dystonia-parkinsonism	X-linked dystonia-parkinsonism		D020734	314250	698279003	C1839130
+x-linked-hyper-igm-syndrome	X-linked hyper IgM syndrome	D80.5	D053307	308230	403835002	C0398689
+x-linked-immunodeficiency-with-magnesium-defect-epstein-barr-virus-infection-and-neoplasia	X-linked immunodeficiency with magnesium defect, Epstein-Barr virus infection, and neoplasia		D008231	300853	711481001	C3275445
+x-linked-infantile-nystagmus	X-linked infantile nystagmus	H55.01	D020417	310700	64635004,307671001	C1839580
+x-linked-infantile-spinal-muscular-atrophy	X-linked infantile spinal muscular atrophy		D014897	301830	719836007	C1844934
+x-linked-intellectual-disability-siderius-type	X-linked intellectual disability, Siderius type		D038901	300263	718908009	C1846055
+x-linked-juvenile-retinoschisis	X-linked juvenile retinoschisis		D041441	312700	86923008,95493003,232013002,232014008	C3714753
+x-linked-lissencephaly-with-abnormal-genitalia	X-linked lissencephaly with abnormal genitalia	Q04.3	D054221	300215	717632002	C1846171
+x-linked-lymphoproliferative-disease	X-linked lymphoproliferative disease	D82.3	D008232	308240,300635	77121009	C0549463,C5399825,C1845076
+x-linked-myotubular-myopathy	X-linked myotubular myopathy	G71.2	D020914	310400	46804001	C0410203
+x-linked-severe-combined-immunodeficiency	X-linked severe combined immunodeficiency		D053632	300400	203592006	C1279481
+x-linked-sideroblastic-anemia-and-ataxia	X-linked sideroblastic anemia and ataxia	D64.0	D000756	301310	62677000	C1845028
+x-linked-sideroblastic-anemia	X-linked sideroblastic anemia	D64.0	D000756	300751	62677000	C4551511
+x-linked-spondyloepiphyseal-dysplasia-tarda	X-linked spondyloepiphyseal dysplasia tarda	Q77.7	D010009	313400	51952004	C3541456
+x-linked-thrombocytopenia	X-linked thrombocytopenia	D69.42	D013921	313900	37492005	C1839163
+yao-syndrome	Yao syndrome		D056660	617321		C4310620
+y-chromosome-infertility	Y chromosome infertility		D007248	415000,400042	236791009	C4551960,C1839071
+yuan-harel-lupski-syndrome	Yuan-Harel-Lupski syndrome		D015417,D002658,D058674	616652		
+zap70-related-severe-combined-immunodeficiency	ZAP70-related severe combined immunodeficiency		D016511	176947	190993005	C5575025
+zellweger-spectrum-disorder	Zellweger spectrum disorder	E71.510,E71.511,G60.1	D015211	214110,266510,614862,614886,202370,601539,214100,614866,614876,614872,614882,614883,614920,614859,614887,614870	88469006,238061001,238062008	C1832200,C4721541,C0282527,C3550234
