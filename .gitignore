@@ -1,4 +1,5 @@
 data
+.idea
 R/rsconnect
 R/*.html
 .Rproj
@@ -8,3 +9,4 @@ R/*.html
 *.Rproj
 *.Ruserdata
 *.pyc
+*.ipynb_checkpoints
