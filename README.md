@@ -2,9 +2,7 @@
 
 
 <img align="right" src="/doc/images/IDG_logo.png" height="120">
-Mining ClinicalTrials.gov via AACT-CTTI-db for target hypotheses, with strong
-cheminformatics and medical terms text mining, powered by NextMove LeadMine
-and JensenLab Tagger.  This project is supported by the NIH [Illuminating the Druggable Genome (IDG) Program](https://commonfund.nih.gov/idg).
+Mining ClinicalTrials.gov via AACT-CTTI-db for target hypotheses, with strong cheminformatics and medical terms text mining, powered by NextMove LeadMine and JensenLab Tagger.  This project is supported by the NIH [Illuminating the Druggable Genome \(IDG\) Program](https://commonfund.nih.gov/idg).
 
 ### Dependencies
 
