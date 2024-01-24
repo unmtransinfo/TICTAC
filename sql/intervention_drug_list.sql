@@ -1,4 +1,4 @@
-SELECT
+ SELECT
 	itv.id,
 	itv.nct_id,
 	itv.name

@@ -1,8 +1,8 @@
 # `TICTAC` - Target illumination clinical trials analytics with cheminformatics
 
-Mining ClinicalTrials.gov via AACT-CTTI-db for target hypotheses, with strong
-cheminformatics and medical terms text mining, powered by NextMove LeadMine
-and JensenLab Tagger.
+
+<img align="right" src="/doc/images/IDG_logo.png" height="120">
+Mining ClinicalTrials.gov via AACT-CTTI-db for target hypotheses, with strong cheminformatics and medical terms text mining, powered by NextMove LeadMine and JensenLab Tagger.  This project is supported by the NIH <a href="https://commonfund.nih.gov/idg">Illuminating the Druggable Genome (IDG) Program</a>.
 
 ### Dependencies
 
