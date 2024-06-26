@@ -1,0 +1,43 @@
+#
+FROM ubuntu:22.04
+WORKDIR /home/app
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install -y sudo
+RUN apt-get install -y apt-utils
+ENV TZ=America/Denver
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >/etc/timezone
+RUN apt-get install -y tzdata
+RUN echo "=== Done installing Ubuntu."
+#
+###
+# Switch to MySql!!
+RUN apt-get install -y mysql-server-8.0
+RUN apt-cache policy mysql-server-8.0
+RUN apt-get install -y mysql-client-8.0
+#
+RUN echo "=== Done installing MySql."
+#
+RUN mkdir -p /home/data/TICTAC
+COPY data/tictac_db_mysqldump.sql /home/data/TICTAC/
+RUN echo "=== Done copying db data."
+#
+# Note that user postgres must start db differently than user root.
+USER mysql
+ENV dbname=tictac_db
+ENV dbusr=tictac
+ENV dbpw=toe
+RUN /etc/init.d/mysql start && \
+	mysql -e "CREATE USER '${dbusr}'@'localhost' IDENTIFIED BY '${dbpw}'" && \
+	mysql -e "CREATE DATABASE ${dbname}" && \
+	mysql ${dbname} </home/data/TICTAC/tictac_db_mysqldump.sql && \
+	mysql ${dbname} -c "GRANT SELECT ON *.* TO '${dbusr}'@'localhost'" && \
+	echo "=== Done loading ${dbname}." && \
+	mysql -l
+USER root
+RUN service mysql stop
+RUN echo "=== Done instantiating and loading dbs."
+#
+# CMD must be in foreground.
+CMD ["sudo", "-u", "mysql", "/usr/lib/postgresql/14/bin/postgres", "-D", "/var/lib/postgresql/14/main", "-c", "config_file=/etc/postgresql/14/main/postgresql.conf"]
+#
