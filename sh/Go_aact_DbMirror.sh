@@ -4,13 +4,12 @@
 # https://aact.ctti-clinicaltrials.org/snapshots
 ###
 #
-set -e
 set -x
 #
 DBNAME="aact"
 DBSCHEMA="ctgov"
-#DBVER="20240909"
-DBVER=`date +'%Y%m%d'`
+DBVER="20240909"
+#DBVER=`date +'%Y%m%d'`
 #
 cwd=$(pwd)
 DATADIR="${cwd}/data"
@@ -21,18 +20,17 @@ if [ ! -e "${SRCDATADIR}" ]; then
 	exit
 fi
 #
-DBHOST="aact-db.ctti-clinicaltrials.org"
-DBNAME="aact"
-#
-pg_dump --no-privileges -Fc --schema=${DBSCHEMA} -h $DBHOST -d $DBNAME >$SRCDATADIR/aact.pgdump
-#
+###
+#DBHOST="aact-db.ctti-clinicaltrials.org"
+#pg_dump --no-privileges -Fc --schema=${DBSCHEMA} -h $DBHOST -d $DBNAME >$SRCDATADIR/aact.pgdump
+####
 dropdb ${DBNAME}
 createdb ${DBNAME}
 #
 #
-pg_restore -e -v -O -x -h localhost -d ${DBNAME} --no-owner ${SRCDATADIR}/aact.pgdump
+pg_restore -e -v -O -x -h localhost -d ${DBNAME} --no-owner ${SRCDATADIR}/postgres.dump
 #
-N=$(psql -t -d ${DBNAME} -c "SELECT COUNT(*) FROM ${SCHEMA}.studies")
+N=$(psql -t -d ${DBNAME} -c "SELECT COUNT(*) FROM ${DBSCHEMA}.studies")
 if [ ! ${N} -gt 0 ]; then
 	printf "ERROR: Cannot access existing AACT db (\"${DBNAME}\")\n"
 	exit
