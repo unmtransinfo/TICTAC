@@ -61,7 +61,7 @@ for f in $(ls $CFGDIR/${PREFIX}_*.cfg) ; do
 	dictname=$(basename $f |perl -pe 's/^(.*)\.cfg$/$1/')
 	printf "Leadmine: $(basename $f) (${dictname})\n"
 	#
-	java -jar $LIBDIR/unm_biocomp_nextmove-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
+	java -jar $LIBDIR/unm_biocomp_nextmove-0.0.3-SNAPSHOT-jar-with-dependencies.jar \
 		-config $f \
 		-i ${DATADIR}/aact_descriptions.tsv \
 		-textcol 3 -unquote -idcol 1 \

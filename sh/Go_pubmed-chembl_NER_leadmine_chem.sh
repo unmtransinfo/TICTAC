@@ -18,7 +18,7 @@ DATADIR="${cwd}/data"
 #
 #############################################################################
 # Chemical NER, with default LeadMine dictionary and resolver. 
-java -jar ${LIBDIR}/unm_biocomp_nextmove-0.0.1-SNAPSHOT-jar-with-dependencies.jar \
+java -jar ${LIBDIR}/unm_biocomp_nextmove-0.0.3-SNAPSHOT-jar-with-dependencies.jar \
 	-v -textcol 3 -idcol 1 \
 	-i $DATADIR/aact_drugs_chembl_document_pubmed-records.tsv \
 	-o $DATADIR/aact_drugs_chembl_document_pubmed-records_leadmine.tsv

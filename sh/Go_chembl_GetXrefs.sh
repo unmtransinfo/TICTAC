@@ -10,60 +10,63 @@ DATADIR="${cwd}/data"
 #
 date
 ###
-printf "InChIKeys (from PubChem): $(cat $DATADIR/aact_drugs.ink |wc -l)\n"
+printf "InChIKeys (from PubChem): $(cat ${DATADIR}/aact_drugs.ink |wc -l)\n"
 ###
 # ChEMBL:
 python3 -m BioClients.chembl.Client get_mol_by_inchikey \
-	--i $DATADIR/aact_drugs.ink \
-	--o $DATADIR/aact_drugs_ink2chembl.tsv
+	--i ${DATADIR}/aact_drugs.ink \
+	--o ${DATADIR}/aact_drugs_ink2chembl.tsv
 #
 python3 -m BioClients.util.pandas.App selectcols --coltags "molecule_chembl_id" \
-	--i $DATADIR/aact_drugs_ink2chembl.tsv \
+	--i ${DATADIR}/aact_drugs_ink2chembl.tsv \
 	|sed -e '1d' |sort -u \
-	>$DATADIR/aact_drugs_ink2chembl.chemblid
+	>${DATADIR}/aact_drugs_ink2chembl.chemblid
 #
-printf "Mols (from ChEMBL): $(cat $DATADIR/aact_drugs_ink2chembl.chemblid |wc -l)\n"
+printf "Mols (from ChEMBL): $(cat ${DATADIR}/aact_drugs_ink2chembl.chemblid |wc -l)\n"
 #
 ###
 # ~12hr for 3711 mols, 2021-06-09
 # ~13hr for 3767 mols, 2022-11-02, 1262315 activities
+# ~12hr for 4945 mols, 2024-09-04, 1480203 activities
 python3 -m BioClients.chembl.Client get_activity_by_mol \
-	--i $DATADIR/aact_drugs_ink2chembl.chemblid \
-	--o $DATADIR/aact_drugs_chembl_activity.tsv
+	--i ${DATADIR}/aact_drugs_ink2chembl.chemblid \
+	--o ${DATADIR}/aact_drugs_chembl_activity.tsv
 #
-printf "Activities (from ChEMBL): $(cat $DATADIR/aact_drugs_chembl_activity.tsv |sed -e '1d' |wc -l)\n"
+printf "Activities (from ChEMBL): $(cat ${DATADIR}/aact_drugs_chembl_activity.tsv |sed -e '1d' |wc -l)\n"
 #
 python3 -m BioClients.util.pandas.App selectcols --coltags "target_chembl_id" \
-	--i $DATADIR/aact_drugs_chembl_activity.tsv \
+	--i ${DATADIR}/aact_drugs_chembl_activity.tsv \
 	|sed -e '1d' |sort -u \
-	>$DATADIR/aact_drugs_chembl_target.chemblid
+	>${DATADIR}/aact_drugs_chembl_target.chemblid
 #
-printf "Targets (from ChEMBL): $(cat $DATADIR/aact_drugs_chembl_target.chemblid |wc -l)\n"
+printf "Targets (from ChEMBL): $(cat ${DATADIR}/aact_drugs_chembl_target.chemblid |wc -l)\n"
 #
 # ~2hr for 7549 targets, 2022-11-03
+# ~2hr for 8057 targets, 2024-09-05
 python3 -m BioClients.chembl.Client get_target_components \
-	--i $DATADIR/aact_drugs_chembl_target.chemblid \
-	--o $DATADIR/aact_drugs_chembl_target_component.tsv
+	--i ${DATADIR}/aact_drugs_chembl_target.chemblid \
+	--o ${DATADIR}/aact_drugs_chembl_target_component.tsv
 #
-printf "Target components (from ChEMBL): $(python3 -m BioClients.util.pandas.App selectcols --coltags "component_id" --i $DATADIR/aact_drugs_chembl_target_component.tsv |sed -e '1d' |wc -l)\n"
+printf "Target components (from ChEMBL): $(python3 -m BioClients.util.pandas.App selectcols --coltags "component_id" --i ${DATADIR}/aact_drugs_chembl_target_component.tsv |sed -e '1d' |wc -l)\n"
 ###
 # 
 python3 -m BioClients.util.pandas.App selectcols --coltags "document_chembl_id" \
-	--i $DATADIR/aact_drugs_chembl_activity.tsv \
+	--i ${DATADIR}/aact_drugs_chembl_activity.tsv \
 	|sed -e '1d' |sort -u \
-	>$DATADIR/aact_drugs_chembl_document.chemblid
+	>${DATADIR}/aact_drugs_chembl_document.chemblid
 #
-printf "Documents (from ChEMBL): $(cat $DATADIR/aact_drugs_chembl_document.chemblid |wc -l)\n"
+printf "Documents (from ChEMBL): $(cat ${DATADIR}/aact_drugs_chembl_document.chemblid |wc -l)\n"
 #
 # ~10hr for 40660 documents, 2022-11-03
+# ~9hr for 44242 documents, 2024-09-05
 python3 -m BioClients.chembl.Client get_document \
-	--i $DATADIR/aact_drugs_chembl_document.chemblid \
-	--o $DATADIR/aact_drugs_chembl_document.tsv
+	--i ${DATADIR}/aact_drugs_chembl_document.chemblid \
+	--o ${DATADIR}/aact_drugs_chembl_document.tsv
 #
-printf "PubMed IDs (from ChEMBL): $(python3 -m BioClients.util.pandas.App selectcols --coltags "pubmed_id" --i $DATADIR/aact_drugs_chembl_document.tsv |sed -e '1d' |wc -l)\n"
+printf "PubMed IDs (from ChEMBL): $(python3 -m BioClients.util.pandas.App selectcols --coltags "pubmed_id" --i ${DATADIR}/aact_drugs_chembl_document.tsv |sed -e '1d' |wc -l)\n"
 #
 python3 -m BioClients.chembl.Client list_sources \
-	--o $DATADIR/chembl_sources.tsv
+	--o ${DATADIR}/chembl_sources.tsv
 #
 printf "Elapsed time: %ds\n" "$[$(date +%s) - ${T0}]"
 #

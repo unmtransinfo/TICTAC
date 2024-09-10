@@ -54,9 +54,9 @@ psql $ARGS -c "COPY (SELECT nct_id,study_type,source,phase,overall_status,start_
 	>$DATADIR/aact_studies.tsv
 ###
 ###
-#Drugs:
+#DRUGs:
 # id is intervention_id
-psql $ARGS -c "COPY (SELECT id, nct_id, name FROM interventions WHERE intervention_type ='Drug') TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
+psql $ARGS -c "COPY (SELECT id, nct_id, name FROM interventions WHERE intervention_type ='DRUG') TO STDOUT WITH (FORMAT CSV,HEADER,DELIMITER E'\t')" \
 	>$DATADIR/aact_drugs.tsv
 ###
 #Keywords:
