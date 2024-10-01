@@ -1,6 +1,6 @@
 ---
 title: 'TICTAC: Target illumination clinical trials analytics with cheminformatics'
-author: "Jeremy Yang"
+author: "Jeremiah Abok and Jeremy Yang"
 output:
   html_document:
     number_sections: yes
@@ -112,11 +112,11 @@ Reference type `results_reference` may offer greater evidence, confidence.
 refs <- read_delim("data/aact_study_refs.tsv", "\t", col_types="ccccc")
 setDT(refs)
 refs[, id:=NULL]
-sprintf("references: %d; NCT_IDs: %d; PMIDs: %d; results_references: %d", nrow(refs), 
+sprintf("references: %d; NCT_IDs: %d; PMIDs: %d; RESULT-type references: %d", nrow(refs), 
         uniqueN(refs$nct_id),
         uniqueN(refs$pmid),
-        nrow(refs[reference_type=="results_reference"]))
-refs <- refs[, .(N_refs = .N, N_results_refs = sum(reference_type=="results_reference"), pmids=paste0(pmid, collapse="; "), citations=paste0(citation, collapse="\t")), by="nct_id"]
+        nrow(refs[reference_type=="RESULT"]))
+refs <- refs[, .(N_refs = .N, N_results_refs = sum(reference_type=="RESULT"), pmids=paste0(pmid, collapse="; "), citations=paste0(citation, collapse="\t")), by="nct_id"]
 ```
 
 ## Drugs 
@@ -137,7 +137,7 @@ sprintf("Unique drug names: %d ; unique intervention IDs: %d", uniqueN(drugs$nam
 Select only ___Interventional___ studies (`study_type`) associated with drugs (via `NCT_ID`). No __Observational__ this analysis.
 
 ```{r}
-studies <- studies[study_type=="Interventional"]
+studies <- studies[study_type=="INTERVENTIONAL"]
 n_studies_inter <- nrow(studies)
 sprintf("Interventional studies: %d (%.1f%%)", n_studies_inter, 100*n_studies_inter/n_studies_total)
 studies$phase[studies$phase == "N/A"] <- NA
@@ -177,7 +177,7 @@ plot_ly() %>%
 
 ```{r message=FALSE}
 yi <- 1990
-yf <- 2021
+yf <- 2023
 plot_ly(type="bar", data=merge(studies[, .(N_studies = .N), by="start_year"], drugs[, .(N_drugs = .N), by="start_year"], by="start_year"), x = ~start_year, name="studies", y = ~N_studies) %>%
 	add_trace(name="drugs", y = ~N_drugs) %>%
 	layout(title=sprintf("AACT: Studies and drugs %d-%d", yi, yf), xaxis=list(range=c(yi, yf), tickangle=-45), yaxis=list(title="N"),
@@ -555,7 +555,9 @@ sprintf("studies: %d ; drugs: %d ; diseases: %d ; targets: %d",
 uniqueN(sddt_links$nct_id), uniqueN(sddt_links$CID), uniqueN(sddt_links$doid),
 uniqueN(sddt_links$uniprot))
 sddt_links <- merge(sddt_links, tgt[, .(uniprot, gene_symbol = tcrdGeneSymbol, idgTDL)], by="uniprot")
-write_delim(sddt_links, "data/sddt_links.tsv", "\t")
+ofile_sddt_links <- "data/sddt_links.tsv.gz"
+sprintf("Writing SDDT links to: %s", ofile_sddt_links)
+write_delim(sddt_links, ofile_sddt_links, "\t")
 knitr::kable(unique(sddt_links[, .(uniprot, idgTDL)])[, .(.N), by="idgTDL"], caption="TDL counts")
 ```
 
